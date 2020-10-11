@@ -1,0 +1,13 @@
+com\my_app\sys_plywacki\web\UserValidator.class
+com\my_app\sys_plywacki\model\User.class
+com\my_app\sys_plywacki\service\SecurityService.class
+com\my_app\sys_plywacki\repository\RoleRepository.class
+com\my_app\sys_plywacki\service\UserServiceImpl.class
+com\my_app\sys_plywacki\repository\UserRepository.class
+com\my_app\sys_plywacki\web\UserController.class
+com\my_app\sys_plywacki\DemoApplication.class
+com\my_app\sys_plywacki\service\UserDetailsServiceImpl.class
+com\my_app\sys_plywacki\service\UserService.class
+com\my_app\sys_plywacki\service\SecurityServiceImpl.class
+com\my_app\sys_plywacki\model\Role.class
+com\my_app\sys_plywacki\WebSecurityConfig.class
