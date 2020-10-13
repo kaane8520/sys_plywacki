@@ -1,11 +1,22 @@
 package com.my_app.sys_plywacki.model;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Set;
 
-public class Guest {
-    @Id
+@Entity
+public class Guest extends Person {
+    //@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id_guest;
+
+    @ManyToMany
+    private Set<Role> roles;
+
+    /*public String displayScore() {}
+
+    public String displayClubs() {}
+
+    public String displayPlayers() {}
+
+    public String displayEvents() {} */
 }

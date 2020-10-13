@@ -1,8 +1,8 @@
 package com.my_app.sys_plywacki.web;
 
-import com.my_app.sys_plywacki.model.User;
+import com.my_app.sys_plywacki.model.Person;
 import com.my_app.sys_plywacki.service.SecurityService;
-import com.my_app.sys_plywacki.service.UserService;
+import com.my_app.sys_plywacki.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,15 +12,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
-public class UserController {
+public class PersonController {
     @Autowired
-    private UserService userService;
+    private PersonService personService;
 
     @Autowired
     private SecurityService securityService;
 
     @Autowired
-    private UserValidator userValidator;
+    private PersonValidator personValidator;
 
     @GetMapping("/registration")
     public String registration(Model model) {
@@ -28,20 +28,20 @@ public class UserController {
             return "redirect:/";
         }
 
-        model.addAttribute("userForm", new User());
+        model.addAttribute("personForm", new Person());
 
         return "registration";
     }
 
     @PostMapping("/registration")
-    public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult) {
-        userValidator.validate(userForm, bindingResult);
+    public String registration(@ModelAttribute("userForm") Person userForm, BindingResult bindingResult) {
+        personValidator.validate(userForm, bindingResult);
 
         if (bindingResult.hasErrors()) {
             return "registration";
         }
 
-        userService.save(userForm);
+        personService.save(userForm);
 
         securityService.autoLogin(userForm.getUsername(), userForm.getPasswordConfirm());
 

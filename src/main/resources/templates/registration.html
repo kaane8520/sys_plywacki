@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="pl-PL" xmlns:th="http://www.thymeleaf.org">
   <head>
       <meta charset="utf-8">
       <title>Create an account</title>
@@ -11,26 +11,26 @@
 
     <div class="container">
 
-        <form method="POST" class="form-signin" th:object="${userForm}" th:action="@{/registration}">
-            <h2 class="form-signin-heading">Create your account</h2>
+        <form method="POST" class="form-signin" th:object="${personForm}" th:action="@{/registration}">
+            <h2 class="form-signin-heading">Załóż konto</h2>
             <div class="form-group">
-                <input type="text" th:field="*{username}" class="form-control" placeholder="Username"
+                <input type="text" th:field="*{username}" class="form-control" placeholder="Wpisz nazwę użytkownika"
                        autofocus="true">
                 <span class="has-error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
             </div>
 
             <div class="form-group">
-                <input type="password" th:field="*{password}" class="form-control" placeholder="Password">
+                <input type="password" th:field="*{password}" class="form-control" placeholder="Wpisz hasło">
                 <span class="has-error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
             </div>
 
             <div class="form-group">
                 <input type="password" th:field="*{passwordConfirm}" class="form-control"
-                            placeholder="Confirm your password">
+                            placeholder="Ponownie wpisz hasło">
                 <span class="has-error" th:if="${#fields.hasErrors('passwordConfirm')}" th:errors="*{passwordConfirm}"></span>
             </div>
 
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Zarejestruj się</button>
         </form>
 
     </div>
