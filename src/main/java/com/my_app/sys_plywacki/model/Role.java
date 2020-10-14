@@ -13,7 +13,7 @@ public class Role {
     private String name;
 
     @ManyToMany(mappedBy = "roles")
-    private Set<User> people;
+    private Set<Person> person;
 
     public Long getId() {
         return id;
@@ -31,11 +31,11 @@ public class Role {
         this.name = name;
     }
 
-    public Set<User> getUsers() {
-        return people;
+    public Set<Person> getUsers() {
+        return person;
     }
 
-    public void setUsers(Set<User> people) {
-        this.people = people;
+    public void setUsers(Set<Person> people) {
+        this.person = people;
     }
 }

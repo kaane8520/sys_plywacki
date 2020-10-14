@@ -3,6 +3,7 @@ package com.my_app.sys_plywacki.model;
 import javax.persistence.*;
 import java.util.Set;
 
+
 @Entity
 @Table(name = "person")
 public class Person {
