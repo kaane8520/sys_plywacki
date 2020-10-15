@@ -55,10 +55,10 @@ public class PersonController {
         }
 
         if (error != null)
-            model.addAttribute("error", "Your username and password is invalid.");
+            model.addAttribute("error", "Nazwa użytkownika lub hasło zostało źle wpisane.");
 
         if (logout != null)
-            model.addAttribute("message", "You have been logged out successfully.");
+            model.addAttribute("message", "Wylogowałeś się pomyślnie.");
 
         return "login";
     }
