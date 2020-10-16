@@ -4,23 +4,20 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "role")
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id_role;
 
     private String name;
 
-    @ManyToMany(mappedBy = "roles")
-    private Set<Person> person;
 
     public Long getId() {
-        return id;
+        return id_role;
     }
 
     public void setId(Long id) {
-        this.id = id;
+        this.id_role = id;
     }
 
     public String getName() {
@@ -31,11 +28,4 @@ public class Role {
         this.name = name;
     }
 
-    public Set<Person> getUsers() {
-        return person;
-    }
-
-    public void setUsers(Set<Person> people) {
-        this.person = people;
-    }
 }
