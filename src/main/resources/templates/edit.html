@@ -2,7 +2,7 @@
 <html lang="pl-PL" xmlns:th="http://www.thymeleaf.org">
   <head>
       <meta charset="utf-8">
-      <title>Edit your account</title>
+      <title>Edytuj konto</title>
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
       <link href="/css/common.css" rel="stylesheet">
   </head>
@@ -14,12 +14,12 @@
         <form method="POST" class="form-signin" th:object="${editForm}" th:action="@{/edit}">
             <h2 class="form-signin-heading">Edytuj konto</h2>
             <div class="form-group">
-                <select th:field="*{user_role}" class="form-control">
+                <!--<select th:field="*{user_role}" class="form-control">
 	    			<option th:value="'zawodnik'" th:text="Zawodnik"></option>
     				<option th:value="'trener'" th:text="Trener"></option>
     				<option th:value="'sedzia'" th:text="Sedzia"></option>
     				<option th:value="'organizator'" th:text="Organizator"></option>
-                </select>
+                </select>-->
             </div>
             <button class="btn btn-lg btn-primary btn-block" type="submit">Potwierdz</button>
         </form>

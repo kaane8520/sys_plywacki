@@ -1,15 +1,14 @@
 package com.my_app.sys_plywacki.web;
 
 import com.my_app.sys_plywacki.model.Person;
+import com.my_app.sys_plywacki.model.Role;
 import com.my_app.sys_plywacki.service.SecurityService;
 import com.my_app.sys_plywacki.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -74,5 +73,10 @@ public class PersonController {
     public String redirectToEditPage() {
     	System.out.println("Redirecting Result To The Final Page");
         return "redirect:edit";
+    }
+
+    @GetMapping("/edit")
+    public String edit(Model model) {
+        return "edit";
     }
 }
