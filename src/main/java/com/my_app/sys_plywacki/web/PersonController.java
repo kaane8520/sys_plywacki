@@ -10,6 +10,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class PersonController {
@@ -66,5 +68,11 @@ public class PersonController {
     @GetMapping({"/", "/welcome"})
     public String welcome(Model model) {
         return "welcome";
+    }
+    
+    @RequestMapping(value = "/redirectToEditPage", method = RequestMethod.GET)
+    public String redirectToEditPage() {
+    	System.out.println("Redirecting Result To The Final Page");
+        return "redirect:edit";
     }
 }
