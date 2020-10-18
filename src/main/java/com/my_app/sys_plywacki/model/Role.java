@@ -1,7 +1,6 @@
 package com.my_app.sys_plywacki.model;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 public class Role {
@@ -27,5 +26,4 @@ public class Role {
     public void setName(String name) {
         this.name = name;
     }
-
 }
