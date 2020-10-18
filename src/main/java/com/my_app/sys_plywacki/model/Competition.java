@@ -4,7 +4,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import java.time.LocalDate;
 
-public class Competitions {
+public class Competition {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_competitions;
     private String competiton_name;

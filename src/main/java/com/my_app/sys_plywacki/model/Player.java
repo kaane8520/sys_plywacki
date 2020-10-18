@@ -4,7 +4,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import java.time.LocalDate;
 
-public class Player {
+public class Player extends User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_player;
 

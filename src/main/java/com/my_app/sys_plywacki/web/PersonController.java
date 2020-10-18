@@ -1,14 +1,15 @@
 package com.my_app.sys_plywacki.web;
 
-import com.my_app.sys_plywacki.model.Person;
+import com.my_app.sys_plywacki.model.*;
 
+import com.my_app.sys_plywacki.service.*;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import com.my_app.sys_plywacki.model.Role;
-import com.my_app.sys_plywacki.service.PersonService;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,7 +18,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import com.my_app.sys_plywacki.service.SecurityService;
 
 @Controller
 public class PersonController {
@@ -30,6 +30,14 @@ public class PersonController {
     @Autowired
     private PersonValidator personValidator;
 
+    @Autowired
+    private PlayerSearchService playerSearchService;
+
+    @Autowired
+    private ClubSearchService clubSearchService;
+
+    @Autowired
+    private CompetitionSearchService competitionSearchService;
 
     @GetMapping("/registration")
     public String registration(Model model) {
@@ -118,6 +126,29 @@ public class PersonController {
 
         return "redirect:/welcome";
     }
-    
+
+    @RequestMapping("/searchPlayers")
+    public String searchPlayers(Model model, @Param("keyword") String keyword){
+        List<Player> playerList = playerSearchService.listAll(keyword);
+        model.addAttribute("playerList", playerList);
+        model.addAttribute("keyword", keyword);
+        return "playerSearchService";
+    }
+
+    @RequestMapping("/searchClubs")
+    public String searchClubs(Model model, @Param("keyword") String keyword){
+        List<Club> clubList = clubSearchService.listAll(keyword);
+        model.addAttribute("clubList", clubList);
+        model.addAttribute("keyword", keyword);
+        return "clubSearchService";
+    }
+
+    @RequestMapping("/searchCompetitions")
+    public String searchCompetitions(Model model, @Param("keyword") String keyword){
+        List<Competition> competitionList = competitionSearchService.listAll(keyword);
+        model.addAttribute("competitionList", competitionList);
+        model.addAttribute("keyword", keyword);
+        return "competitionSearchService";
+    }
 
 }
