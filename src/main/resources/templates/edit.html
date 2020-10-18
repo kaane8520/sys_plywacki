@@ -14,12 +14,13 @@
         <form method="POST" class="form-signin" th:object="${role}" th:action="@{/edit}">
             <h2 class="form-signin-heading">Edytuj konto</h2>
             <div class="form-group">
-               <select th:field="*{name}" class="form-control">
+                <select th:field="*{name}" class="form-control">
 	    			<option th:value="'zawodnik'" th:text="Zawodnik"></option>
     				<option th:value="'trener'" th:text="Trener"></option>
     				<option th:value="'sedzia'" th:text="Sedzia"></option>
     				<option th:value="'organizator'" th:text="Organizator"></option>
-                </select> 
+                </select>
+                <input type="file" class="form-control">
             </div>
             <button class="btn btn-lg btn-primary btn-block" type="submit">Potwierdz</button>
         </form>
