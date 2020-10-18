@@ -6,6 +6,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import com.my_app.sys_plywacki.model.Role;
 import com.my_app.sys_plywacki.service.PersonService;
+
+import java.util.Arrays;
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import com.my_app.sys_plywacki.service.SecurityService;
-import com.my_app.sys_plywacki.service.UserDetailsServiceImpl;
 
 @Controller
 public class PersonController {
@@ -26,6 +29,7 @@ public class PersonController {
 
     @Autowired
     private PersonValidator personValidator;
+
 
     @GetMapping("/registration")
     public String registration(Model model) {
@@ -83,19 +87,35 @@ public class PersonController {
     public String edit(Model model) {
     	model.addAttribute("role", new Role());
     	System.out.println("Jestem w GetMapping /edit");
+    	//Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    	//System.out.println("Twoj login to: "+auth.getPrincipal().toString());
         return "edit";
     }
     @PostMapping("/edit")
     public String edit(@ModelAttribute Role role, Model model, BindingResult bindingResult) {
+    	System.out.println("Jestem w PostMapping /edit");
         if (bindingResult.hasErrors()) {
             return "edit";
         }
+        
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Person p = new Person();
-        p.setUsername(auth.getPrincipal().toString());
-        p.setPassword(auth.getCredentials().toString());
+        
+        System.out.println("Twój username: "+auth.getName().toString());
+        
+        System.out.println("Tworze obiekt person");
+        Person p = personService.findByUsername(auth.getName());
+        
+        System.out.println("Twoja rola to (role.getName()): "+role.getName());
+        
         personService.add_role(p, role);
-    	System.out.println("Your role is: "+role.getName());
+        
+        System.out.println("Twoja rola to (person.getRoles()): "+Arrays.toString(p.getRoles().toArray()));
+        
+        Collection r = personService.getAuthorities(role);
+        System.out.println(Arrays.toString(r.toArray()));
+
+    	//System.out.println("Your role is: "+p.getRoles());
+
         return "redirect:/welcome";
     }
     

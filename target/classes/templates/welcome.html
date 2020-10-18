@@ -13,8 +13,8 @@
         </form>
 
         <h2>Welcome <span sec:authentication="name"></span> | <a onclick="document.forms['logoutForm'].submit()">Logout</a></h2>
-        <h4><a href="/edit">Edytuj swoje konto</a></h4>
-        
+    
+      <h5>Twoja rola to: <span sec:authentication="principal.authorities"></span></h5> 
     <form th:action="@{/redirectToEditPage}">
         <input type="submit" value="Edytuj swoje konto"/>
     </form>
