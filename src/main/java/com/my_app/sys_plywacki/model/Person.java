@@ -14,6 +14,7 @@ public class Person {
 
     private String password;
 
+
     @Transient
     private String passwordConfirm;
 
@@ -59,4 +60,5 @@ public class Person {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
 }

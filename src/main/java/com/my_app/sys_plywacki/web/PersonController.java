@@ -1,8 +1,10 @@
 package com.my_app.sys_plywacki.web;
 
 import com.my_app.sys_plywacki.model.Person;
+
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import com.my_app.sys_plywacki.model.Role;
-import com.my_app.sys_plywacki.service.SecurityService;
 import com.my_app.sys_plywacki.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +13,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import com.my_app.sys_plywacki.service.SecurityService;
+import com.my_app.sys_plywacki.service.UserDetailsServiceImpl;
 
 @Controller
 public class PersonController {
@@ -77,6 +81,23 @@ public class PersonController {
 
     @GetMapping("/edit")
     public String edit(Model model) {
+    	model.addAttribute("role", new Role());
+    	System.out.println("Jestem w GetMapping /edit");
         return "edit";
     }
+    @PostMapping("/edit")
+    public String edit(@ModelAttribute Role role, Model model, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "edit";
+        }
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Person p = new Person();
+        p.setUsername(auth.getPrincipal().toString());
+        p.setPassword(auth.getCredentials().toString());
+        personService.add_role(p, role);
+    	System.out.println("Your role is: "+role.getName());
+        return "redirect:/welcome";
+    }
+    
+
 }
