@@ -31,7 +31,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/css/**", "/js/**", "/registration").permitAll()
                 .antMatchers("/enterResults", "/acceptApplications", "/registrationCompetitions").hasAuthority("organizator")
                 .antMatchers("/judgingCompetitions").hasAuthority("sedzia")
-                .antMatchers("/registrationCompetitorsCoach", "verificationMedicalExaminations").hasAuthority("trener")
+                .antMatchers("/registrationCompetitorsCoach", "/verificationMedicalExaminations", "/registrationClub").hasAuthority("trener")
                 .antMatchers("/registrationCompetitiorsPlayer").hasAuthority("zawodnik")
                 .anyRequest().authenticated()
                 .and()
