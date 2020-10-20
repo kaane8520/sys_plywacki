@@ -7,13 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 
 public class PlayerSearchServiceImp {
-    @Autowired
-    private PlayerRepository repository;
-    public List<Player> listAll(String keyword){
-        if(keyword != null){
-            return repository.search(keyword);
-        }
-        return repository.findAll();
-    }
+//    @Autowired
+//    private PlayerRepository repository;
+//    public List<Player> listAll(String keyword){
+//        if(keyword != null){
+//            return repository.search(keyword);
+//        }
+//        return repository.findAll();
+//    }
 
 }

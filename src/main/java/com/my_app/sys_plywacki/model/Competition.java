@@ -10,4 +10,6 @@ public class Competition {
     private String competiton_name;
     private LocalDate competition_date;
 
+    public void search(String keyword){}
+
 }

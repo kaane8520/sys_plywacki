@@ -9,4 +9,6 @@ public class Player extends User {
     private Long id_player;
 
     private LocalDate med_ex_date;
+
+    public void search(String keyword){}
 }

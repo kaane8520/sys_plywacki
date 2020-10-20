@@ -23,4 +23,8 @@ public class Club {
     public void setClub_name(String club_name) {
         this.club_name = club_name;
     }
+
+    public void search(String keyword){
+
+    }
 }

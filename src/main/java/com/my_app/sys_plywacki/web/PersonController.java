@@ -31,13 +31,13 @@ public class PersonController {
     private PersonValidator personValidator;
 
     @Autowired
-    private PlayerSearchService playerSearchService;
+    private PlayerSearchService playerService;
 
     @Autowired
     private ClubService clubService;
 
     @Autowired
-    private CompetitionSearchService competitionSearchService;
+    private CompetitionService competitionService;
 
 
 
@@ -129,35 +129,45 @@ public class PersonController {
         return "redirect:/welcome";
     }
 
-    @RequestMapping("/searchPlayers")
-    public String searchPlayers(Model model, @Param("keyword") String keyword){
-        List<Player> playerList = playerSearchService.listAll(keyword);
-        model.addAttribute("playerList", playerList);
-        model.addAttribute("keyword", keyword);
-        return "playerSearchService";
+//    @RequestMapping("/searchPlayers")
+//    public String searchPlayers(Model model, @Param("keyword") String keyword){
+//        List<Player> playerList = playerSearchService.listAll(keyword);
+//        model.addAttribute("playerList", playerList);
+//        model.addAttribute("keyword", keyword);
+//        return "playerSearchService";
+//    }
+//
+//
+//
+
+
+
+
+    @GetMapping("clubRegistration")
+    public String clubRegistration(Model model){
+        model.addAttribute("clubForm", new Club());
+
+        return "clubRegistration";
     }
 
+    @PostMapping("clubRegistration")
+    public String clubRegistration(@ModelAttribute("clubForm") Club clubForm){
+        clubService.save(clubForm);
 
-
-    @RequestMapping("/searchCompetitions")
-    public String searchCompetitions(Model model, @Param("keyword") String keyword){
-        List<Competition> competitionList = competitionSearchService.listAll(keyword);
-        model.addAttribute("competitionList", competitionList);
-        model.addAttribute("keyword", keyword);
-        return "competitionSearchService";
+        return "clubRegistration";
     }
 
-    @RequestMapping("/")
+    @RequestMapping("/clubRegistration")
     public String viewClubPage(Model model){
         List<Club> clubList = clubService.listAll();
         model.addAttribute("clubList", clubList);
-        return "registrationClub";
+        return "clubRegistration";
     }
-    @RequestMapping("/registrationClub")
+    @RequestMapping("/")
     public String showNewClubPage(Model model){
         Club club = new Club();
         model.addAttribute("Club", club);
-        return "registrationClub";
+        return "clubRegistration";
     }
 
     @RequestMapping("/searchClubs")
@@ -167,10 +177,40 @@ public class PersonController {
         model.addAttribute("keyword", keyword);
         return "clubSearchService";
     }
-    @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String saveClub(Club club){
-        clubService.save(club);
-        return "redirected:/";
+
+
+    @GetMapping("registrationCompetitions")
+    public String registrationCompetition(Model model){
+        model.addAttribute("competitionForm", new Competition());
+
+        return "registrationCompetitions";
     }
 
+    @PostMapping("registrationCompetitions")
+    public String registrationCompetition(@ModelAttribute("competitionForm") Competition competitionForm){
+        competitionService.save(competitionForm);
+
+        return "registrationCompetitions";
+    }
+
+    @RequestMapping("/registrationCompetitions")
+    public String viewCompetitionPage(Model model){
+        List<Competition> competitionList = competitionService.listAll();
+        model.addAttribute("competitionList", competitionList);
+        return "registrationCompetitions";
+    }
+    @RequestMapping("/")
+    public String showNewCompetitionPage(Model model){
+        Competition competition = new Competition();
+        model.addAttribute("Competition", competition);
+        return "registrationCompetitions";
+    }
+
+    @RequestMapping("/searchCompetition")
+    public String searchCompetition(Model model, @Param("keyword") String keyword){
+        List<Competition> competitionList = competitionService.listAll(keyword);
+        model.addAttribute("competitionList", competitionList);
+        model.addAttribute("keyword", keyword);
+        return "competitionSearchService";
+    }
 }

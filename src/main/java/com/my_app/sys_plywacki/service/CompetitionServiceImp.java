@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-public class CompetitionSearchServiceImp {
+public class CompetitionServiceImp {
     @Autowired
     private CompetitionRepository repository;
     public List<Competition> listAll(String keyword){

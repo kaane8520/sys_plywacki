@@ -9,8 +9,8 @@ import java.util.List;
 
 public interface PlayerSearchService extends JpaRepository<Player, Long> {
 
-    @Query("SELECT p FROM Player p WHERE p.username LIKE %?1$")
-    public List<Player> search (String keyword);
-
-    List<Player> listAll(String keyword);
+//    @Query("SELECT p FROM Player p WHERE p.username LIKE %?1$")
+//    public List<Player> search (String keyword);
+//
+//    List<Player> listAll(String keyword);
 }
