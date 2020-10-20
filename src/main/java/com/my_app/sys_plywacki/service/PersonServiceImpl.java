@@ -6,7 +6,6 @@ import com.my_app.sys_plywacki.repository.RoleRepository;
 import com.my_app.sys_plywacki.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -34,8 +33,8 @@ public class PersonServiceImpl implements PersonService {
 	}
 
 	@Override
-	public Person findByUsername(String email) {
-		return personRepository.findByUsername(email);
+	public Person findByUsername(String username) {
+		return personRepository.findByUsername(username);
 	}
 
 	@Override

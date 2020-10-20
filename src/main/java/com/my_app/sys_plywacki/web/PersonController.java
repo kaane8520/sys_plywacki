@@ -103,28 +103,28 @@ public class PersonController {
     }
     @PostMapping("/edit")
     public String edit(@ModelAttribute Role role, Model model, BindingResult bindingResult) {
-    	System.out.println("Jestem w PostMapping /edit");
+        System.out.println("Jestem w PostMapping /edit");
         if (bindingResult.hasErrors()) {
             return "edit";
         }
-        
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        
-        System.out.println("Twój username: "+auth.getName().toString());
-        
+
+        System.out.println("Twój username: " + auth.getName().toString());
+
         System.out.println("Tworze obiekt person");
         Person p = personService.findByUsername(auth.getName());
-        
-        System.out.println("Twoja rola to (role.getName()): "+role.getName());
-        
+
+        System.out.println("Twoja rola to (role.getName()): " + role.getName());
+
         personService.add_role(p, role);
-        
-        System.out.println("Twoja rola to (person.getRoles()): "+Arrays.toString(p.getRoles().toArray()));
-        
+
+        System.out.println("Twoja rola to (person.getRoles()): " + Arrays.toString(p.getRoles().toArray()));
+
         Collection r = personService.getAuthorities(role);
         System.out.println(Arrays.toString(r.toArray()));
 
-    	//System.out.println("Your role is: "+p.getRoles());
+        //System.out.println("Your role is: "+p.getRoles());
 
         return "redirect:/welcome";
     }
@@ -142,7 +142,7 @@ public class PersonController {
 
 
 
-
+/*
     @GetMapping("clubRegistration")
     public String clubRegistration(Model model){
         model.addAttribute("clubForm", new Club());
@@ -207,10 +207,11 @@ public class PersonController {
     }
 
     @RequestMapping("/searchCompetition")
-    public String searchCompetition(Model model, @Param("keyword") String keyword){
+      public String searchCompetition(Model model, @Param("keyword") String keyword){
         List<Competition> competitionList = competitionService.listAll(keyword);
         model.addAttribute("competitionList", competitionList);
         model.addAttribute("keyword", keyword);
         return "competitionSearchService";
-    }
+    }*/
 }
+

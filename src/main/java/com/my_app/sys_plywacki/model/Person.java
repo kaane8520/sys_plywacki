@@ -8,17 +8,22 @@ import java.util.Set;
 public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_person")
     private Long id_person;
 
+    @Column(name = "username")
     private String username;
 
+    @Column(name = "password")
     private String password;
 
 
     @Transient
+    @Column(name = "passwordConfirm")
     private String passwordConfirm;
 
     @ManyToMany
+    @Column(name = "roles")
     private Set<Role> roles;
 
     public Long getId() {
