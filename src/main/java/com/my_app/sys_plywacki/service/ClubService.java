@@ -12,10 +12,10 @@ import java.util.List;
 
 public interface ClubService extends JpaRepository<Club, Long> {
 
-//    @Query("SELECT c FROM Club c WHERE c.club_name LIKE %?1%")
-//    public List<Club> search (String keyword);
+//   @Query("SELECT c FROM Club c WHERE c.clubName LIKE %?1%")
+    public List<Club> findByClubName(String keyword);
 
-//    List<Club> listAll(String keyword);
-//
-//    List<Club> listAll();
+//    List<Club> findAll(String keyword);
+
+//    List<Club> findAll();
 }

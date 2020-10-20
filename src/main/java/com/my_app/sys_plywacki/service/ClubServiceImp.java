@@ -13,9 +13,9 @@ import java.util.List;
 public class ClubServiceImp {
     @Autowired
     private ClubRepository repository;
-//    public List<Club> listAll(String keyword){
+//    public List<Club> findAll(String keyword){
 //        if(keyword != null){
-//            return repository.search(keyword);
+//            return repository.findByClubName(keyword);
 //        }
 //        return repository.findAll();
 //    }

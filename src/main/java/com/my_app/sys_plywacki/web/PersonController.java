@@ -142,7 +142,7 @@ public class PersonController {
 
 
 
-/*
+
     @GetMapping("clubRegistration")
     public String clubRegistration(Model model){
         model.addAttribute("clubForm", new Club());
@@ -157,6 +157,14 @@ public class PersonController {
         return "clubRegistration";
     }
 
+//    @RequestMapping("/searchClubs")
+//    public String findByClubName(Model model, @Param("keyword") String keyword){
+//        List<Club> clubList = clubService.findAll(keyword);
+//        model.addAttribute("clubList", clubList);
+//        model.addAttribute("keyword", keyword);
+//        return "clubSearchService";
+//    }
+/*
     @RequestMapping("/clubRegistration")
     public String viewClubPage(Model model){
         List<Club> clubList = clubService.listAll();
@@ -170,13 +178,7 @@ public class PersonController {
         return "clubRegistration";
     }
 
-    @RequestMapping("/searchClubs")
-    public String searchClubs(Model model, @Param("keyword") String keyword){
-        List<Club> clubList = clubService.listAll(keyword);
-        model.addAttribute("clubList", clubList);
-        model.addAttribute("keyword", keyword);
-        return "clubSearchService";
-    }
+
 
 
     @GetMapping("registrationCompetitions")
