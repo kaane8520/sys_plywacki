@@ -13,12 +13,12 @@ import java.util.List;
 public class ClubServiceImp {
     @Autowired
     private ClubRepository repository;
-    public List<Club> listAll(String keyword){
-        if(keyword != null){
-            return repository.search(keyword);
-        }
-        return repository.findAll();
-    }
+//    public List<Club> listAll(String keyword){
+//        if(keyword != null){
+//            return repository.search(keyword);
+//        }
+//        return repository.findAll();
+//    }
     public void save (Club club){
         repository.save(club);
     }
