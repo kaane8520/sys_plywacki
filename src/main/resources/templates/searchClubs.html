@@ -12,6 +12,29 @@
     <form class="form-signin" method="POST" >
         <h2 class="form-heading">Wyszukaj klub</h2>
 
+        <div align="center">
+            <h1>Club List</h1>
+            <a href="/registrationClub">Create New Club</a>
+            <br/><br/>
+            <table border="1" cellpadding="10">
+                <thead>
+                <tr>
+                    <th>Club ID</th>
+                    <th>Club name</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="club : ${listClubs}">
+                    <td th:text="${club.id_club}">Product ID</td>
+                    <td th:text="${club.club_name}">Name</td>
+
+
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
         <div class="form-group">
             <span th:text="${message}"></span>
             <input name="clubname" type="text" class="form-control" placeholder="Wpisz nazwę klubu"

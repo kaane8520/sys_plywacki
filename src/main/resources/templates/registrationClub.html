@@ -8,8 +8,17 @@
     </head>
     <body>
         <div class="container">
-            <form method="POST" class="form-signin" th:action="@{/registrationClub}">
+            <form method="POST" class="form-signin" th:action="@{/save}">
+                <table border="0" cellpadding="10">
+                    <tr>
+                        <td>Club Name:</td>
+                        <td><input type="text" th:field="*{name}" /></td>
+                    </tr>
 
+                    <tr>
+                        <td colspan="2"><button type="submit">Save</button> </td>
+                    </tr>
+                </table>
             </form>
         </div>
 

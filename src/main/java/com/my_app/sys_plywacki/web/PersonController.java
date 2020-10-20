@@ -34,10 +34,12 @@ public class PersonController {
     private PlayerSearchService playerSearchService;
 
     @Autowired
-    private ClubSearchService clubSearchService;
+    private ClubService clubService;
 
     @Autowired
     private CompetitionSearchService competitionSearchService;
+
+
 
     @GetMapping("/registration")
     public String registration(Model model) {
@@ -135,13 +137,7 @@ public class PersonController {
         return "playerSearchService";
     }
 
-    @RequestMapping("/searchClubs")
-    public String searchClubs(Model model, @Param("keyword") String keyword){
-        List<Club> clubList = clubSearchService.listAll(keyword);
-        model.addAttribute("clubList", clubList);
-        model.addAttribute("keyword", keyword);
-        return "clubSearchService";
-    }
+
 
     @RequestMapping("/searchCompetitions")
     public String searchCompetitions(Model model, @Param("keyword") String keyword){
@@ -149,6 +145,32 @@ public class PersonController {
         model.addAttribute("competitionList", competitionList);
         model.addAttribute("keyword", keyword);
         return "competitionSearchService";
+    }
+
+    @RequestMapping("/")
+    public String viewClubPage(Model model){
+        List<Club> clubList = clubService.listAll();
+        model.addAttribute("clubList", clubList);
+        return "registrationClub";
+    }
+    @RequestMapping("/registrationClub")
+    public String showNewClubPage(Model model){
+        Club club = new Club();
+        model.addAttribute("Club", club);
+        return "registrationClub";
+    }
+
+    @RequestMapping("/searchClubs")
+    public String searchClubs(Model model, @Param("keyword") String keyword){
+        List<Club> clubList = clubService.listAll(keyword);
+        model.addAttribute("clubList", clubList);
+        model.addAttribute("keyword", keyword);
+        return "clubSearchService";
+    }
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    public String saveClub(Club club){
+        clubService.save(club);
+        return "redirected:/";
     }
 
 }

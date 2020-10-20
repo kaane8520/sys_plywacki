@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface CompetitionSearchService extends JpaRepository<Competition, Long> {
 
-    @Query("SELECT p FROM Competiton p WHERE p.competition_name LIKE %?1$")
+    @Query("SELECT c FROM Competiton c WHERE c.competition_name LIKE %?1$")
     public List<Competition> search (String keyword);
 
     List<Competition> listAll(String keyword);
