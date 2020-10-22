@@ -4,22 +4,37 @@
     <meta charset="utf-8">
     <title>Create an account</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link href="/css/main.css" rel="stylesheet">
 </head>
 <body>
-  <div class="container">
-    <div sec:authorize="isAuthenticated()">
-        <form id="logoutForm" method="POST" th:action="@{/logout}">
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-        </form>
-
-        <h2>Welcome <span sec:authentication="name"></span> | <a onclick="document.forms['logoutForm'].submit()">Logout</a></h2>
-    
-      <h5>Twoja rola to: <span sec:authentication="principal.authorities"></span></h5> 
-    <form th:action="@{/redirectToEditPage}">
-        <input type="submit" value="Edytuj swoje konto"/>
-    </form>
+    <div class="navbar">
+        <div sec:authorize="isAuthenticated()">
+            <form id="logoutForm" method="POST" th:action="@{/logout}">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+            </form>
+            <a onclick="document.forms['logoutForm'].submit()">Logout</a>
+        </div>
     </div>
-  </div>
+    <div class="container">
+
+        <div sec:authorize="isAuthenticated()">
+    <!--        <form id="logoutForm" method="POST" th:action="@{/logout}">-->
+    <!--            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
+    <!--        </form>-->
+
+            <h2>Welcome <span sec:authentication="name"></span> | <a onclick="document.forms['logoutForm'].submit()">Logout</a></h2>
+
+          <h5>Twoja rola to: <div sec:authentication="principal.authorities"></div></h5>
+            <span sec:authentication="name">username</span>
+        <form th:action="@{/redirectToEditPage}">
+            <input type="submit" value="Edytuj swoje konto"/>
+        </form>
+            <form th:action="@{/redirectToRegClub}">
+                <input type="submit" value="dodaj klub"/>
+            </form>
+
+        </div>
+    </div>
 
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
+@RequestMapping("/")
 public class PersonController {
     @Autowired
     private PersonService personService;
@@ -141,21 +142,41 @@ public class PersonController {
 //
 
 
+    @RequestMapping(value = "/redirectToRegClub", method = RequestMethod.GET)
+    public String redirectToRegClub() {
+        System.out.println("Redirecting Result To The Final Page");
+        return "redirect:registrationClub";
+    }
 
-
-    @GetMapping("clubRegistration")
+    @GetMapping("/registrationClub")
     public String clubRegistration(Model model){
+//        if(securityService.isAuthenticated()){
+//            return"redirect:/welcome";
+//        }
+        System.out.println("jestem w getmapping");
         model.addAttribute("clubForm", new Club());
 
-        return "clubRegistration";
+        return "registrationClub";
     }
+//
+//    @PostMapping("/registrationClub")
+//    public String clubRegistration(@ModelAttribute("clubForm") Club clubForm){
+//
+//
+//        System.out.println("Jestem w PostMapping /clubRegistration");
+//
+//        clubService.save(clubForm);
+//
+//        return "redirect:/welcome";
+//    }
 
-    @PostMapping("clubRegistration")
-    public String clubRegistration(@ModelAttribute("clubForm") Club clubForm){
-        clubService.save(clubForm);
 
-        return "clubRegistration";
-    }
+//    @RequestMapping("/searchClubs")
+//    public String viewClubPage(Model model){
+//        List<Club> clubList = clubService.findAll();
+//        model.addAttribute("clubList", clubList);
+//        return "/searchClubs";
+//    }
 
 //    @RequestMapping("/searchClubs")
 //    public String findByClubName(Model model, @Param("keyword") String keyword){
@@ -165,12 +186,7 @@ public class PersonController {
 //        return "clubSearchService";
 //    }
 /*
-    @RequestMapping("/clubRegistration")
-    public String viewClubPage(Model model){
-        List<Club> clubList = clubService.listAll();
-        model.addAttribute("clubList", clubList);
-        return "clubRegistration";
-    }
+
     @RequestMapping("/")
     public String showNewClubPage(Model model){
         Club club = new Club();

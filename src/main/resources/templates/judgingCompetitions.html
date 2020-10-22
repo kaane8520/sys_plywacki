@@ -1,12 +1,20 @@
 <!DOCTYPE html>
-<html lang="pl-PL" xmlns:th="http://www.thymeleaf.org">
+<html lang="pl-PL" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
     <head>
         <meta charset="UTF-8">
         <title>Formularz aplikacji do sędziowania na zawodach</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-        <link href="/css/common.css" rel="stylesheet">
+        <link href="/css/mainn.css" rel="stylesheet">
     </head>
     <body>
+        <div class="navbar">
+            <div sec:authorize="isAuthenticated()">
+                <form id="logoutForm" method="POST" th:action="@{/logout}">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                </form>
+                <a onclick="document.forms['logoutForm'].submit()">Logout</a>
+            </div>
+        </div>
         <div class="container">
             <form method="POST" class="form-signin" th:action="@{/registrationCompetitions}">
 

@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface ClubRepository extends JpaRepository<Club, Long>{
     List<Club> findByClubName(String keyword);
-//    List<Club> findByClubName(String clubName);
+
 }
