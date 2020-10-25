@@ -1,19 +1,26 @@
 package com.my_app.sys_plywacki;
 
-import org.apache.catalina.Server;
+import org.apache.catalina.LifecycleException;
+
+import org.hsqldb.Server;
 import org.hsqldb.persist.HsqlProperties;
+
+
 import org.hsqldb.server.ServerAcl;
+
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.SmartLifecycle;
 import org.springframework.context.annotation.Configuration;
 
 import java.io.IOException;
 import java.util.Properties;
-import java.util.logging.Logger;
+
+
 
 @Configuration
 public class HyperSqlDbServer implements SmartLifecycle {
-    private final Logger logger = (Logger) LoggerFactory.getLogger(HyperSqlDbServer.class);
+    private final Logger logger = LoggerFactory.getLogger(HyperSqlDbServer.class);
     private HsqlProperties properties;
     private Server server;
     private boolean running = false;
