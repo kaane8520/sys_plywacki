@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pl-PL" xmlns:th="http://www.thymeleaf.org">
+<html lang="pl-PL" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="utf-8">
     <title>Wyszukaj zawodnika</title>
@@ -10,7 +10,15 @@
 <body>
 <div class="navbar">
     <span>To jest navbar</span>
-    <a onclick="document.forms['logoutForm'].submit()">Logout</a>
+    <div sec:authorize="isAuthenticated()">
+        <form id="logoutForm" method="POST" th:action="@{/logout}">
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        </form>
+        <a onclick="document.forms['logoutForm'].submit()">Logout</a>
+    </div>
+    <form th:action="@{/redirectToSearchClubPage}">
+        <input class="nav-items" type="submit" value="wyszukaj klub"/>
+    </form>
 </div>
 <div class="container">
 <!--    <form th:action="@{/searchPlayers}">-->

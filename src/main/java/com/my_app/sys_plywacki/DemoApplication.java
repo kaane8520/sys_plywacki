@@ -8,12 +8,18 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 @SpringBootApplication
 @ComponentScan(basePackages= {"com.my_app"})
 
 public class DemoApplication {
+
+	public DemoApplication() throws SQLException {
+	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
@@ -37,5 +43,6 @@ public class DemoApplication {
 
 		context.close();
 	}
+	Connection conn = DriverManager.getConnection("jdbc:hsqldb:file:mydb", "sa", "");
 
 }

@@ -40,6 +40,8 @@ public class PersonController {
     @Autowired
     private CompetitionService competitionService;
 
+    private List <Club> clubs;
+
 
 
     @GetMapping("/registration")
@@ -142,25 +144,26 @@ public class PersonController {
 //
 
 
-    @RequestMapping(value = "/redirectToRegClub", method = RequestMethod.GET)
-    public String redirectToRegClub() {
-        System.out.println("Redirecting Result To The Final Page");
-        return "redirect:registrationClub";
-    }
+//    @RequestMapping(value = "/redirectToRegClub", method = RequestMethod.GET)
+//    public String redirectToRegClub() {
+//        System.out.println("Redirecting Result To The Final Page");
+//        return "redirect:registrationClub";
+//    }
 
     @GetMapping("/registrationClub")
-    public String clubRegistration(Model model){
+    public String clubReg(Model model){
 //        if(securityService.isAuthenticated()){
 //            return"redirect:/welcome";
 //        }
-        System.out.println("jestem w getmapping");
-        model.addAttribute("clubForm", new Club());
 
-        return "registrationClub";
+        List<Club> clubList = clubService.findAll();
+        model.addAttribute("clubForm", clubList);
+
+        return "/registrationClub";
     }
-//
+
 //    @PostMapping("/registrationClub")
-//    public String clubRegistration(@ModelAttribute("clubForm") Club clubForm){
+//    public String clubReg(@ModelAttribute("clubForm") Club clubForm){
 //
 //
 //        System.out.println("Jestem w PostMapping /clubRegistration");
@@ -171,20 +174,18 @@ public class PersonController {
 //    }
 
 
-//    @RequestMapping("/searchClubs")
-//    public String viewClubPage(Model model){
-//        List<Club> clubList = clubService.findAll();
-//        model.addAttribute("clubList", clubList);
-//        return "/searchClubs";
-//    }
+    @GetMapping("/searchClubs")
+    public String viewClubPage(Model model){
+        List<Club> clubList = clubService.findAll();
+        model.addAttribute("clubList", clubList);
+        return "/searchClubs";
+    }
 
-//    @RequestMapping("/searchClubs")
-//    public String findByClubName(Model model, @Param("keyword") String keyword){
-//        List<Club> clubList = clubService.findAll(keyword);
-//        model.addAttribute("clubList", clubList);
-//        model.addAttribute("keyword", keyword);
-//        return "clubSearchService";
-//    }
+    @RequestMapping(value = "/redirectToSearchClubPage", method = RequestMethod.GET)
+    public String redirectToSearchClubPage() {
+        System.out.println("Redirecting Result To The Final Page");
+        return "redirect:searchClubs";
+    }
 /*
 
     @RequestMapping("/")
