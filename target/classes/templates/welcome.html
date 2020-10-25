@@ -14,6 +14,10 @@
             </form>
             <a onclick="document.forms['logoutForm'].submit()">Logout</a>
         </div>
+
+        <form th:action="@{/redirectToSearchClubPage}">
+            <input class="nav-items" type="submit" value="wyszukaj klub"/>
+        </form>
     </div>
     <div class="container">
 
@@ -26,11 +30,14 @@
 
           <h5>Twoja rola to: <div sec:authentication="principal.authorities"></div></h5>
             <span sec:authentication="name">username</span>
-        <form th:action="@{/redirectToEditPage}">
-            <input type="submit" value="Edytuj swoje konto"/>
-        </form>
+            <form th:action="@{/redirectToEditPage}">
+                <input type="submit" value="Edytuj swoje konto"/>
+            </form>
             <form th:action="@{/redirectToRegClub}">
                 <input type="submit" value="dodaj klub"/>
+            </form>
+            <form th:action="@{/redirectToSearchClubPage}">
+                <input type="submit" value="wyszukaj klub"/>
             </form>
 
         </div>

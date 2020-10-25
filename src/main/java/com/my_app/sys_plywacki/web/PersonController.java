@@ -186,6 +186,12 @@ public class PersonController {
         System.out.println("Redirecting Result To The Final Page");
         return "redirect:searchClubs";
     }
+
+    @RequestMapping(value = "/redirectToSearchClubPage", method = RequestMethod.GET)
+    public String redirectToSearchCompetitionPage() {
+        System.out.println("Redirecting Result To The Final Page");
+        return "redirect:searchClubs";
+    }
 /*
 
     @RequestMapping("/")
