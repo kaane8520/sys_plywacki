@@ -1,17 +1,39 @@
 body {
-    padding-top: 40px;
-    padding-bottom: 40px;
-    background-color: #eee;
+    padding-bottom: 5%;
+    background-color: #505291;
 }
 
 .form-signin {
-    max-width: 330px;
+    margin-top: 10%;
     padding: 15px;
     margin: 0 auto;
 }
 
+.container {
+    padding-top: 5%;
+    width: 80%;
+    background: #ECECEC;
+    border: 1px solid white;
+    box-shadow: 0 5px 5px 5px;
+    padding: 5%;
+}
+
+.navbar{
+    color: white;
+    text-transform: uppercase;
+    font-size: 1em;
+    /*position: absolute;*/
+    width: 100%;
+    height: 10%;
+    background: #535353;
+    margin: 0;
+    padding: 2%;
+    box-shadow: 0 5px 5px 5px black;
+}
+
 .form-signin .form-signin-heading,
 .form-signin .checkbox {
+    margin-top: 5%;
     margin-bottom: 10px;
 }
 
