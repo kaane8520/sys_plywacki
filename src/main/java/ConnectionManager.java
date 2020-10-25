@@ -3,7 +3,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConnectionManager {
-    private static String url = "jdbc:hsqldb:mem:mydb";
+    private static String url = "jdbc:hsqldb:hsql://localhost/mydb";
     private static String driverName = "org.hsqldb.jdbc.JDBCDriver";
     private static String username = "SA";
     private static String password = "";
