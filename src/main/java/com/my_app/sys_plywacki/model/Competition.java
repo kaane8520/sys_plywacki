@@ -10,9 +10,9 @@ import java.time.LocalDate;
 public class Competition {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_competitions;
-    private String competition_name;
-    private LocalDate competition_date;
+    private Long idCompetitions;
+    private String competitionName;
+    private LocalDate competitionDate;
 
 
     public void search(String keyword){}

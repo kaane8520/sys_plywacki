@@ -32,6 +32,7 @@ public class HyperSqlDbServer implements SmartLifecycle {
         props.setProperty("server.remote_open", "true");
         props.setProperty("server.trace", "true");
         props.setProperty("hsqldb.reconfig_logging", "false");
+        props.setProperty("server.port", "9137");
         properties = new HsqlProperties(props);
     }
 

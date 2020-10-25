@@ -14,7 +14,14 @@
       <form th:action="@{/redirectToSearchClubPage}">
           <input class="nav-items" type="submit" value="wyszukaj klub"/>
       </form>
+      <form th:action="@{/redirectToSearchCompetitionsPage}">
+          <input class="nav-items" type="submit" value="wyszukaj zawody"/>
+      </form>
+      <form th:action="@{/redirectToSearchPlayersPage}">
+          <input class="nav-items" type="submit" value="wyszukaj zawodników"/>
+      </form>
   </div>
+
     <div class="container">
 
         <form method="POST" class="form-signin" th:object="${personForm}" th:action="@{/registration}">

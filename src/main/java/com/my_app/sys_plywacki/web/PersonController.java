@@ -187,10 +187,31 @@ public class PersonController {
         return "redirect:searchClubs";
     }
 
-    @RequestMapping(value = "/redirectToSearchClubPage", method = RequestMethod.GET)
-    public String redirectToSearchCompetitionPage() {
+    @GetMapping("/searchComptetion")
+    public String viewComptetionPage(Model model){
+        List<Competition> competitionList = competitionService.findAll();
+        model.addAttribute("competitionList", competitionList);
+        return "/searchComptetion";
+    }
+
+    @RequestMapping(value = "/redirectToSearchCompetitionsPage", method = RequestMethod.GET)
+    public String redirectToSearchCompetitionsPage() {
         System.out.println("Redirecting Result To The Final Page");
-        return "redirect:searchClubs";
+        return "redirect:searchCompetitions";
+    }
+
+    @GetMapping("/searchPlayers")
+    public String viewPlayersPage(Model model){
+        List<Player> playerList = playerService.findAll();
+        model.addAttribute("playerList", playerList);
+        return "/searchPlayers";
+    }
+
+
+    @RequestMapping(value = "/redirectToSearchPlayersPage", method = RequestMethod.GET)
+    public String redirectToSearchPlayersPage() {
+        System.out.println("Redirecting Result To The Final Page");
+        return "redirect:searchPlayers";
     }
 /*
 

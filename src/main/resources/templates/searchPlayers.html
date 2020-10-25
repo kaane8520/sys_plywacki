@@ -19,7 +19,14 @@
     <form th:action="@{/redirectToSearchClubPage}">
         <input class="nav-items" type="submit" value="wyszukaj klub"/>
     </form>
+    <form th:action="@{/redirectToSearchCompetitionsPage}">
+        <input class="nav-items" type="submit" value="wyszukaj zawody"/>
+    </form>
+    <form th:action="@{/redirectToSearchPlayersPage}">
+        <input class="nav-items" type="submit" value="wyszukaj zawodników"/>
+    </form>
 </div>
+
 <div class="container">
 <!--    <form th:action="@{/searchPlayers}">-->
 <!--        Filter: <input type="text" name="keyword" id="keyword" size="50" th:value="${keyword}" required />-->

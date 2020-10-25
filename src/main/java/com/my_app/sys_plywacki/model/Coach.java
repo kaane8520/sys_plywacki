@@ -5,8 +5,8 @@ import javax.persistence.GenerationType;
 
 public class Coach extends User{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_coach;
-    private Club id_club;
+    private Long idCoach;
+    private Club idClub;
 
 
 }

@@ -9,9 +9,9 @@ import java.time.LocalDate;
 @Entity
 public class Player extends User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_player;
+    private Long idPlayer;
 
-    private LocalDate med_ex_date;
+    private LocalDate medExDate;
 
     public void search(String keyword){}
 }
