@@ -12,12 +12,17 @@
       <driver-ref>hsqldb.remote</driver-ref>
       <synchronize>true</synchronize>
       <imported>true</imported>
-      <configured-by-url>true</configured-by-url>
       <remarks>Hibernate
 
 C:/Users/ihate/Documents/GitHub/test/sys_plywacki/src/main/resources/hibernate.cfg.xml</remarks>
       <jdbc-driver>org.hsqldb.jdbc.JDBCDriver</jdbc-driver>
-      <jdbc-url>jdbc:hsqldb:mem:javaguides</jdbc-url>
+      <jdbc-url>jdbc:hsqldb:hsql://localhost:9137/mydb</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="jdbc:hsqldb:hsql://localhost/mydb" uuid="a8463317-a9ef-48aa-9268-5e36e41faa2e">
+      <driver-ref>hsqldb.local</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.hsqldb.jdbc.JDBCDriver</jdbc-driver>
+      <jdbc-url>jdbc:hsqldb:hsql://localhost/mydb</jdbc-url>
     </data-source>
   </component>
 </project>

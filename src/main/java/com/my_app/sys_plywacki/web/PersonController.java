@@ -50,6 +50,7 @@ public class PersonController {
             return "redirect:/";
         }
 
+
         model.addAttribute("personForm", new Person());
 
         return "registration";
@@ -144,11 +145,7 @@ public class PersonController {
 //
 
 
-//    @RequestMapping(value = "/redirectToRegClub", method = RequestMethod.GET)
-//    public String redirectToRegClub() {
-//        System.out.println("Redirecting Result To The Final Page");
-//        return "redirect:registrationClub";
-//    }
+
 
     @GetMapping("/registrationClub")
     public String clubReg(Model model){
@@ -156,22 +153,26 @@ public class PersonController {
 //            return"redirect:/welcome";
 //        }
 
-        List<Club> clubList = clubService.findAll();
-        model.addAttribute("clubForm", clubList);
+//        List<Club> clubForm = clubService.findAll();
+        model.addAttribute("clubForm", new Club());
 
         return "/registrationClub";
     }
 
-//    @PostMapping("/registrationClub")
-//    public String clubReg(@ModelAttribute("clubForm") Club clubForm){
-//
-//
-//        System.out.println("Jestem w PostMapping /clubRegistration");
-//
-//        clubService.save(clubForm);
-//
-//        return "redirect:/welcome";
-//    }
+    @RequestMapping(value = "/redirectToRegClub", method = RequestMethod.GET)
+    public String redirectToRegClub() {
+        System.out.println("Redirecting Result To The Final Page");
+        return "redirect:registrationClub";
+    }
+
+    @PostMapping("/registrationClub")
+    public String clubReg(@ModelAttribute("clubForm") Club clubForm){
+        System.out.println("Jestem w PostMapping /clubRegistration");
+
+        clubService.save(clubForm);
+
+        return "redirect:/welcome";
+    }
 
 
     @GetMapping("/searchClubs")
@@ -187,11 +188,11 @@ public class PersonController {
         return "redirect:searchClubs";
     }
 
-    @GetMapping("/searchComptetion")
+    @GetMapping("/searchCompetitions")
     public String viewComptetionPage(Model model){
-        List<Competition> competitionList = competitionService.findAll();
-        model.addAttribute("competitionList", competitionList);
-        return "/searchComptetion";
+//        List<Competition> competitionList = competitionService.findAll();
+//        model.addAttribute("competitionList", competitionList);
+        return "/searchCompetitions";
     }
 
     @RequestMapping(value = "/redirectToSearchCompetitionsPage", method = RequestMethod.GET)

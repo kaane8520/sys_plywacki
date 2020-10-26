@@ -1,27 +1,45 @@
 package com.my_app.sys_plywacki.model;
 
+import com.sun.istack.NotNull;
+
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Set;
 
 
 @Entity
 public class Person {
+    @NotNull private BigDecimal price;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_person;
-
+    @Column(nullable = false)
     private String username;
-
+//    @Column
+//    private String firstName;
+//    @Column
+//    private String lastName;
+    @Column(nullable = false)
     private String password;
 
 
     @Transient
-    @Column(name = "passwordConfirm")
+    @Column //(name = "passwordConfirm")
     private String passwordConfirm;
 
     @ManyToMany
-    @Column(name = "roles")
+    @Column //(name = "roles")
     private Set<Role> roles;
+
+
+    public Person(Long id_person, String username, String password, String passwordConfirm) {
+        this.id_person = id_person;
+        this.username = username;
+        this.password = password;
+        this.passwordConfirm = passwordConfirm;
+    }
+
+    public Person() {}
 
     public Long getId() {
         return id_person;
@@ -62,4 +80,6 @@ public class Person {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
+
 }

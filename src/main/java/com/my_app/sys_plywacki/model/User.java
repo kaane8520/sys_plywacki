@@ -8,4 +8,6 @@ public class User extends Person {
 
     @ManyToMany
     private Set<Role> roles;
+
+
 }

@@ -6,6 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.time.LocalDate;
 
+
 @Entity
 public class Player extends User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
