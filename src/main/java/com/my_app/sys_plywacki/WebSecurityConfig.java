@@ -32,7 +32,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/enterResults", "/acceptApplications", "/registrationCompetitions").hasAuthority("organizator")
                 .antMatchers("/judgingCompetitions").hasAuthority("sedzia")
                 .antMatchers("/registrationCompetitorsCoach", "/verificationMedicalExaminations").hasAuthority("trener")
-                .antMatchers("/registrationCompetitiorsPlayer").hasAuthority("zawodnik")
+                .antMatchers("/registrationCompetitiorsPlayer","/test").hasAuthority("zawodnik")
                 .anyRequest().authenticated()
                 .and()
             .formLogin()

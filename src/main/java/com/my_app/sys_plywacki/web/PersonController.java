@@ -1,15 +1,27 @@
 package com.my_app.sys_plywacki.web;
 
 import com.my_app.sys_plywacki.model.*;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import javax.servlet.http.HttpSession;
+import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 
 import com.my_app.sys_plywacki.service.*;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -111,24 +123,21 @@ public class PersonController {
         if (bindingResult.hasErrors()) {
             return "edit";
         }
+                
+        Collection<SimpleGrantedAuthority> oldAuthorities = (Collection<SimpleGrantedAuthority>)SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.getName());
+        List<SimpleGrantedAuthority> updatedAuthorities = new ArrayList<SimpleGrantedAuthority>();
+        updatedAuthorities.add(authority);
+        updatedAuthorities.addAll(oldAuthorities);
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-        System.out.println("Twój username: " + auth.getName().toString());
-
-        System.out.println("Tworze obiekt person");
-        Person p = personService.findByUsername(auth.getName());
-
-        System.out.println("Twoja rola to (role.getName()): " + role.getName());
-
-        personService.add_role(p, role);
-
-        System.out.println("Twoja rola to (person.getRoles()): " + Arrays.toString(p.getRoles().toArray()));
-
-        Collection r = personService.getAuthorities(role);
-        System.out.println(Arrays.toString(r.toArray()));
-
-        //System.out.println("Your role is: "+p.getRoles());
+        SecurityContextHolder.getContext().setAuthentication(
+                   new UsernamePasswordAuthenticationToken(
+                           SecurityContextHolder.getContext().getAuthentication().getPrincipal(),
+                           SecurityContextHolder.getContext().getAuthentication().getCredentials(),
+                           updatedAuthorities)
+        );
+        System.out.println("Authorities updates");
+        System.out.println(updatedAuthorities);
 
         return "redirect:/welcome";
     }
@@ -260,5 +269,15 @@ public class PersonController {
         model.addAttribute("keyword", keyword);
         return "competitionSearchService";
     }*/
+    
+    @GetMapping("/test")
+    public String test(Model model) {
+        return "test";
+    }
+
+    @PostMapping("/test")
+    public String test() {
+        return "redirect:/welcome";
+    }
 }
 
