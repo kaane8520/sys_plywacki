@@ -138,7 +138,9 @@ public class PersonController {
         );
         System.out.println("Authorities updates");
         System.out.println(updatedAuthorities);
-
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Person p = personService.findByUsername(auth.getName());
+        personService.add_role(p, role);
         return "redirect:/welcome";
     }
 
