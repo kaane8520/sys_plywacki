@@ -88,6 +88,8 @@ public class PersonController {
         if (securityService.isAuthenticated()) {
             return "redirect:/";
         }
+        System.out.println("Not authenticated");
+    	System.out.println("Doin login process...");
 
         if (error != null)
             model.addAttribute("error", "Nazwa użytkownika lub hasło zostało źle wpisane.");
@@ -100,6 +102,29 @@ public class PersonController {
 
     @GetMapping({"/", "/welcome"})
     public String welcome(Model model) {
+       	System.out.println("i am in welcome method");
+    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Person p = personService.findByUsername(auth.getName());
+        
+        Set<Role> roles = p.getRoles();
+        
+        List<SimpleGrantedAuthority> updatedAuthorities = new ArrayList<SimpleGrantedAuthority>();
+        
+        System.out.println("Checking user authorities...");
+        for (Role x : roles) {
+        	System.out.println("Your role is: "+x.getName());
+        	SimpleGrantedAuthority authority = new SimpleGrantedAuthority(x.getName());
+        	updatedAuthorities.add(authority);
+        	
+        }
+        SecurityContextHolder.getContext().setAuthentication(
+                new UsernamePasswordAuthenticationToken(
+                        SecurityContextHolder.getContext().getAuthentication().getPrincipal(),
+                        SecurityContextHolder.getContext().getAuthentication().getCredentials(),
+                        updatedAuthorities)
+        		);
+        System.out.println("Authorities updates during login process");
+        System.out.println(updatedAuthorities);
         return "welcome";
     }
     

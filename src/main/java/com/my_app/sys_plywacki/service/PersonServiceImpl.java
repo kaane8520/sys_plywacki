@@ -33,7 +33,7 @@ public class PersonServiceImpl implements PersonService {
 	@Override
 	public void save(Person person) {
 		person.setPassword(bCryptPasswordEncoder.encode(person.getPassword()));
-		person.setRoles(new HashSet<>(roleRepository.findAll()));
+		person.setRoles(new HashSet<>(roleRepository.findAll()));// ?????
 		personRepository.save(person);
 	}
 
@@ -44,13 +44,18 @@ public class PersonServiceImpl implements PersonService {
 
 	@Override
 	public void add_role(Person person, Role role) {
-		Set<Role> newRoles = person.getRoles();
-		if (newRoles == null) {
-			newRoles = new HashSet<Role>();
-		}
-		newRoles.add(role);
-		person.setRoles(newRoles);
-		roleRepository.save(role);
+		//Set<Role> newRoles = person.getRoles();
+		//if (newRoles == null) {
+		Set <Role> newRole = new HashSet<Role>();
+		//}
+		newRole.add(role);
+		System.out.println("Person roles: ");
+        for (Role x : newRole) {
+            System.out.println(x.getName());
+        }
+		person.setRoles(newRole);
+		//szukam id_roli
+		roleRepository.save(role); //takie zapisywanie powinno się odbywać przy starcie aplikacji
 	}
 
 	@Override
