@@ -3,9 +3,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConnectionManager {
-    private static String url = "jdbc:hsqldb:hsql://localhost/mydb";
-    private static String driverName = "org.hsqldb.jdbc.JDBCDriver";
-    private static String username = "SA";
+    private static String url = "jdbc:mysql://localhost/mydb";
+    private static String driverName = "com.mysql.jdbc.Driver";
+    private static String username = "sa";
     private static String password = "";
     private static Connection con;
     private static String urlstring;
