@@ -24,17 +24,17 @@ public class DemoApplication {
 
 	public static void main(String[] args) throws IOException, ServerAcl.AclFormatException {
 		SpringApplication.run(DemoApplication.class, args);
-		HsqlProperties p = new HsqlProperties();
-		p.setProperty("server.database.0","file:./hsqldb/mydb");
-		p.setProperty("server.dbname.0","mydb");
-		// set up the rest of properties
-
-		// alternative to the above is
-		Server server = new Server();
-		server.setProperties(p);
-		server.setLogWriter(null); // can use custom writer
-		server.setErrWriter(null); // can use custom writer
-		server.start();
+//		HsqlProperties p = new HsqlProperties();
+//		p.setProperty("server.database.0","file:./hsqldb/mydb");
+//		p.setProperty("server.dbname.0","mydb");
+//		// set up the rest of properties
+//
+//		// alternative to the above is
+//		Server server = new Server();
+//		server.setProperties(p);
+//		server.setLogWriter(null); // can use custom writer
+//		server.setErrWriter(null); // can use custom writer
+//		server.start();
 
 	}
 //	public DemoApplication() throws SQLException {

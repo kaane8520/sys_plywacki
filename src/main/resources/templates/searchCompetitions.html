@@ -10,12 +10,10 @@
 <body>
 <div class="navbar">
     <span>To jest navbar</span>
-    <div sec:authorize="isAuthenticated()">
-        <form id="logoutForm" method="POST" th:action="@{/logout}">
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-        </form>
-        <a onclick="document.forms['logoutForm'].submit()">Logout</a>
-    </div>
+    <form th:action="@{/redirectToWelcome}">
+        <input class="nav-items" type="submit" value="Strona główna"/>
+    </form>
+
     <form th:action="@{/redirectToSearchClubPage}">
         <input class="nav-items" type="submit" value="wyszukaj klub"/>
     </form>
@@ -25,29 +23,46 @@
     <form th:action="@{/redirectToSearchPlayersPage}">
         <input class="nav-items" type="submit" value="wyszukaj zawodników"/>
     </form>
+    <div sec:authorize="isAuthenticated()">
+        <form th:action="@{/redirectToEditPage}">
+            <input class="nav-items" type="submit" value="Edytuj swoje konto"/>
+        </form>
+    </div>
+    <div sec:authorize="isAuthenticated()">
+        <form id="logoutForm" method="POST" th:action="@{/logout}">
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        </form>
+        <a onclick="document.forms['logoutForm'].submit()">Logout</a>
+    </div>
 </div>
 
 <div class="container">
-<!--    <form class="form-signin" method="POST" >-->
-<!--        <h2 class="form-heading">Wyszukaj zawody</h2>-->
+    <div align="center">
+        <h1>Lista zawodów</h1>
 
-<!--        <div class="form-group">-->
-<!--            <span th:text="${message}"></span>-->
-<!--            <input name="competitionname" type="text" class="form-control" placeholder="Wpisz nazwę zawodów"-->
-<!--                   autofocus="true"/>-->
+        <br/><br/>
+        <table border="1" cellpadding="10">
+            <thead>
+            <tr>
+                <th>ID zawodów</th>
+                <th>Data zawodów</th>
+                <th>Nazwa zawodów</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${competitionList.empty}">
+                <td colspan="3"> Nie ma zawodów </td>
+            </tr>
+            <tr th:each="competition : ${competitionList}">
+                <td th:text="${competition.id_competitions}"></td>
+                <td th:text="${competition.competition_date}"></td>
+                <td th:text="${competition.competition_name}"></td>
 
-<!--            <button class="btn btn-lg btn-primary btn-block" type="submit">Wyszukaj</button>-->
 
-<!--        </div>-->
-<!--    </form>-->
-
-<!--    <form th:action="@{/searchClubs}">-->
-<!--        Wyszukaj zawody:-->
-<!--        <input type="text" class="form-control" name="keyword" id="keyword" size="50" th:value="${keyword}" required />-->
-
-<!--        <button class="btn btn-lg btn-primary btn-block" type="submit">Wyszukaj</button>-->
-
-<!--    </form>-->
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

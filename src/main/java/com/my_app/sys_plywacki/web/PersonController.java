@@ -98,6 +98,11 @@ public class PersonController {
         return "login";
     }
 
+    @RequestMapping(value = "/redirectToWelcome", method = RequestMethod.GET)
+    public String redirectToWelcome() {
+        return "redirect:/";
+    }
+
     @GetMapping({"/", "/welcome"})
     public String welcome(Model model) {
         return "welcome";
@@ -165,6 +170,7 @@ public class PersonController {
 //        }
 
 //        List<Club> clubForm = clubService.findAll();
+
         model.addAttribute("clubForm", new Club());
 
         return "/registrationClub";
@@ -194,15 +200,16 @@ public class PersonController {
     }
 
     @RequestMapping(value = "/redirectToSearchClubPage", method = RequestMethod.GET)
-    public String redirectToSearchClubPage() {
-        System.out.println("Redirecting Result To The Final Page");
+    public String redirectToSearchClubPage(Model model) {
+
         return "redirect:searchClubs";
     }
 
+
     @GetMapping("/searchCompetitions")
     public String viewComptetionPage(Model model){
-//        List<Competition> competitionList = competitionService.findAll();
-//        model.addAttribute("competitionList", competitionList);
+        List<Competition> competitionList = competitionService.findAll();
+        model.addAttribute("competitionList", competitionList);
         return "/searchCompetitions";
     }
 
