@@ -15,4 +15,6 @@ public interface PersonService {
     void add_role(Person person, Role role);
     
     Collection<? extends GrantedAuthority> getAuthorities(Role role);
+    
+    void update_user_role_if_exists();
 }

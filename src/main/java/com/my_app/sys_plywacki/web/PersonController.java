@@ -102,29 +102,7 @@ public class PersonController {
 
     @GetMapping({"/", "/welcome"})
     public String welcome(Model model) {
-       	System.out.println("i am in welcome method");
-    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Person p = personService.findByUsername(auth.getName());
-        
-        Set<Role> roles = p.getRoles();
-        
-        List<SimpleGrantedAuthority> updatedAuthorities = new ArrayList<SimpleGrantedAuthority>();
-        
-        System.out.println("Checking user authorities...");
-        for (Role x : roles) {
-        	System.out.println("Your role is: "+x.getName());
-        	SimpleGrantedAuthority authority = new SimpleGrantedAuthority(x.getName());
-        	updatedAuthorities.add(authority);
-        	
-        }
-        SecurityContextHolder.getContext().setAuthentication(
-                new UsernamePasswordAuthenticationToken(
-                        SecurityContextHolder.getContext().getAuthentication().getPrincipal(),
-                        SecurityContextHolder.getContext().getAuthentication().getCredentials(),
-                        updatedAuthorities)
-        		);
-        System.out.println("Authorities updates during login process");
-        System.out.println(updatedAuthorities);
+    	personService.update_user_role_if_exists();
         return "welcome";
     }
     
@@ -138,6 +116,7 @@ public class PersonController {
     public String edit(Model model) {
     	model.addAttribute("role", new Role());
     	System.out.println("Jestem w GetMapping /edit");
+    	personService.update_user_role_if_exists();
     	//Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     	//System.out.println("Twoj login to: "+auth.getPrincipal().toString());
         return "edit";
