@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface CompetitionRepository extends JpaRepository<Competition, Long>{
 
-//    List<Competition> findByCompetitonName(String keyword);
+   // List<Competition> findByCompetitonName(String keyword);
+    //List<Competition> search(String keyword);
 }

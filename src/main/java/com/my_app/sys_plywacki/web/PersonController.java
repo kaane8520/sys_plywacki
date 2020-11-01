@@ -239,7 +239,7 @@ public class PersonController {
         Club club = new Club();
         model.addAttribute("Club", club);
         return "clubRegistration";
-    }
+    }*/
 
 
 
@@ -255,22 +255,16 @@ public class PersonController {
     public String registrationCompetition(@ModelAttribute("competitionForm") Competition competitionForm){
         competitionService.save(competitionForm);
 
-        return "registrationCompetitions";
+        return "/searchCompetitions";
     }
-
-    @RequestMapping("/registrationCompetitions")
-    public String viewCompetitionPage(Model model){
-        List<Competition> competitionList = competitionService.listAll();
-        model.addAttribute("competitionList", competitionList);
-        return "registrationCompetitions";
-    }
+    
     @RequestMapping("/")
     public String showNewCompetitionPage(Model model){
         Competition competition = new Competition();
         model.addAttribute("Competition", competition);
         return "registrationCompetitions";
     }
-
+/*
     @RequestMapping("/searchCompetition")
       public String searchCompetition(Model model, @Param("keyword") String keyword){
         List<Competition> competitionList = competitionService.listAll(keyword);

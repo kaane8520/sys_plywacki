@@ -39,7 +39,12 @@
 <div class="container">
     <div align="center">
         <h1>Lista zawodów</h1>
-
+        <br/><br/>
+        <div sec:authorize="isAuthenticated()">
+            <form th:action="@{/registrationCompetitions}">
+                <input class="nav-items" type="submit" value="Dodaj zawody"/>
+            </form>
+        </div>
         <br/><br/>
         <table border="1" cellpadding="10">
             <thead>
@@ -54,9 +59,9 @@
                 <td colspan="3"> Nie ma zawodów </td>
             </tr>
             <tr th:each="competition : ${competitionList}">
-                <td th:text="${competition.id_competitions}"></td>
-                <td th:text="${competition.competition_date}"></td>
-                <td th:text="${competition.competition_name}"></td>
+                <td th:text="${competition.idCompetitions}"></td>
+                <td th:text="${competition.competitionDate}"></td>
+                <td th:text="${competition.competitionName}"></td>
 
 
             </tr>
