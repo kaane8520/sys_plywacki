@@ -64,9 +64,11 @@
                 <td th:text="${competition.competitionDate}"></td>
                 <td th:text="${competition.competitionName}"></td>
                 <td>
+                <div sec:authorize="hasAuthority('trener')">
                     <form class="form-signin" th:object="${competitiorsPlayerForm}" th:action="@{/registrationCompetitiorsPlayer}">
-                        <input type="submit" value="Zarejestruj się na zawody"/>
+                        <input type="submit" value="Zarejestruj klub na zawody"/>
                     </form>
+                </div>
                 </td>
 
             </tr>
