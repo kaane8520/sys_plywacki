@@ -29,6 +29,8 @@
 
         <form method="POST" class="form-signin" th:object="${personForm}" th:action="@{/registration}">
             <h2 class="form-signin-heading">Załóż konto</h2>
+
+
             <div class="form-group">
                 <input type="text" th:field="*{username}" class="form-control" placeholder="Wpisz nazwę użytkownika"
                        autofocus="true">

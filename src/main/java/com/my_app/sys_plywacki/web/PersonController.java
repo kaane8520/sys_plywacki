@@ -3,25 +3,14 @@ package com.my_app.sys_plywacki.web;
 import com.my_app.sys_plywacki.model.*;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import javax.servlet.http.HttpSession;
-import org.springframework.web.context.request.ServletRequestAttributes;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 
 import com.my_app.sys_plywacki.service.*;
-import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
-import java.util.HashSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -257,14 +246,30 @@ public class PersonController {
 
         return "/searchCompetitions";
     }
-    
+
     @RequestMapping("/")
     public String showNewCompetitionPage(Model model){
         Competition competition = new Competition();
         model.addAttribute("Competition", competition);
         return "registrationCompetitions";
     }
+
+    @GetMapping("registrationCompetitorsPlayer")
+    public String registrationCompetitiorsPlayer(Model model){
+        model.addAttribute("competitiorsPlayerForm", new Player());
+
+        return "registrationCompetitiorsPlayer";
+    }
+
+    @PostMapping("registrationCompetitorsPlayer")
+    public String registrationCompetitiorsPlayer(@ModelAttribute("competitiorsPlayerForm") Player competitiorsPlayerForm){
+        playerService.save(competitiorsPlayerForm);
+
+        return "/searchCompetitions";
+    }
+
 /*
+
     @RequestMapping("/searchCompetition")
       public String searchCompetition(Model model, @Param("keyword") String keyword){
         List<Competition> competitionList = competitionService.listAll(keyword);

@@ -19,12 +19,12 @@
             <form method="POST" class="form-signin" th:object="${competitionForm}" th:action="@{/registrationCompetitions}">
                 <div class="form-group">
                     <input type="date" th:field="*{competitionDate}" class="form-control" placeholder="Wybierz datę zawodów"
-                           autofocus="true">
+                           autofocus="true" required="required">
                     <span class="has-error" th:if="${#fields.hasErrors('competitionDate')}" th:errors="*{competitionDate}"></span>
                 </div>
 
                 <div class="form-group">
-                    <input type="text" th:field="*{competitionName}" placeholder="Wpisz nazwę zawodów" autofocus="true">
+                    <input type="text" th:field="*{competitionName}" placeholder="Wpisz nazwę zawodów" autofocus="true" required="required">
                     <span class="has-error" th:if="${#fields.hasErrors('competitionName')}" th:errors="*{competitionName}"></span>
                 </div>
 

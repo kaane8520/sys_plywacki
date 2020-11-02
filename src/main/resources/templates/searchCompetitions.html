@@ -42,7 +42,7 @@
         <br/><br/>
         <div sec:authorize="isAuthenticated()">
             <form th:action="@{/registrationCompetitions}">
-                <input class="nav-items" type="submit" value="Dodaj zawody"/>
+                <input type="submit" value="Dodaj zawody"/>
             </form>
         </div>
         <br/><br/>
@@ -62,7 +62,11 @@
                 <td th:text="${competition.idCompetitions}"></td>
                 <td th:text="${competition.competitionDate}"></td>
                 <td th:text="${competition.competitionName}"></td>
-
+                <td>
+                    <form class="form-signin" th:object="${competitiorsPlayerForm}" th:action="@{/registrationCompetitiorsPlayer}">
+                        <input type="submit" value="Zarejestruj się na zawody"/>
+                    </form>
+                </td>
 
             </tr>
             </tbody>

@@ -18,8 +18,6 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 @SpringBootApplication
-@ComponentScan(basePackages= {"com.my_app"})
-
 public class DemoApplication {
 
 	public static void main(String[] args) throws IOException, ServerAcl.AclFormatException {

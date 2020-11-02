@@ -1,23 +1,18 @@
 package com.my_app.sys_plywacki.service;
 
 import com.my_app.sys_plywacki.model.Person;
-import com.my_app.sys_plywacki.model.Role;
 import com.my_app.sys_plywacki.model.User;
 import com.my_app.sys_plywacki.repository.PersonRepository;
-
-import antlr.collections.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
