@@ -9,6 +9,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.jdbc.core.JdbcTemplate;
+import com.my_app.sys_plywacki.repository.RoleRepository;
+import org.springframework.context.annotation.Bean;
+import org.springframework.boot.CommandLineRunner;
+import java.util.List;
+import java.util.Arrays;
 
 import javax.sql.DataSource;
 import java.io.IOException;
@@ -22,19 +27,30 @@ public class DemoApplication {
 
 	public static void main(String[] args) throws IOException, ServerAcl.AclFormatException {
 		SpringApplication.run(DemoApplication.class, args);
-//		HsqlProperties p = new HsqlProperties();
-//		p.setProperty("server.database.0","file:./hsqldb/mydb");
-//		p.setProperty("server.dbname.0","mydb");
-//		// set up the rest of properties
-//
-//		// alternative to the above is
-//		Server server = new Server();
-//		server.setProperties(p);
-//		server.setLogWriter(null); // can use custom writer
-//		server.setErrWriter(null); // can use custom writer
-//		server.start();
 
 	}
+	/*
+    @Bean
+    CommandLineRunner init (RoleRepository roleRepo){
+        return args -> {
+        	if(roleRepo.findAll() == null) { //jesli nie ma nic w tabeli role
+        	//roleRepo.deleteAll();
+	            List<String> role_names = Arrays.asList("zawodnik", "trener","sedzia","organizator");
+	            Long i = 1L;
+	            for(String rn: role_names) {
+	            	Role r = new Role();
+	            	r.setName(rn);
+	            	System.out.println("Role name: "+rn);
+	            	r.setId(i);
+	            	System.out.println("Role id: "+i);
+	            	roleRepo.save(r);
+	            	i=i+1;
+	            }
+        	}
+            //role_names.forEach(role_names -> roleRepo.save(new Role(role_names)));
+        };
+    }
+    */
 //	public DemoApplication() throws SQLException {
 //	}
 

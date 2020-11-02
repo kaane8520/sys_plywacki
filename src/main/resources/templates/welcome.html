@@ -45,7 +45,7 @@
 
             <h2>Welcome <span sec:authentication="name"></span> | <a onclick="document.forms['logoutForm'].submit()">Logout</a></h2>
 
-          <h5>Twoja rola to: <div sec:authentication="principal.authorities"></div></h5>
+          <h5>Twoja rola to: <span sec:authentication="authorities"></span></h5>
             <span sec:authentication="name">username</span>
             <form th:action="@{/redirectToEditPage}">
                 <input type="submit" value="Edytuj swoje konto"/>

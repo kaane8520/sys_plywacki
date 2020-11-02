@@ -9,6 +9,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 
 import java.sql.*;
 import java.util.Collection;
@@ -16,6 +19,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
 import java.util.List;
+import java.util.ArrayList;
 
 @Service
 public class PersonServiceImpl implements PersonService {
@@ -33,7 +37,7 @@ public class PersonServiceImpl implements PersonService {
 	@Override
 	public void save(Person person) {
 		person.setPassword(bCryptPasswordEncoder.encode(person.getPassword()));
-		person.setRoles(new HashSet<>(roleRepository.findAll()));
+		person.setRoles(new HashSet<>(roleRepository.findAll()));// ?????
 		personRepository.save(person);
 	}
 
@@ -44,13 +48,18 @@ public class PersonServiceImpl implements PersonService {
 
 	@Override
 	public void add_role(Person person, Role role) {
-		Set<Role> newRoles = person.getRoles();
-		if (newRoles == null) {
-			newRoles = new HashSet<Role>();
-		}
-		newRoles.add(role);
-		person.setRoles(newRoles);
-		roleRepository.save(role);
+		//Set<Role> newRoles = person.getRoles();
+		//if (newRoles == null) {
+		Set <Role> newRole = new HashSet<Role>();
+		//}
+		newRole.add(role);
+		System.out.println("Person roles: ");
+        for (Role x : newRole) {
+            System.out.println(x.getName());
+        }
+		person.setRoles(newRole);
+		//szukam id_roli
+		roleRepository.save(role); //takie zapisywanie powinno się odbywać przy starcie aplikacji
 	}
 
 	@Override
@@ -60,6 +69,31 @@ public class PersonServiceImpl implements PersonService {
 		authorities.add(new SimpleGrantedAuthority(role.getName()));
 		return authorities;
 	}
-
+	@Override
+	public void update_user_role_if_exists() {
+       	System.out.println("update_user_role_if_exists");
+    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Person p = this.findByUsername(auth.getName());
+        
+        Set<Role> roles = p.getRoles();
+        
+        List<SimpleGrantedAuthority> updatedAuthorities = new ArrayList<SimpleGrantedAuthority>();
+        
+        System.out.println("Checking user authorities...");
+        for (Role x : roles) {
+        	System.out.println("Your role is: "+x.getName());
+        	SimpleGrantedAuthority authority = new SimpleGrantedAuthority(x.getName());
+        	updatedAuthorities.add(authority);
+        	
+        }
+        SecurityContextHolder.getContext().setAuthentication(
+                new UsernamePasswordAuthenticationToken(
+                        SecurityContextHolder.getContext().getAuthentication().getPrincipal(),
+                        SecurityContextHolder.getContext().getAuthentication().getCredentials(),
+                        updatedAuthorities)
+        		);
+        System.out.println("Authorities updates during login process");
+        System.out.println(updatedAuthorities);
+	}
 
 }

@@ -77,6 +77,8 @@ public class PersonController {
         if (securityService.isAuthenticated()) {
             return "redirect:/";
         }
+        System.out.println("Not authenticated");
+    	System.out.println("Doin login process...");
 
         if (error != null)
             model.addAttribute("error", "Nazwa użytkownika lub hasło zostało źle wpisane.");
@@ -94,6 +96,7 @@ public class PersonController {
 
     @GetMapping({"/", "/welcome"})
     public String welcome(Model model) {
+    	personService.update_user_role_if_exists();
         return "welcome";
     }
     
@@ -107,6 +110,7 @@ public class PersonController {
     public String edit(Model model) {
     	model.addAttribute("role", new Role());
     	System.out.println("Jestem w GetMapping /edit");
+    	personService.update_user_role_if_exists();
     	//Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     	//System.out.println("Twoj login to: "+auth.getPrincipal().toString());
         return "edit";
