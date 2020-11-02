@@ -37,7 +37,7 @@ public class PersonServiceImpl implements PersonService {
 	@Override
 	public void save(Person person) {
 		person.setPassword(bCryptPasswordEncoder.encode(person.getPassword()));
-		person.setRoles(new HashSet<>(roleRepository.findAll()));// ?????
+		person.setRoles(new HashSet<>());// ?????
 		personRepository.save(person);
 	}
 
@@ -74,12 +74,14 @@ public class PersonServiceImpl implements PersonService {
        	System.out.println("update_user_role_if_exists");
     	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Person p = this.findByUsername(auth.getName());
+        System.out.println("User name: "+p.getUsername());
         
         Set<Role> roles = p.getRoles();
         
         List<SimpleGrantedAuthority> updatedAuthorities = new ArrayList<SimpleGrantedAuthority>();
         
         System.out.println("Checking user authorities...");
+        
         for (Role x : roles) {
         	System.out.println("Your role is: "+x.getName());
         	SimpleGrantedAuthority authority = new SimpleGrantedAuthority(x.getName());

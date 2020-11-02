@@ -77,8 +77,6 @@ public class PersonController {
         if (securityService.isAuthenticated()) {
             return "redirect:/";
         }
-        System.out.println("Not authenticated");
-    	System.out.println("Doin login process...");
 
         if (error != null)
             model.addAttribute("error", "Nazwa użytkownika lub hasło zostało źle wpisane.");
@@ -235,8 +233,6 @@ public class PersonController {
     }*/
 
 
-
-
     @GetMapping("registrationCompetitions")
     public String registrationCompetition(Model model){
         model.addAttribute("competitionForm", new Competition());
@@ -248,7 +244,7 @@ public class PersonController {
     public String registrationCompetition(@ModelAttribute("competitionForm") Competition competitionForm){
         competitionService.save(competitionForm);
 
-        return "/searchCompetitions";
+        return "redirect:searchCompetitions";
     }
 
     @RequestMapping("/")
