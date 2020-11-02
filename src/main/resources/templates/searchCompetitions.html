@@ -40,7 +40,8 @@
     <div align="center">
         <h1>Lista zawodów</h1>
         <br/><br/>
-        <div sec:authorize="isAuthenticated()">
+        <!-- <div sec:authorize="isAuthenticated()"> -->
+        <div sec:authorize="hasAuthority('organizator')">
             <form th:action="@{/registrationCompetitions}">
                 <input type="submit" value="Dodaj zawody"/>
             </form>
