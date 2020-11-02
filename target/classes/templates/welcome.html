@@ -8,12 +8,10 @@
 </head>
 <body>
     <div class="navbar">
-        <div sec:authorize="isAuthenticated()">
-            <form id="logoutForm" method="POST" th:action="@{/logout}">
-                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-            </form>
-            <a onclick="document.forms['logoutForm'].submit()">Logout</a>
-        </div>
+        <span>To jest navbar</span>
+        <form th:action="@{/redirectToWelcome}">
+            <input class="nav-items" type="submit" value="Strona główna"/>
+        </form>
 
         <form th:action="@{/redirectToSearchClubPage}">
             <input class="nav-items" type="submit" value="wyszukaj klub"/>
@@ -24,6 +22,18 @@
         <form th:action="@{/redirectToSearchPlayersPage}">
             <input class="nav-items" type="submit" value="wyszukaj zawodników"/>
         </form>
+
+        <div sec:authorize="isAuthenticated()">
+            <form th:action="@{/redirectToEditPage}">
+                <input class="nav-items" type="submit" value="Edytuj swoje konto"/>
+            </form>
+        </div>
+        <div sec:authorize="isAuthenticated()">
+            <form id="logoutForm" method="POST" th:action="@{/logout}">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+            </form>
+            <a onclick="document.forms['logoutForm'].submit()">Logout</a>
+        </div>
     </div>
 
     <div class="container">

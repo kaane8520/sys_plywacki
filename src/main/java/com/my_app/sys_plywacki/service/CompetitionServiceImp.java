@@ -12,11 +12,12 @@ import java.util.List;
 public class CompetitionServiceImp {
     @Autowired
     private CompetitionRepository repository;
-//    public List<Competition> listAll(String keyword){
-//        if(keyword != null){
-//            return repository.search(keyword);
-//        }
-//        return repository.findAll();
-//    }
+
+    public List<Competition> listAll(String keyword){
+        //if(keyword != null){
+            //return repository.search(keyword);
+        //}
+        return repository.findAll();
+    }
 
 }

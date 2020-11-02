@@ -1,5 +1,7 @@
 package com.my_app.sys_plywacki.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,10 +14,34 @@ public class Competition {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idCompetitions;
     private String competitionName;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate competitionDate;
 
+    public Long getIdCompetitions() {
+        return idCompetitions;
+    }
+
+    public void setIdCompetitions(Long idCompetitions) {
+        this.idCompetitions = idCompetitions;
+    }
+
+    public String getCompetitionName() {
+        return competitionName;
+    }
+
+    public void setCompetitionName(String competitionName) {
+        this.competitionName = competitionName;
+    }
+
+    public LocalDate getCompetitionDate() {
+        return competitionDate;
+    }
+
+    public void setCompetitionDate(LocalDate competitionDate) {
+        this.competitionDate = competitionDate;
+    }
 
     public void search(String keyword){}
-
 
 }

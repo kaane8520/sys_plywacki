@@ -10,12 +10,10 @@
 <body>
 <div class="navbar">
     <span>To jest navbar</span>
-    <div sec:authorize="isAuthenticated()">
-        <form id="logoutForm" method="POST" th:action="@{/logout}">
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-        </form>
-        <a onclick="document.forms['logoutForm'].submit()">Logout</a>
-    </div>
+    <form th:action="@{/redirectToWelcome}">
+        <input class="nav-items" type="submit" value="Strona główna"/>
+    </form>
+
     <form th:action="@{/redirectToSearchClubPage}">
         <input class="nav-items" type="submit" value="wyszukaj klub"/>
     </form>
@@ -25,15 +23,46 @@
     <form th:action="@{/redirectToSearchPlayersPage}">
         <input class="nav-items" type="submit" value="wyszukaj zawodników"/>
     </form>
+    <div sec:authorize="isAuthenticated()">
+        <form th:action="@{/redirectToEditPage}">
+            <input class="nav-items" type="submit" value="Edytuj swoje konto"/>
+        </form>
+    </div>
+    <div sec:authorize="isAuthenticated()">
+        <form id="logoutForm" method="POST" th:action="@{/logout}">
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        </form>
+        <a onclick="document.forms['logoutForm'].submit()">Logout</a>
+    </div>
 </div>
 
 <div class="container">
-<!--    <form th:action="@{/searchPlayers}">-->
-<!--        Filter: <input type="text" name="keyword" id="keyword" size="50" th:value="${keyword}" required />-->
+    <div align="center">
+        <h1>Lista zawodników</h1>
 
-<!--        <input type="submit" value="Wyszukaj" />-->
+        <br/><br/>
+        <table border="1" cellpadding="10">
+            <thead>
+<!--            <tr>-->
+<!--                <th>ID zawodów</th>-->
+<!--                <th>Data zawodów</th>-->
+<!--                <th>Nazwa zawodów</th>-->
+<!--            </tr>-->
+            </thead>
+            <tbody>
+            <tr th:if="${playerList.empty}">
+                <td colspan="3"> Nie ma zawodników</td>
+            </tr>
+            <tr th:each="player : ${playerList}">
+<!--                <td th:text="${playerList.id_competitions}"></td>-->
+<!--                <td th:text="${playerList.competition_date}"></td>-->
+<!--                <td th:text="${playerList.competition_name}"></td>-->
 
-<!--    </form>-->
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

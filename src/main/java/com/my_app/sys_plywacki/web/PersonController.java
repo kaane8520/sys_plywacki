@@ -100,6 +100,11 @@ public class PersonController {
         return "login";
     }
 
+    @RequestMapping(value = "/redirectToWelcome", method = RequestMethod.GET)
+    public String redirectToWelcome() {
+        return "redirect:/";
+    }
+
     @GetMapping({"/", "/welcome"})
     public String welcome(Model model) {
     	personService.update_user_role_if_exists();
@@ -169,6 +174,7 @@ public class PersonController {
 //        }
 
 //        List<Club> clubForm = clubService.findAll();
+
         model.addAttribute("clubForm", new Club());
 
         return "/registrationClub";
@@ -198,15 +204,16 @@ public class PersonController {
     }
 
     @RequestMapping(value = "/redirectToSearchClubPage", method = RequestMethod.GET)
-    public String redirectToSearchClubPage() {
-        System.out.println("Redirecting Result To The Final Page");
+    public String redirectToSearchClubPage(Model model) {
+
         return "redirect:searchClubs";
     }
 
+
     @GetMapping("/searchCompetitions")
     public String viewComptetionPage(Model model){
-//        List<Competition> competitionList = competitionService.findAll();
-//        model.addAttribute("competitionList", competitionList);
+        List<Competition> competitionList = competitionService.findAll();
+        model.addAttribute("competitionList", competitionList);
         return "/searchCompetitions";
     }
 
@@ -236,7 +243,7 @@ public class PersonController {
         Club club = new Club();
         model.addAttribute("Club", club);
         return "clubRegistration";
-    }
+    }*/
 
 
 
@@ -252,22 +259,16 @@ public class PersonController {
     public String registrationCompetition(@ModelAttribute("competitionForm") Competition competitionForm){
         competitionService.save(competitionForm);
 
-        return "registrationCompetitions";
+        return "/searchCompetitions";
     }
-
-    @RequestMapping("/registrationCompetitions")
-    public String viewCompetitionPage(Model model){
-        List<Competition> competitionList = competitionService.listAll();
-        model.addAttribute("competitionList", competitionList);
-        return "registrationCompetitions";
-    }
+    
     @RequestMapping("/")
     public String showNewCompetitionPage(Model model){
         Competition competition = new Competition();
         model.addAttribute("Competition", competition);
         return "registrationCompetitions";
     }
-
+/*
     @RequestMapping("/searchCompetition")
       public String searchCompetition(Model model, @Param("keyword") String keyword){
         List<Competition> competitionList = competitionService.listAll(keyword);

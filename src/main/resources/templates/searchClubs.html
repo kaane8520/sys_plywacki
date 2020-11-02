@@ -10,12 +10,10 @@
 <body>
     <div class="navbar">
         <span>To jest navbar</span>
-        <div sec:authorize="isAuthenticated()">
-            <form id="logoutForm" method="POST" th:action="@{/logout}">
-                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-            </form>
-            <a onclick="document.forms['logoutForm'].submit()">Logout</a>
-        </div>
+        <form th:action="@{/redirectToWelcome}">
+            <input class="nav-items" type="submit" value="Strona główna"/>
+        </form>
+
         <form th:action="@{/redirectToSearchClubPage}">
             <input class="nav-items" type="submit" value="wyszukaj klub"/>
         </form>
@@ -25,6 +23,17 @@
         <form th:action="@{/redirectToSearchPlayersPage}">
             <input class="nav-items" type="submit" value="wyszukaj zawodników"/>
         </form>
+        <div sec:authorize="isAuthenticated()">
+            <form th:action="@{/redirectToEditPage}">
+                <input class="nav-items" type="submit" value="Edytuj swoje konto"/>
+            </form>
+        </div>
+        <div sec:authorize="isAuthenticated()">
+            <form id="logoutForm" method="POST" th:action="@{/logout}">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+            </form>
+            <a onclick="document.forms['logoutForm'].submit()">Logout</a>
+        </div>
     </div>
 
     <div class="container">
@@ -32,19 +41,21 @@
             <h2 class="form-heading">Wyszukaj klub</h2>
 
             <div align="center">
-                <h1>Club List</h1>
-                <a href="/registrationClub">Create New Club</a>
+                <h1>Lista klubów</h1>
+
                 <br/><br/>
                 <table border="1" cellpadding="10">
                     <thead>
                     <tr>
-                        <th>Club ID</th>
-                        <th>Club name</th>
-
+                        <th>ID klubu</th>
+                        <th>Nazwa klubu</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="club : ${listClubs}">
+                    <tr th:if="${clubList.empty}">
+                        <td colspan="2"> Nie ma klubów </td>
+                    </tr>
+                    <tr th:each="club : ${clubList}">
                         <td th:text="${club.id_club}"></td>
                         <td th:text="${club.club_name}"></td>
 
@@ -56,7 +67,7 @@
 
             <div class="form-group">
                 <span th:text="${message}"></span>
-                <input name="clubname" type="text" class="form-control" placeholder="Wpisz nazwę klubu"
+                <input name="club_name" type="text" class="form-control" placeholder="Wpisz nazwę klubu"
                        autofocus="true"/>
 
                 <button class="btn btn-lg btn-primary btn-block" type="submit">Wyszukaj</button>

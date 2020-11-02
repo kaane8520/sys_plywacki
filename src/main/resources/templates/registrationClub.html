@@ -8,7 +8,9 @@
 </head>
 <body>
     <div class="navbar">
-
+        <form th:action="@{/redirectToWelcome}">
+            <input class="nav-items" type="submit" value="Strona główna"/>
+        </form>
         <form th:action="@{/redirectToSearchClubPage}">
             <input class="nav-items" type="submit" value="wyszukaj klub"/>
         </form>
@@ -18,7 +20,11 @@
         <form th:action="@{/redirectToSearchPlayersPage}">
             <input class="nav-items" type="submit" value="wyszukaj zawodników"/>
         </form>
-
+        <div sec:authorize="isAuthenticated()">
+            <form th:action="@{/redirectToEditPage}">
+                <input class="nav-items" type="submit" value="Edytuj swoje konto"/>
+            </form>
+        </div>
         <div sec:authorize="isAuthenticated()">
             <form id="logoutForm" method="POST" th:action="@{/logout}">
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -30,19 +36,11 @@
     <div class="container">
         <form method="POST" class="form-signin" th:object="${clubForm}" th:action="@{/registrationClub}">
             <div class="form-group">
-                <input type="text"  placeholder="Wpisz nazwę klubu" autofocus="true">
+                <input type="text" th:field="*{club_name}" placeholder="Wpisz nazwę klubu" autofocus="true">
+                <span class="has-error" th:if="${#fields.hasErrors('club_name')}" th:errors="*{club_name}"></span>
             </div>
             <button class="btn btn-lg btn-primary btn-block" type="submit">Zarejestruj klub</button>
-<!--            <table>-->
-<!--                <tr>-->
-<!--                    <td>Club Name:</td>-->
-<!--                    <td><input type="text" th:field="*{name}" /></td>-->
-<!--                </tr>-->
 
-<!--                <tr>-->
-<!--                    <td colspan="2"><button type="submit">Save</button> </td>-->
-<!--                </tr>-->
-<!--            </table>-->
         </form>
     </div>
 </body>
