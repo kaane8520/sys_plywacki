@@ -74,8 +74,8 @@
 
             </div>
         </form>
-        <form th:action="@{/searchClubs}">
-            Filter: <input type="text" name="keyword" id="keyword" size="50" th:value="${keyword}" required />
+        <form th:object="${clubList}" th:action="@{/searchClub}" method="post">
+            Filter: <input type="text" name="keyword" id="keyword" size="50" th:name="club_name" th:value="${search}" required />
 
             <input type="submit" value="Wyszukaj" />
 
