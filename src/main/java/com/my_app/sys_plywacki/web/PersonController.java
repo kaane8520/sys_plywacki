@@ -6,6 +6,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.my_app.sys_plywacki.service.*;
+import com.my_app.sys_plywacki.repository.*;
 import org.springframework.security.core.Authentication;
 
 import java.util.ArrayList;
@@ -40,6 +41,9 @@ public class PersonController {
 
     @Autowired
     private CompetitionService competitionService;
+    
+    @Autowired
+    private PlayerRepository playerRepository;
 
     private List <Club> clubs;
 
@@ -137,8 +141,31 @@ public class PersonController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Person p = personService.findByUsername(auth.getName());
         personService.add_role(p, role);
-        return "redirect:/welcome";
+        if(role.getName().equals("zawodnik")) {
+        	return "editPlayer";
+        }
+        else return "redirect:/welcome";
     }
+    @GetMapping("/editPlayer")
+    public String editPlayer(Model model) {
+    	model.addAttribute("player",new Player());
+    	System.out.println("Jestem w funkcji editPlayer");
+    	return "editPlayer";
+    }
+    @PostMapping("/editPlayer")
+    public String editPlayer(@ModelAttribute Player player, Model model, BindingResult bindingResult) {
+    	//playerRepository.save(player);
+    	return "redirect:/welcome";
+    }
+    // List for "Favorite Exercise" dropdown
+    @ModelAttribute("exerciseList")
+    public List<String> getExerciseList(){
+        List<String> exerciseList = new ArrayList<>();
+        exerciseList.add("Aerobic");
+        exerciseList.add("Anaerobic");
+        exerciseList.add("Flexibility Trng");
+        return exerciseList;
+      }
 
 //    @RequestMapping("/searchPlayers")
 //    public String searchPlayers(Model model, @Param("keyword") String keyword){
@@ -231,6 +258,8 @@ public class PersonController {
         model.addAttribute("Club", club);
         return "clubRegistration";
     }*/
+
+
 
 
     @GetMapping("registrationCompetitions")
