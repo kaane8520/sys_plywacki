@@ -1,6 +1,7 @@
 package com.my_app.sys_plywacki.web;
 
 import com.my_app.sys_plywacki.model.*;
+import com.my_app.sys_plywacki.repository.ClubRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -42,6 +43,8 @@ public class PersonController {
     private CompetitionService competitionService;
 
     private List <Club> clubs;
+
+    private ClubRepository clubRepository;
 
 
 
@@ -194,6 +197,16 @@ public class PersonController {
     public String redirectToSearchClubPage(Model model) {
 
         return "redirect:searchClubs";
+    }
+    @Autowired
+    public void setClubRepository(ClubRepository clubRepository){
+        this.clubRepository = clubRepository;
+    }
+
+    @PostMapping("/searchClub/")
+    public String searchClub(@RequestParam(value = "search", required = true) String club_name, Model model){
+        model.addAttribute("club_name", clubRepository.findClubByClub_name(club_name));
+        return "club_name";
     }
 
 

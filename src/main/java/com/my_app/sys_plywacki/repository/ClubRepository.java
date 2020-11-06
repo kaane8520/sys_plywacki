@@ -9,10 +9,11 @@ import java.util.List;
 
 public interface ClubRepository extends JpaRepository<Club, Long>{
 //    List<Club> findByClubName(String keyword);
+    List<Club> findClubByClub_name(String keyword);
+
 
 //    @Query
-//            ("SELECT * FROM club where club_name = %?1%")
-//    public List<Club> search(String keyword);
+    //    public List<Club> search(String keyword);
 
 
 }
