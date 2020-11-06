@@ -159,11 +159,6 @@ public class PersonController {
 
     @GetMapping("/registrationClub")
     public String clubReg(Model model){
-//        if(securityService.isAuthenticated()){
-//            return"redirect:/welcome";
-//        }
-
-//        List<Club> clubForm = clubService.findAll();
 
         model.addAttribute("clubForm", new Club());
 
@@ -204,9 +199,9 @@ public class PersonController {
     }
 
     @PostMapping("/searchClub/")
-    public String searchClub(@RequestParam(value = "search", required = true) String club_name, Model model){
-        model.addAttribute("club_name", clubRepository.findClubByClub_name(club_name));
-        return "club_name";
+    public String searchClub(@RequestParam(value = "search", required = true) String clubname, Model model){
+        model.addAttribute("clubname", clubRepository.findClubByClubname(clubname));
+        return "clubname";
     }
 
 
