@@ -9,8 +9,9 @@ import java.time.LocalDate;
 import javax.persistence.*;
 
 @Entity
-public class Player extends User {
+public class Player{
 	//@Id dlacego to nie dziala?
+    @Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idPlayer;
 
@@ -34,6 +35,5 @@ public class Player extends User {
     public void setMedExDate(LocalDate medExDate) {
         this.medExDate = medExDate;
     }
-
     public void search(String keyword){}
 }

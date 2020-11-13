@@ -4,14 +4,21 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Column;
+import java.util.Set;
+import javax.persistence.*;
 
 @Entity
 public class Club {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_club;
+    @Column(nullable = false)
     private String club_name;
-
+    
+    @ManyToMany
+    @Column 
+    private Set<Player> players;
 
     @Override
     public String toString() {
@@ -33,7 +40,14 @@ public class Club {
     public void setClub_name(String club_name) {
         this.club_name = club_name;
     }
+    
+    public Set<Player> getPlayers() {
+        return this.players;
+    }
 
+    public void setPlayers(Set<Player> players) {
+        this.players = players;
+    }
 //    List<Club> findAll(String keyword){
 //        return null;
 //    }

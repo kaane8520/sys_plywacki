@@ -144,19 +144,29 @@ public class PersonController {
         if(role.getName().equals("zawodnik")) {
         	return "editPlayer";
         }
-        else return "redirect:/welcome";
+        else return "redirect:welcome";
     }
+    //------------edycja zawodnika, utworzenie nowego obiektu Zawodnik:
+    @RequestMapping(value = "/redirectToEditPlayer", method = RequestMethod.GET)
+    public String redirectToEditPlayer() {
+    	System.out.println("Redirecting Result To Edit Player Page");
+        return "redirect:editPlayer";
+    }
+    
     @GetMapping("/editPlayer")
     public String editPlayer(Model model) {
     	model.addAttribute("player",new Player());
     	System.out.println("Jestem w funkcji editPlayer");
-    	return "editPlayer";
+    	return "/editPlayer";
     }
     @PostMapping("/editPlayer")
     public String editPlayer(@ModelAttribute Player player, Model model, BindingResult bindingResult) {
-    	//playerRepository.save(player);
-    	return "redirect:/welcome";
+    	System.out.println("Data wygasniecia dokumentacji zawodnika: "+player.getMedExDate());
+    	playerRepository.save(player);
+    	//System.out.println("PostMapping /editPlayer");
+    	return "redirect:welcome";
     }
+    
     // List for "Favorite Exercise" dropdown
     @ModelAttribute("exerciseList")
     public List<String> getExerciseList(){

@@ -38,7 +38,7 @@
 
     <div class="container">
 
-        <form method="POST" class="form-signin" th:object="${role}" th:action="@{/edit}">
+        <form method="GET" class="form-signin" th:object="${role}" th:action="@{/redirectToEditPlayer}">
             <h2 class="form-signin-heading">Edytuj konto</h2>
             <div class="form-group">
                 <select th:field="*{name}" class="form-control">
