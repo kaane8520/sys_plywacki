@@ -22,6 +22,11 @@ public class PlayerServiceImpl implements PlayerService{
     private PlayerRepository repository;
     @Autowired
     JdbcTemplate template;
+    
+	@Override
+	public void save(Player player) {
+		repository.save(player);
+	}
 
 
     public List<Player> findAll(){
@@ -32,9 +37,5 @@ public class PlayerServiceImpl implements PlayerService{
             return new ArrayList<Player>();
         }
     }
-	@Override
-	public void save(Player player) {
-		repository.save(player);
-	}
 
 }
