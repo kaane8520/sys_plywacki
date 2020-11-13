@@ -10,7 +10,7 @@ import javax.persistence.*;
 
 @Entity
 public class Player{
-	//@Id dlacego to nie dziala?
+
     @Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idPlayer;

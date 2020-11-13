@@ -142,7 +142,8 @@ public class PersonController {
         Person p = personService.findByUsername(auth.getName());
         personService.add_role(p, role);
         if(role.getName().equals("zawodnik")) {
-        	return "editPlayer";
+        	System.out.println("Twoja rola = "+role.getName());
+        	return "redirect:editPlayer";
         }
         else return "redirect:welcome";
     }
