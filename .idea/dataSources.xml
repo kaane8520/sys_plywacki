@@ -24,5 +24,17 @@ C:/Users/ihate/Documents/GitHub/test/sys_plywacki/src/main/resources/hibernate.c
       <jdbc-driver>org.hsqldb.jdbc.JDBCDriver</jdbc-driver>
       <jdbc-url>jdbc:hsqldb:hsql://localhost/mydb</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="@localhost" uuid="df4a5ba5-0714-494d-9205-d8cfa744d567">
+      <driver-ref>mysql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="mydb2@localhost" uuid="1b43edb0-a063-4473-8c3a-9aee220727f8">
+      <driver-ref>mysql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost/mydb2</jdbc-url>
+    </data-source>
   </component>
 </project>
