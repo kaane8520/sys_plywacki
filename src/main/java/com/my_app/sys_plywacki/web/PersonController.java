@@ -12,6 +12,8 @@ import org.springframework.security.core.Authentication;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -44,6 +46,9 @@ public class PersonController {
     
     @Autowired
     private PlayerRepository playerRepository;
+    
+    @Autowired
+    private ClubRepository clubRepository;
 
     private List <Club> clubs;
 
@@ -160,24 +165,23 @@ public class PersonController {
     	System.out.println("Jestem w funkcji editPlayer");
     	return "/editPlayer";
     }
+    @ModelAttribute("listOfAvailableClubs")
+    public List<Club> editPlayer() {
+    	System.out.println("Jestem w funkcji editPlayer @ModelAttribute");
+    	List<Club> listOfAvailableClubs = clubService.findAll();
+        for (Club x : listOfAvailableClubs) {
+        	System.out.println("Id klubu: "+x.getId_club());
+            System.out.println("Nazwa klubu: "+x.getClub_name());
+        }
+        return listOfAvailableClubs;
+     }
     @PostMapping("/editPlayer")
     public String editPlayer(@ModelAttribute Player player, Model model, BindingResult bindingResult) {
     	System.out.println("Data wygasniecia dokumentacji zawodnika: "+player.getMedExDate());
     	playerRepository.save(player);
-    	//System.out.println("PostMapping /editPlayer");
     	return "redirect:welcome";
     }
     
-    // List for "Favorite Exercise" dropdown
-    @ModelAttribute("exerciseList")
-    public List<String> getExerciseList(){
-        List<String> exerciseList = new ArrayList<>();
-        exerciseList.add("Aerobic");
-        exerciseList.add("Anaerobic");
-        exerciseList.add("Flexibility Trng");
-        return exerciseList;
-      }
-
 //    @RequestMapping("/searchPlayers")
 //    public String searchPlayers(Model model, @Param("keyword") String keyword){
 //        List<Player> playerList = playerSearchService.listAll(keyword);

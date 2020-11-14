@@ -11,7 +11,7 @@
       <div class="navbar">
           <span>To jest navbar</span>
           <form th:action="@{/redirectToWelcome}">
-              <input class="nav-items" type="submit" value="Strona główna"/>
+              <input class="nav-items" type="submit" value="Strona glówna"/>
           </form>
 
           <form th:action="@{/redirectToSearchClubPage}">
@@ -39,12 +39,23 @@
     <div class="container">
 
         <form method="POST" class="form-signin" th:object="${player}" th:action="@{/editPlayer}">
+
             <h2 class="form-signin-heading">Edytuj swój profil (zawodnik)</h2>
             <div class="form-group">
-                <input type="date" th:field=*{medExDate} class="form-control" placeholder="Data ważności Twojej dokumentacji" autofocus="true" required="required">
+                <input type="date" th:field=*{medExDate} class="form-control" placeholder="Data waznosci Twojej dokumentacji" autofocus="true" required="required">
 				<span class="has-error" th:if="${#fields.hasErrors('medExDate')}" th:errors="*{medExDate}"></span>
-				<!--<form:select path="exercise" items="${exerciseList}" multiple="true"/>
-                <input type="file" class="form-control"> -->
+            	<h3>Wybierz klub:</h3>
+		         <!-- <div th:if="${listOfAvailableClubs != null and not #lists.isEmpty(listOfAvailableClubs)}">-->
+		         <select th:field="*{idClub}" class="form-control">
+		         	<option th:each="dropDownItem : ${listOfAvailableClubs}"
+		                                 th:value="${dropDownItem.getId_club()}"
+		                                 th:text="${dropDownItem.getClub_name()}" 
+		                              />
+		         </select>
+		       <!-- </div> -->
+		         <!-- <div th:if="${listOfAvailableClubs == null or lists.isEmpty(listOfAvailableClubs)}">
+		            <div>"Brak klubów do wybrania"</div>
+		        </div> -->
             </div>
             <button id="add-player" button class="btn btn-lg btn-primary btn-block" type="submit">Potwierdz</button>
         </form>

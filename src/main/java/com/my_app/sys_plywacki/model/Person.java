@@ -30,7 +30,7 @@ public class Person {
     @ManyToMany
     @Column //(name = "roles")
     private Set<Role> roles;
-
+    
 
     public Person(Long id_person, String username, String password, String passwordConfirm) {
         this.id_person = id_person;

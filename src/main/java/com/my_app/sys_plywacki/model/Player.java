@@ -18,10 +18,16 @@ public class Player{
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate medExDate;
 
-    //private Long id_club;
+    private Long idClub;
 
     public Long getIdPlayer() {
         return idPlayer;
+    }
+    public Long getIdClub() {
+        return idClub;
+    }    
+    public void setIdClub(Long idClub) {
+        this.idClub = idClub;
     }
 
     public void setIdPlayer(Long idPlayer) {

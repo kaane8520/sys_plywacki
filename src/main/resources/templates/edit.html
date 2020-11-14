@@ -40,6 +40,9 @@
 
         <form method="POST" class="form-signin" th:object="${role}" th:action="@{/edit}">
             <h2 class="form-signin-heading">Edytuj konto</h2>
+            <h5>Twoja obecna rola to: <span sec:authentication="authorities"></span></h5>
+            
+        	<h5>Zmień rolę na:</h5>
             <div class="form-group">
                 <select th:field="*{name}" class="form-control">
 	    			<option th:value="'zawodnik'" th:text="Zawodnik"></option>
@@ -47,8 +50,25 @@
     				<option th:value="'sedzia'" th:text="Sedzia"></option>
     				<option th:value="'organizator'" th:text="Organizator"></option>
                 </select>
-                <input type="file" class="form-control">
             </div>
+            
+            <!-- <form th:action="@{/updatePlayerMedDoc}"> -->
+            <p>Aktualizuj swoją dokumentację:</p>
+            <div sec:authorize="hasAuthority('zawodnik')">
+                <input type="file" id="player_doc" class="form-control">
+            </div>
+            
+            <div sec:authorize="hasAuthority('sedzia')">
+                <input type="file" id="judge_doc" class="form-control">
+            </div>
+            
+            <div sec:authorize="hasAuthority('trener')">
+                <input type="file" id="coach_doc" class="form-control">
+            </div>
+            <!-- </form> -->
+
+            
+            
             <button class="btn btn-lg btn-primary btn-block" type="submit">Potwierdz</button>
         </form>
 
