@@ -1,6 +1,7 @@
 package com.my_app.sys_plywacki.web;
 
 import com.my_app.sys_plywacki.model.*;
+import com.my_app.sys_plywacki.repository.RefereeRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -40,6 +41,9 @@ public class PersonController {
 
     @Autowired
     private CompetitionService competitionService;
+
+    @Autowired
+    private RefereeRepository refereeRepository;
 
     private List <Club> clubs;
 
@@ -268,6 +272,25 @@ public class PersonController {
         return "/searchCompetitions";
     }
 
+//    @RequestMapping(value = "/redirectToEditReferee", method = RequestMethod.GET)
+//    public String redirectToEditReferee() {
+//        System.out.println("Redirecting Result To Edit Referee Page");
+//        return "redirect:editReferee";
+//    }
+
+    @GetMapping("/editReferee")
+    public String editReferee(Model model) {
+        model.addAttribute("referee", new Referee());
+        System.out.println("Jestem w funkcji editReferee");
+        return "/editReferee";
+    }
+    @PostMapping("/editReferee")
+    public String editReferee(@ModelAttribute Referee referee, Model model, BindingResult bindingResult) {
+//        System.out.println("Data wygasniecia dokumentacji sędziego: " + referee.getRefereeLegDate());
+        refereeRepository.save(referee);
+        //System.out.println("PostMapping /editPlayer");
+        return "redirect:welcome";
+    }
 /*
 
     @RequestMapping("/searchCompetition")
