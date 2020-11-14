@@ -53,6 +53,9 @@ public class PersonController {
     @Autowired
     private RefereeRepository refereeRepository;
 
+    @Autowired
+    private RefereeRepository refereeRepository;
+
     private List <Club> clubs;
 
     @Autowired
