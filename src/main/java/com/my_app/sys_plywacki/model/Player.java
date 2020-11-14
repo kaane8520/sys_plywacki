@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Set;
 import javax.persistence.*;
 
 @Entity
@@ -17,17 +19,43 @@ public class Player{
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate medExDate;
-
+//
     private Long idClub;
+
+    private Long idPerson;
+
+    @ManyToMany
+    Set<Club> clubs;
+
+
+    @OneToMany
+    List<PlayerPersonConnection> persons;
+
+//    public Set<Person> getPersons() {
+//        return persons;
+//    }
+//
+//    public void setPersons(Set<Person> persons) {
+//        this.persons = persons;
+//    }
 
     public Long getIdPlayer() {
         return idPlayer;
     }
     public Long getIdClub() {
         return idClub;
-    }    
+    }
     public void setIdClub(Long idClub) {
         this.idClub = idClub;
+    }
+
+
+    public Set<Club> getClubs() {
+        return clubs;
+    }
+
+    public void setClubs(Set<Club> clubs) {
+        this.clubs = clubs;
     }
 
     public void setIdPlayer(Long idPlayer) {

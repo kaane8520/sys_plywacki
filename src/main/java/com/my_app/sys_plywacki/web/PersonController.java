@@ -52,6 +52,12 @@ public class PersonController {
 
     private List <Club> clubs;
 
+//    @Autowired
+//    private PlayerPersonConnectionService playerPersonConnectionService;
+//
+    @Autowired
+    private PlayerPersonConnectionRepository playerPersonConnectionRepository;
+
 
 
     @GetMapping("/registration")
@@ -178,7 +184,14 @@ public class PersonController {
     @PostMapping("/editPlayer")
     public String editPlayer(@ModelAttribute Player player, Model model, BindingResult bindingResult) {
     	System.out.println("Data wygasniecia dokumentacji zawodnika: "+player.getMedExDate());
-    	playerRepository.save(player);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Person p = personService.findByUsername(auth.getName());
+        System.out.println("to jest person id"+p.getId());
+        System.out.println("to jest player id"+player.getIdPlayer());
+
+        playerRepository.save(player);
+
+        playerPersonConnectionRepository.save(new PlayerPersonConnection(player, p));
     	return "redirect:welcome";
     }
     

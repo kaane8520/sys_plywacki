@@ -4,6 +4,7 @@ import com.sun.istack.NotNull;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Set;
 
 
@@ -30,7 +31,17 @@ public class Person {
     @ManyToMany
     @Column //(name = "roles")
     private Set<Role> roles;
-    
+
+    @OneToMany
+    private List<PlayerPersonConnection> players;
+
+    public Long getId_person() {
+        return id_person;
+    }
+
+    public void setId_person(Long id_person) {
+        this.id_person = id_person;
+    }
 
     public Person(Long id_person, String username, String password, String passwordConfirm) {
         this.id_person = id_person;
