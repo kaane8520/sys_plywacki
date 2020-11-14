@@ -141,6 +141,10 @@ public class PersonController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Person p = personService.findByUsername(auth.getName());
         personService.add_role(p, role);
+        if(role.getName().equals("sedzia")) {
+            System.out.println("Twoja rola = "+role.getName());
+            return "redirect:editReferee";
+        }
         return "redirect:/welcome";
     }
 
@@ -272,11 +276,11 @@ public class PersonController {
         return "/searchCompetitions";
     }
 
-//    @RequestMapping(value = "/redirectToEditReferee", method = RequestMethod.GET)
-//    public String redirectToEditReferee() {
-//        System.out.println("Redirecting Result To Edit Referee Page");
-//        return "redirect:editReferee";
-//    }
+    @RequestMapping(value = "/redirectToEditReferee", method = RequestMethod.GET)
+    public String redirectToEditReferee() {
+        System.out.println("Redirecting Result To Edit Referee Page");
+        return "redirect:editReferee";
+    }
 
     @GetMapping("/editReferee")
     public String editReferee(Model model) {

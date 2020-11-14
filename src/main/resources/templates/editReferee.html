@@ -37,18 +37,18 @@
 </div>
 
 <div class="container">
-
-    <form method="POST" class="form-signin" th:object="${referee}" th:action="@{/editReferee}">
-        <h2 class="form-signin-heading">Edytuj swój profil (sędzia)</h2>
-        <div class="form-group">
-            <input type="date" th:field=*{refereelegidate} class="form-control" placeholder="Data ważności Twojej dokumentacji" autofocus="true" required="required">
-            <span class="has-error" th:if="${#fields.hasErrors('refereeLegDate')}" th:errors="*{refereeLegDate}"></span>
-            <!--<form:select path="exercise" items="${exerciseList}" multiple="true"/>
-            <input type="file" class="form-control"> -->
-        </div>
-        <button id="add-player" button class="btn btn-lg btn-primary btn-block" type="submit">Potwierdz</button>
-    </form>
-
+    <div sec:authorize="hasAuthority('sedzia')">
+        <form method="POST" class="form-signin" th:object="${referee}" th:action="@{/editReferee}">
+            <h2 class="form-signin-heading">Edytuj swój profil (sędzia)</h2>
+            <div class="form-group">
+                <input type="date" th:field="*{refereeLegDate}" class="form-control" placeholder="Data ważności Twojej dokumentacji" autofocus="true" required="required">
+                <span class="has-error" th:if="${#fields.hasErrors('refereeLegDate')}" th:errors="*{refereeLegDate}"></span>
+                <!--<form:select path="exercise" items="${exerciseList}" multiple="true"/>
+                <input type="file" class="form-control"> -->
+            </div>
+            <button id="add-player" button class="btn btn-lg btn-primary btn-block" type="submit">Potwierdz</button>
+        </form>
+    </div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
