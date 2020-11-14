@@ -24,7 +24,7 @@ public class Player{
 
 
     @OneToMany
-    Set<ClubPlayerConnection> clubs;
+    List<ClubPlayerConnection> clubs;
 
 
     @OneToMany
@@ -48,12 +48,11 @@ public class Player{
         this.idClub = idClub;
     }
 
-
-    public Set<ClubPlayerConnection> getClubs() {
+    public List<ClubPlayerConnection> getClubs() {
         return clubs;
     }
 
-    public void setClubs(Set<ClubPlayerConnection> clubs) {
+    public void setClubs(List<ClubPlayerConnection> clubs) {
         this.clubs = clubs;
     }
 

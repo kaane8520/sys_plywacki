@@ -1,12 +1,12 @@
 package com.my_app.sys_plywacki.model;
-
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import com.sun.istack.NotNull;
 
 import javax.persistence.*;
 
 @Entity
 public class ClubPlayerConnection {
     @Id
+    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -15,6 +15,15 @@ public class ClubPlayerConnection {
 
     @ManyToOne
     Player player;
+
+    public ClubPlayerConnection(Club club, Player player) {
+        this.club = club;
+        this.player = player;
+    }
+
+    public ClubPlayerConnection() {
+
+    }
 
     public Long getId() {
         return id;

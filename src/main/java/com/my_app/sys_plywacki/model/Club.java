@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Column;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.*;
 
@@ -18,7 +19,7 @@ public class Club {
     
     @OneToMany
     @Column 
-    private Set<ClubPlayerConnection> players;
+    private List<ClubPlayerConnection> players;
 
     @Override
     public String toString() {
@@ -41,11 +42,11 @@ public class Club {
         this.club_name = club_name;
     }
 
-    public Set<ClubPlayerConnection> getPlayers() {
+    public List<ClubPlayerConnection> getPlayers() {
         return players;
     }
 
-    public void setPlayers(Set<ClubPlayerConnection> players) {
+    public void setPlayers(List<ClubPlayerConnection> players) {
         this.players = players;
     }
 }

@@ -12,6 +12,7 @@ import org.springframework.security.core.Authentication;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -185,14 +186,21 @@ public class PersonController {
         Person p = personService.findByUsername(auth.getName());
         System.out.println("to jest person id"+p.getId());
         System.out.println("to jest player id"+player.getIdPlayer());
+        System.out.println("to jest model atrybut "+model.getAttribute("player.wartosc"));
 
         playerRepository.save(player);
+        Long x=player.getIdClub();
+        Optional<Club> club = clubRepository.findById(x);
+        System.out.println("to jest club get" + club.get().getId_club());
+
 //Tutaj trzeba wyciągnąć klub do którego sie zapisał zawododnik, żeby zapisać do bd
-//        clubPlayerConnectionRepository.save(new ClubPlayerConnection(player, club));
+        clubPlayerConnectionRepository.save(new ClubPlayerConnection(club.get(), player));
 
         playerPersonConnectionRepository.save(new PlayerPersonConnection(player, p));
+        System.out.println("to jest player id"+player.getIdPlayer());
     	return "redirect:welcome";
     }
+
     
 //    @RequestMapping("/searchPlayers")
 //    public String searchPlayers(Model model, @Param("keyword") String keyword){
@@ -201,9 +209,7 @@ public class PersonController {
 //        model.addAttribute("keyword", keyword);
 //        return "playerSearchService";
 //    }
-//
-//
-//
+
 
 
 
