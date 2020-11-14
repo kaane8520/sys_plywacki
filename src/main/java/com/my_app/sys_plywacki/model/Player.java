@@ -19,13 +19,12 @@ public class Player{
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate medExDate;
-//
+
     private Long idClub;
 
-    private Long idPerson;
 
-    @ManyToMany
-    Set<Club> clubs;
+    @OneToMany
+    Set<ClubPlayerConnection> clubs;
 
 
     @OneToMany
@@ -50,12 +49,20 @@ public class Player{
     }
 
 
-    public Set<Club> getClubs() {
+    public Set<ClubPlayerConnection> getClubs() {
         return clubs;
     }
 
-    public void setClubs(Set<Club> clubs) {
+    public void setClubs(Set<ClubPlayerConnection> clubs) {
         this.clubs = clubs;
+    }
+
+    public List<PlayerPersonConnection> getPersons() {
+        return persons;
+    }
+
+    public void setPersons(List<PlayerPersonConnection> persons) {
+        this.persons = persons;
     }
 
     public void setIdPlayer(Long idPlayer) {

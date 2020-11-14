@@ -12,8 +12,6 @@ import org.springframework.security.core.Authentication;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -52,9 +50,8 @@ public class PersonController {
 
     private List <Club> clubs;
 
-//    @Autowired
-//    private PlayerPersonConnectionService playerPersonConnectionService;
-//
+    @Autowired
+    private ClubPlayerConnectionRepository clubPlayerConnectionRepository;
     @Autowired
     private PlayerPersonConnectionRepository playerPersonConnectionRepository;
 
@@ -190,6 +187,8 @@ public class PersonController {
         System.out.println("to jest player id"+player.getIdPlayer());
 
         playerRepository.save(player);
+//Tutaj trzeba wyciągnąć klub do którego sie zapisał zawododnik, żeby zapisać do bd
+//        clubPlayerConnectionRepository.save(new ClubPlayerConnection(player, club));
 
         playerPersonConnectionRepository.save(new PlayerPersonConnection(player, p));
     	return "redirect:welcome";

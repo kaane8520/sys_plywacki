@@ -16,9 +16,9 @@ public class Club {
     @Column(nullable = false)
     private String club_name;
     
-    @ManyToMany
+    @OneToMany
     @Column 
-    private Set<Player> players;
+    private Set<ClubPlayerConnection> players;
 
     @Override
     public String toString() {
@@ -40,18 +40,12 @@ public class Club {
     public void setClub_name(String club_name) {
         this.club_name = club_name;
     }
-    
-    public Set<Player> getPlayers() {
-        return this.players;
+
+    public Set<ClubPlayerConnection> getPlayers() {
+        return players;
     }
 
-    public void setPlayers(Set<Player> players) {
+    public void setPlayers(Set<ClubPlayerConnection> players) {
         this.players = players;
     }
-//    List<Club> findAll(String keyword){
-//        return null;
-//    }
-//    List<Club> findAll() {
-//        return null;
-//    }
 }
