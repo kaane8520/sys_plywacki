@@ -1,12 +1,20 @@
 package com.my_app.sys_plywacki.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import java.time.LocalDate;
 
-public class Coach extends User{
+@Entity
+public class Coach {
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idCoach;
-    private Club idClub;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate refereelegidate;
 
 }

@@ -50,7 +50,7 @@ public class PersonController {
     private RefereeRepository refereeRepository;
 
     @Autowired
-    private RefereeRepository refereeRepository;
+    private CoachRepository coachRepository;
 
     private List <Club> clubs;
 
@@ -332,6 +332,18 @@ public class PersonController {
 //        System.out.println("Data wygasniecia dokumentacji sędziego: " + referee.getRefereeLegDate());
         refereeRepository.save(referee);
         //System.out.println("PostMapping /editPlayer");
+        return "redirect:welcome";
+    }
+
+    @GetMapping("/editCoach")
+    public String editCoach(Model model) {
+        model.addAttribute("coach", new Referee());
+        System.out.println("Jestem w funkcji editCoach");
+        return "/editCoach";
+    }
+    @PostMapping("/editCoach")
+    public String editCoach(@ModelAttribute Coach coach, Model model, BindingResult bindingResult) {
+        coachRepository.save(coach);
         return "redirect:welcome";
     }
 /*

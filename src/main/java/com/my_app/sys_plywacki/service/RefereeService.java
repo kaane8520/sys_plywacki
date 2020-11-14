@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface RefereeService {
 //    public void saveReferee(Referee referee);
-    public void save(Referee referee);
+    void save(Referee referee);
 //    List<Referee> findAll();
 
 
