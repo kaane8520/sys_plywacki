@@ -15,7 +15,7 @@ public class Club {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_club;
     @Column(nullable = false)
-    private String club_name;
+    private String clubname;
     
     @OneToMany
     @Column 
@@ -23,7 +23,7 @@ public class Club {
 
     @Override
     public String toString() {
-        return "Club [id=" + id_club + ", club name=" + club_name +"]";
+        return "Club [id=" + id_club + ", club name=" + clubname +"]";
     }
 
     public Long getId_club() {
@@ -35,11 +35,11 @@ public class Club {
     }
 
     public String getClub_name() {
-        return club_name;
+        return clubname;
     }
 
     public void setClub_name(String club_name) {
-        this.club_name = club_name;
+        this.clubname = club_name;
     }
 
     public List<ClubPlayerConnection> getPlayers() {
