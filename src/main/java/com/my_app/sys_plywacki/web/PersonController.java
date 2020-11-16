@@ -56,6 +56,14 @@ public class PersonController {
     @Autowired
     private PlayerPersonConnectionRepository playerPersonConnectionRepository;
 
+    @Autowired
+    private OrganizerCompetitionConnectionRepository organizerCompetitionConnectionRepository;
+    @Autowired
+    private OrganizerRepository organizerRepository;
+
+    @Autowired
+    private OrganizerPersonConnectionRepository organizerPersonConnectionRepository;
+
 
 
     @GetMapping("/registration")
@@ -153,6 +161,14 @@ public class PersonController {
         if(role.getName().equals("zawodnik")) {
         	System.out.println("Twoja rola = "+role.getName());
         	return "redirect:editPlayer";
+        }
+        else if (role.getName().equals("organizator")) {
+
+            Organizer organizer = new Organizer();
+            model.addAttribute("organizer", organizer);
+            organizerRepository.save(organizer);
+            organizerPersonConnectionRepository.save(new OrganizerPersonConnection(organizer, p));
+            return "redirect:welcome";
         }
         else return "redirect:welcome";
     }
@@ -305,7 +321,12 @@ public class PersonController {
     @PostMapping("registrationCompetitions")
     public String registrationCompetition(@ModelAttribute("competitionForm") Competition competitionForm){
         competitionService.save(competitionForm);
-
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Person p = personService.findByUsername(auth.getName());
+        Long x = p.getId();
+        System.out.println("To jest id organizatora " +x);
+        Optional<Organizer> organizer = organizerRepository.findById(x);
+        organizerCompetitionConnectionRepository.save(new OrganizerCompetitionConnection(competitionForm, organizer.get()));
         return "redirect:searchCompetitions";
     }
 

@@ -24,6 +24,7 @@ public class Person {
     private String password;
 
 
+
     @Transient
     @Column //(name = "passwordConfirm")
     private String passwordConfirm;
@@ -34,6 +35,9 @@ public class Person {
 
     @OneToMany
     private List<PlayerPersonConnection> players;
+
+    @OneToMany
+    private List<OrganizerPersonConnection> organizers;
 
     public Long getId_person() {
         return id_person;
