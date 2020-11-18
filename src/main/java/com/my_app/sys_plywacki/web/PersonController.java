@@ -386,7 +386,7 @@ public class PersonController {
     }
     @PostMapping("/editCoach")
     public String editCoach(@ModelAttribute Coach coach, Model model, BindingResult bindingResult) {
-        coachRepository.save(coach);
+        //coachRepository.save(coach);
         return "redirect:welcome";
     }
 /*

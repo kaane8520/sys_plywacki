@@ -20,6 +20,10 @@ public class PlayerPersonConnection {
         this.person = person;
     }
 
+    public PlayerPersonConnection() {
+
+    }
+
     public Long getId() {
         return id;
     }
