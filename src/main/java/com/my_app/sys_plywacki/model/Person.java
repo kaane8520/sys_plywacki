@@ -39,6 +39,14 @@ public class Person {
     @OneToMany
     private List<OrganizerPersonConnection> organizers;
 
+    @OneToMany
+    private List<CoachPersonConnection> coaches;
+
+    @OneToMany
+    private List<RefereePersonConnection> referees;
+
+
+
     public Long getId_person() {
         return id_person;
     }

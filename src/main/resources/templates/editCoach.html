@@ -38,16 +38,31 @@
 
 <div class="container">
 
-    <form method="POST" class="form-signin" th:object="${player}" th:action="@{/editPlayer}">
-        <h2 class="form-signin-heading">Edytuj swój profil (zawodnik)</h2>
+    <form method="POST" class="form-signin" th:object="${coach}" th:action="@{/editCoach}">
+        <h2 class="form-signin-heading">Edytuj swój profil (trener)</h2>
         <div class="form-group">
-            <input type="date" th:field=*{medExDate} class="form-control" placeholder="Data ważności Twojej dokumentacji" autofocus="true" required="required">
-            <span class="has-error" th:if="${#fields.hasErrors('medExDate')}" th:errors="*{medExDate}"></span>
-            <!--<form:select path="exercise" items="${exerciseList}" multiple="true"/>
-            <input type="file" class="form-control"> -->
+            <input type="date" th:field=*{coachlegidate} class="form-control" placeholder="Data ważności Twojej dokumentacji" autofocus="true" required="required">
+            <span class="has-error" th:if="${#fields.hasErrors('coachlegidate')}" th:errors="*{coachlegidate}"></span>
+<!--            <form method="POST" class="form-signin">-->
+<!--                <div class="form-group">-->
+<!--                    <input type="text" th:field="*{clubname}" placeholder="Wpisz nazwę klubu" autofocus="true">-->
+<!--                    <span class="has-error" th:if="${#fields.hasErrors('clubname')}" th:errors="*{clubname}"></span>-->
+<!--                </div>-->
+
+
+<!--            </form>-->
         </div>
-        <button id="add-player" button class="btn btn-lg btn-primary btn-block" type="submit">Potwierdz</button>
+
     </form>
+    <form method="POST" class="form-signin" th:object="${club}" th:action="@{/registrationClub}">
+        <div class="form-group">
+            <input type="text" th:field="*{clubname}" placeholder="Wpisz nazwę klubu" autofocus="true">
+            <span class="has-error" th:if="${#fields.hasErrors('clubname')}" th:errors="*{clubname}"></span>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Zarejestruj klub</button>
+
+    </form>
+    <button id="add-player" button class="btn btn-lg btn-primary btn-block" type="submit">Potwierdz</button>
 
 </div>
 

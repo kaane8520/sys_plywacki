@@ -71,6 +71,11 @@ public class PersonController {
     @Autowired
     private OrganizerPersonConnectionRepository organizerPersonConnectionRepository;
 
+    @Autowired
+    private CoachPersonConnectionRepository coachPersonConnectionRepository;
+    @Autowired
+    private RefereePersonConnectionRepository refereePersonConnectionRepository;
+
 
 
     @GetMapping("/registration")
@@ -177,6 +182,18 @@ public class PersonController {
             organizerPersonConnectionRepository.save(new OrganizerPersonConnection(organizer, p));
             return "redirect:welcome";
         }
+        else if (role.getName().equals("trener")) {
+
+//            Coach coach = new Coach();
+//            model.addAttribute("coach", coach);
+//            coachRepository.save(coach);
+//            coachPersonConnectionRepository.save(new CoachPersonConnection(coach, p));
+            return "redirect:editCoach";
+        }
+        else if(role.getName().equals("sedzia")) {
+            System.out.println("Twoja rola = "+role.getName());
+            return "redirect:editReferee";
+        }
         else return "redirect:welcome";
     }
     //------------edycja zawodnika, utworzenie nowego obiektu Zawodnik:
@@ -198,7 +215,7 @@ public class PersonController {
     	List<Club> listOfAvailableClubs = clubService.findAll();
         for (Club x : listOfAvailableClubs) {
         	System.out.println("Id klubu: "+x.getId_club());
-            System.out.println("Nazwa klubu: "+x.getClubname());
+            System.out.println("Nazwa klubu: "+x.getClub_name());
         }
         return listOfAvailableClubs;
      }
@@ -224,31 +241,53 @@ public class PersonController {
     	return "redirect:welcome";
     }
 
-    
-//    @RequestMapping("/searchPlayers")
-//    public String searchPlayers(Model model, @Param("keyword") String keyword){
-//        List<Player> playerList = playerSearchService.listAll(keyword);
-//        model.addAttribute("playerList", playerList);
-//        model.addAttribute("keyword", keyword);
-//        return "playerSearchService";
-//    }
-
-
-
-
-
-    @GetMapping("/registrationClub")
-    public String clubReg(Model model){
-//        if(securityService.isAuthenticated()){
-//            return"redirect:/welcome";
-//        }
-
-//        List<Club> clubForm = clubService.findAll();
-
-        model.addAttribute("clubForm", new Club());
-
-        return "/registrationClub";
+    @RequestMapping(value = "/redirectToEditCoach", method = RequestMethod.GET)
+    public String redirectToEditCoach() {
+        System.out.println("Redirecting Result To Edit CoachPage");
+        return "redirect:editCoach";
     }
+
+    @GetMapping("/editCoach")
+    public String editCoach(@ModelAttribute Club club, Model model) {
+        model.addAttribute("coach",new Coach());
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        Person p = personService.findByUsername(auth.getName());
+//        Long x = p.getId();
+//        Optional<Coach> coach = coachRepository.findById(x);
+
+        model.addAttribute("club", new Club());
+        System.out.println("Jestem w funkcji editCoach");
+        return "/editCoach";
+    }
+    @PostMapping("/editCoach")
+    public String editCoach(@ModelAttribute Coach coach, @ModelAttribute Club club, Model model, BindingResult bindingResult) {
+        System.out.println("Data wygasniecia dokumentacji zawodnika: "+coach.getCoachlegidate());
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Person p = personService.findByUsername(auth.getName());
+
+        coach = new Coach(club);
+        club = new Club(coach);
+        clubRepository.save(club);
+        coachRepository.save(coach);
+
+
+
+        return "redirect:welcome";
+    }
+
+
+
+//    @GetMapping("/registrationClub")
+//    public String clubReg(@ModelAttribute Club club, Model model){
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        Person p = personService.findByUsername(auth.getName());
+//        Long x = p.getId();
+//        Optional<Coach> coach = coachRepository.findById(x);
+//
+//        model.addAttribute("club", new Club(coach.get()));
+//
+//        return "/registrationClub";
+//    }
 
     @RequestMapping(value = "/redirectToRegClub", method = RequestMethod.GET)
     public String redirectToRegClub() {
@@ -257,10 +296,14 @@ public class PersonController {
     }
 
     @PostMapping("/registrationClub")
-    public String clubReg(@ModelAttribute("clubForm") Club clubForm){
+    public String clubReg(@ModelAttribute("club") Club club){
         System.out.println("Jestem w PostMapping /clubRegistration");
+        Coach coach = new Coach(club);
+        Club clubb = new Club(coach);
+        clubRepository.save(club);
+        coachRepository.save(coach);
 
-        clubService.save(clubForm);
+
 
         return "redirect:/welcome";
     }
@@ -358,11 +401,12 @@ public class PersonController {
         return "/searchCompetitions";
     }
 
-//    @RequestMapping(value = "/redirectToEditReferee", method = RequestMethod.GET)
-//    public String redirectToEditReferee() {
-//        System.out.println("Redirecting Result To Edit Referee Page");
-//        return "redirect:editReferee";
-//    }
+
+    @RequestMapping(value = "/redirectToReferee", method = RequestMethod.GET)
+    public String redirectToReferee() {
+        System.out.println("Redirecting Result To Edit Referee Page");
+        return "redirect:editReferee";
+    }
 
     @GetMapping("/editReferee")
     public String editReferee(Model model) {
@@ -373,22 +417,17 @@ public class PersonController {
     @PostMapping("/editReferee")
     public String editReferee(@ModelAttribute Referee referee, Model model, BindingResult bindingResult) {
 //        System.out.println("Data wygasniecia dokumentacji sędziego: " + referee.getRefereeLegDate());
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Person p = personService.findByUsername(auth.getName());
         refereeRepository.save(referee);
-        //System.out.println("PostMapping /editPlayer");
+
+        refereePersonConnectionRepository.save(new RefereePersonConnection(referee, p));
+
         return "redirect:welcome";
     }
 
-    @GetMapping("/editCoach")
-    public String editCoach(Model model) {
-        model.addAttribute("coach", new Referee());
-        System.out.println("Jestem w funkcji editCoach");
-        return "/editCoach";
-    }
-    @PostMapping("/editCoach")
-    public String editCoach(@ModelAttribute Coach coach, Model model, BindingResult bindingResult) {
-        //coachRepository.save(coach);
-        return "redirect:welcome";
-    }
+
 /*
 
     @RequestMapping("/searchCompetition")

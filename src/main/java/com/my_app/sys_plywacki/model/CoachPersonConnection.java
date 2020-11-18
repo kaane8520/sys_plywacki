@@ -3,23 +3,22 @@ package com.my_app.sys_plywacki.model;
 import javax.persistence.*;
 
 @Entity
-public class OrganizerPersonConnection {
+public class CoachPersonConnection {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    Organizer organizer;
+    Coach coach;
 
     @ManyToOne
     Person person;
 
-    public OrganizerPersonConnection(Organizer organizer, Person person) {
-        this.organizer = organizer;
+    public CoachPersonConnection(Coach coach, Person person) {
+        this.coach = coach;
         this.person = person;
     }
 
-    public OrganizerPersonConnection() {
+    public CoachPersonConnection() {
     }
-
 }

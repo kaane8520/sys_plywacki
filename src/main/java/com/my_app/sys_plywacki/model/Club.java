@@ -20,6 +20,13 @@ public class Club {
     @Column 
     private List<ClubPlayerConnection> players;
 
+    @OneToOne
+    Coach coach;
+
+//    public Club(Coach coach) {
+//        this.coach = coach;
+//    }
+
     @Override
     public String toString() {
         return "Club [id=" + id_club + ", clubname=" + clubname +"]";
@@ -33,12 +40,19 @@ public class Club {
         this.id_club = id_club;
     }
 
-    public String getClubname() {
+    public String getClub_name() {
         return clubname;
     }
 
     public void setClubname(String clubname) {
         this.clubname = clubname;
+    }
+
+    public Club() {
+    }
+
+    public Club(Coach coach) {
+        this.coach = coach;
     }
 
     public List<ClubPlayerConnection> getPlayers() {

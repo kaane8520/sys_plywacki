@@ -2,11 +2,9 @@ package com.my_app.sys_plywacki.model;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 public class Referee {
@@ -16,4 +14,23 @@ public class Referee {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate refereelegidate;
+
+    @OneToMany
+    private List<RefereePersonConnection> persons;
+
+    public Long getIdReferee() {
+        return idReferee;
+    }
+
+    public void setIdReferee(Long idReferee) {
+        this.idReferee = idReferee;
+    }
+
+    public LocalDate getRefereelegidate() {
+        return refereelegidate;
+    }
+
+    public void setRefereelegidate(LocalDate refereelegidate) {
+        this.refereelegidate = refereelegidate;
+    }
 }
