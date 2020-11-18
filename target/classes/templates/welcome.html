@@ -50,9 +50,16 @@
             <form th:action="@{/redirectToEditPage}">
                 <input type="submit" value="Edytuj swoje konto"/>
             </form>
-            <form th:action="@{/redirectToRegClub}">
-                <input type="submit" value="dodaj klub"/>
-            </form>
+            <div sec:authorize="hasAuthority('trener')">
+                <form th:action="@{/redirectToRegClub}">
+                    <input type="submit" value="dodaj klub"/>
+                </form>
+            </div>
+            <div sec:authorize="hasAuthority('organizator')">
+                <form th:action="@{/registrationCompetitions}">
+                    <input type="submit" value="Dodaj zawody"/>
+                </form>
+            </div>
             <form th:action="@{/redirectToSearchClubPage}">
                 <input type="submit" value="wyszukaj klub"/>
             </form>

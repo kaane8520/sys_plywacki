@@ -18,6 +18,9 @@ public class Referee {
     @OneToMany
     private List<RefereePersonConnection> persons;
 
+    @OneToOne
+    private RefereeRoleOnCompetition refereeRoleOnCompetition;
+
     public Long getIdReferee() {
         return idReferee;
     }

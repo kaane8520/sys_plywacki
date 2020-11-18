@@ -1,29 +1,63 @@
 <!DOCTYPE html>
 <html lang="pl-PL" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
-    <head>
-        <meta charset="UTF-8">
-        <title>Formularz aplikacji do sędziowania na zawodach</title>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-        <link href="/css/mainn.css" rel="stylesheet">
-    </head>
-    <body>
-        <div class="navbar">
-            <div sec:authorize="isAuthenticated()">
-                <form id="logoutForm" method="POST" th:action="@{/logout}">
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                </form>
-                <a onclick="document.forms['logoutForm'].submit()">Logout</a>
-            </div>
-        </div>
-        <div class="container">
-            <form method="POST" class="form-signin" th:action="@{/registrationCompetitions}">
+<head>
+    <meta charset="utf-8">
+    <title>Edytuj konto</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link href="/css/main.css" rel="stylesheet">
+</head>
 
-            </form>
+<body>
+<div class="navbar">
+    <span>To jest navbar</span>
+    <form th:action="@{/redirectToWelcome}">
+        <input class="nav-items" type="submit" value="Strona główna"/>
+    </form>
+
+    <form th:action="@{/redirectToSearchClubPage}">
+        <input class="nav-items" type="submit" value="wyszukaj klub"/>
+    </form>
+    <form th:action="@{/redirectToSearchCompetitionsPage}">
+        <input class="nav-items" type="submit" value="wyszukaj zawody"/>
+    </form>
+    <form th:action="@{/redirectToSearchPlayersPage}">
+        <input class="nav-items" type="submit" value="wyszukaj zawodników"/>
+    </form>
+    <div sec:authorize="isAuthenticated()">
+        <form th:action="@{/redirectToEditPage}">
+            <input class="nav-items" type="submit" value="Edytuj swoje konto"/>
+        </form>
+    </div>
+    <div sec:authorize="isAuthenticated()">
+        <form id="logoutForm" method="POST" th:action="@{/logout}">
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        </form>
+        <a onclick="document.forms['logoutForm'].submit()">Logout</a>
+    </div>
+</div>
+
+<div class="container">
+
+    <form method="POST" class="form-signin" th:object="${refereeRole}" th:action="@{/judgingCompoetitions}">
+        <h5>Zmień rolę na:</h5>
+        <div class="form-group">
+            <select class="form-control">
+                <option th:value="'sedziaglowny'" >Sędzia główny</option>
+                <option th:value="'starter'">Starter</option>
+                <option th:value="'kierownikwyscigu'">Kierownik wyścigu</option>
+                <option th:value="'inspektorstartu'">Inspektor startu</option>
+                <option th:value="'inspektornawrotu'">Inspektor nawrotu</option>
+            </select>
         </div>
 
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-        <script src="/js/main.js"></script>
-    </body>
+        <button id="add-player" button class="btn btn-lg btn-primary btn-block" type="submit">Potwierdz</button>
+    </form>
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<script src="/js/main.js"></script>
+</body>
 </html>

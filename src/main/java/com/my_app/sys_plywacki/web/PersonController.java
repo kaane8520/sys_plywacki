@@ -76,7 +76,11 @@ public class PersonController {
     @Autowired
     private RefereePersonConnectionRepository refereePersonConnectionRepository;
 
+    @Autowired
+    private RefereeRolesRepository refereeRolesRepository;
 
+    @Autowired
+    private RefereeRoleOnCompetitionRepository refereeRoleOnCompetitionRepository;
 
     @GetMapping("/registration")
     public String registration(Model model) {
@@ -423,6 +427,22 @@ public class PersonController {
         return "redirect:welcome";
     }
 
+
+    @RequestMapping(value = "/redirectToJudgingCompetitions", method = RequestMethod.GET)
+    public String redirectToJudgingCompetitions() {
+        System.out.println("Redirecting Result To Judging Competitions Page");
+        return "redirect:judgingCompetitions";
+    }
+    @GetMapping("/judgingCompetitions")
+    public String judgingCompetitions(Model model){
+        return "/judgingCompetitions";
+    }
+    @PostMapping("/judgingCompetitions")
+    public String judgingCompetitions(@ModelAttribute RefereeRoles refereeRoles, Model model){
+
+        refereeRolesRepository.save(refereeRoles);
+        return "redirect:welcome";
+    }
 
 /*
 

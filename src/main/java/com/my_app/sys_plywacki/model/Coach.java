@@ -13,7 +13,7 @@ public class Coach {
     private Long idCoach;
 
     @OneToOne
-    Club club;
+    private Club club;
 
     public Coach(Club club) {
         this.club = club;

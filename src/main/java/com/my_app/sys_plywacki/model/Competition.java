@@ -20,6 +20,9 @@ public class Competition {
     @Column
     private List<OrganizerCompetitionConnection> organizers;
 
+    @OneToMany
+    private List<RefereeRoleOnCompetition> refereeRoleOnCompetitionList;
+
     public Long getIdCompetitions() {
         return idCompetitions;
     }

@@ -21,7 +21,7 @@ public class Club {
     private List<ClubPlayerConnection> players;
 
     @OneToOne
-    Coach coach;
+    private Coach coach;
 
 //    public Club(Coach coach) {
 //        this.coach = coach;
