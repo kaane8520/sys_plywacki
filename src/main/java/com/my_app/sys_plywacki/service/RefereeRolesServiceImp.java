@@ -28,7 +28,6 @@ public class RefereeRolesServiceImp implements RefereeRolesService {
                 RefereeRoles role = new RefereeRoles();
                 role.setIdrefereerole(i);
                 role.setRefereerolename(rn);
-                System.out.println("id roli: " + i + " nazwa roli: " + rn);
                 repository.save(role);
                 i++;
             }

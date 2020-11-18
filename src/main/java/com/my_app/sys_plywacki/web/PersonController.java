@@ -463,7 +463,7 @@ public class PersonController {
     @GetMapping("/chooseCompetitionForReferee")
     public String chooseCompetitions(Model model){
         model.addAttribute("competitionForm", new Competition());
-        System.out.println("Lista ról" + refereeRolesRepository.findAll());
+
 
 
         return "/chooseCompetitionForReferee";
@@ -491,10 +491,7 @@ public class PersonController {
     public List<RefereeRoles> judgingCompetitions() {
         System.out.println("Jestem w funkcji editPlayer @ModelAttribute");
         List<RefereeRoles> listOfRefereeRoles = refereeRolesService.findAll();
-        for (RefereeRoles x : listOfRefereeRoles) {
-            System.out.println("Id roli: "+x.getIdrefereerole());
-            System.out.println("Nazwa roli: "+x.getRefereerolename());
-        }
+
         return listOfRefereeRoles;
     }
 

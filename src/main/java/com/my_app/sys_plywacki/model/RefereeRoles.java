@@ -9,15 +9,11 @@ public class RefereeRoles {
     private Long idrefereerole;
     private String refereerolename;
 
-    @OneToOne
-    private RefereeRoleOnCompetition refereeRoleOnCompetition;
 
     public RefereeRoles() {
     }
 
-    public RefereeRoles(RefereeRoleOnCompetition refereeRoleOnCompetition) {
-        this.refereeRoleOnCompetition = refereeRoleOnCompetition;
-    }
+
 
     public Long getIdrefereerole() {
         return idrefereerole;
@@ -35,11 +31,4 @@ public class RefereeRoles {
         this.refereerolename = refereerolename;
     }
 
-    public RefereeRoleOnCompetition getRefereeRoleOnCompetition() {
-        return refereeRoleOnCompetition;
-    }
-
-    public void setRefereeRoleOnCompetition(RefereeRoleOnCompetition refereeRoleOnCompetition) {
-        this.refereeRoleOnCompetition = refereeRoleOnCompetition;
-    }
 }
