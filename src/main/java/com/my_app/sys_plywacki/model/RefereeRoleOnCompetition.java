@@ -16,4 +16,16 @@ public class RefereeRoleOnCompetition {
 
     @ManyToOne
     Competition competition;
+
+    public RefereeRoleOnCompetition() {
+    }
+
+    public RefereeRoleOnCompetition(RefereeRoles refereeRoles) {
+        this.refereeRoles = refereeRoles;
+    }
+
+    public RefereeRoleOnCompetition(Referee referee, Competition competition) {
+        this.referee = referee;
+        this.competition = competition;
+    }
 }

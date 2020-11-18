@@ -60,6 +60,11 @@
                     <input type="submit" value="Dodaj zawody"/>
                 </form>
             </div>
+            <div sec:authorize="hasAuthority('sedzia')">
+                <form th:action="@{/chooseCompetitionForReferee}">
+                    <input type="submit" value="Sędziuj na zawodach"/>
+                </form>
+            </div>
             <form th:action="@{/redirectToSearchClubPage}">
                 <input type="submit" value="wyszukaj klub"/>
             </form>

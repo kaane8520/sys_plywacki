@@ -82,6 +82,12 @@ public class PersonController {
     @Autowired
     private RefereeRoleOnCompetitionRepository refereeRoleOnCompetitionRepository;
 
+    @Autowired
+    private RefereeRolesService refereeRolesService;
+
+    @Autowired
+    private CompetitionRepository competitionRepository;
+
     @GetMapping("/registration")
     public String registration(Model model) {
         if (securityService.isAuthenticated()) {
@@ -132,6 +138,9 @@ public class PersonController {
     @GetMapping({"/", "/welcome"})
     public String welcome(Model model) {
     	personService.update_user_role_if_exists();
+        if(refereeRolesRepository.findAll().isEmpty()) {
+            refereeRolesService.addRoles();
+        }
         return "welcome";
     }
     
@@ -188,10 +197,6 @@ public class PersonController {
         }
         else if (role.getName().equals("trener")) {
 
-//            Coach coach = new Coach();
-//            model.addAttribute("coach", coach);
-//            coachRepository.save(coach);
-//            coachPersonConnectionRepository.save(new CoachPersonConnection(coach, p));
             return "redirect:editCoach";
         }
         else if(role.getName().equals("sedzia")) {
@@ -340,6 +345,17 @@ public class PersonController {
     public String viewPlayersPage(Model model){
         List<Player> playerList = playerService.findAll();
         model.addAttribute("playerList", playerList);
+        List<PlayerPersonConnection> playerPersonConnections;
+        Player player = new Player();
+        player.getPersons();
+        System.out.println("id zawodnika " + player.getIdPlayer());
+        System.out.println("lsita zawodnika " + player.getPersons());
+
+        playerRepository.findAll();
+        System.out.println("lsita zawodnika " + playerRepository.findAll());
+        System.out.println("lsita zawodników i persons " + playerPersonConnectionRepository.findAll());
+
+
         return "/searchPlayers";
     }
 
@@ -427,22 +443,82 @@ public class PersonController {
         return "redirect:welcome";
     }
 
+    @RequestMapping(value = "/redirectChooseCompetitionForReferee", method = RequestMethod.GET)
+    public String redirectToChooseCompetitions() {
+        System.out.println("Redirecting Result To Judging Competitions Page");
+        return "redirect:chooseCompetitionForReferee";
+    }
 
+    @ModelAttribute("listOfCompetition")
+    public List<Competition> chooseCompetitions() {
+        System.out.println("Jestem w funkcji editPlayer @ModelAttribute");
+        List<Competition> listOfCompetition = competitionRepository.findAll();
+        for (Competition x : listOfCompetition) {
+            System.out.println("Id roli: "+x.getIdCompetitions());
+            System.out.println("Nazwa roli: "+x.getIdCompetitions());
+        }
+        return listOfCompetition;
+    }
+
+    @GetMapping("/chooseCompetitionForReferee")
+    public String chooseCompetitions(Model model){
+        model.addAttribute("competitionForm", new Competition());
+        System.out.println("Lista ról" + refereeRolesRepository.findAll());
+
+
+        return "/chooseCompetitionForReferee";
+    }
+    @PostMapping("/chooseCompetitionForReferee")
+    public String chooseCompetitions(@ModelAttribute Competition competitionForm){
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Person p = personService.findByUsername(auth.getName());
+        Long x = p.getId();
+        System.out.println("To jest id sedziego " +x);
+        Optional<Referee> referee = refereeRepository.findById(x);
+//        competitionRepository.saveAndFlush(competitionForm);
+        RefereeRoleOnCompetition refereeRoleOnCompetition = new RefereeRoleOnCompetition(referee.get(), competitionForm);
+        refereeRoleOnCompetitionRepository.save(refereeRoleOnCompetition);
+        return "redirect:judgingCompetitions";
+    }
     @RequestMapping(value = "/redirectToJudgingCompetitions", method = RequestMethod.GET)
     public String redirectToJudgingCompetitions() {
         System.out.println("Redirecting Result To Judging Competitions Page");
-        return "redirect:judgingCompetitions";
+        return "redirect:/judgingCompetitions";
     }
+
+    @ModelAttribute("listOfRefereeRoles")
+    public List<RefereeRoles> judgingCompetitions() {
+        System.out.println("Jestem w funkcji editPlayer @ModelAttribute");
+        List<RefereeRoles> listOfRefereeRoles = refereeRolesService.findAll();
+        for (RefereeRoles x : listOfRefereeRoles) {
+            System.out.println("Id roli: "+x.getIdrefereerole());
+            System.out.println("Nazwa roli: "+x.getRefereerolename());
+        }
+        return listOfRefereeRoles;
+    }
+
     @GetMapping("/judgingCompetitions")
     public String judgingCompetitions(Model model){
+        model.addAttribute("refereeRolesForm", new RefereeRoles());
+
         return "/judgingCompetitions";
     }
     @PostMapping("/judgingCompetitions")
-    public String judgingCompetitions(@ModelAttribute RefereeRoles refereeRoles, Model model){
+    public String judgingCompetitions(@ModelAttribute("refereeRolesForm") RefereeRoles refereeRolesForm){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Person p = personService.findByUsername(auth.getName());
+        Long x = p.getId();
+        System.out.println("To jest id sedziego " +x);
+        Optional<Referee> referee = refereeRepository.findById(x);
 
-        refereeRolesRepository.save(refereeRoles);
-        return "redirect:welcome";
+
+        RefereeRoleOnCompetition refereeRoleOnCompetition = new RefereeRoleOnCompetition(refereeRolesForm);
+        refereeRoleOnCompetitionRepository.saveAndFlush(refereeRoleOnCompetition);
+        return "redirect:/welcome";
     }
+
+
 
 /*
 

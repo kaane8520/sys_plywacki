@@ -6,7 +6,7 @@ import javax.persistence.*;
 public class RefereeRoles {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long idrefereerole;
     private String refereerolename;
 
     @OneToOne
@@ -19,12 +19,12 @@ public class RefereeRoles {
         this.refereeRoleOnCompetition = refereeRoleOnCompetition;
     }
 
-    public Long getId() {
-        return id;
+    public Long getIdrefereerole() {
+        return idrefereerole;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setIdrefereerole(Long id) {
+        this.idrefereerole = id;
     }
 
     public String getRefereerolename() {

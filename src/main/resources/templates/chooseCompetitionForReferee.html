@@ -37,42 +37,20 @@
 </div>
 
 <div class="container">
-<!--    <form method="POST" class="form-signin" th:object="${competitionForm}" th:action="@{/judgingCompetitions}">-->
-<!--        <h5>Wybierz zawody na których chcesz sędziować:</h5>-->
-<!--        <div class="form-group">-->
-<!--            <select th:field="*{idCompetitions}" class="form-control">-->
-<!--                <option th:each="dropDownItem : ${listOfCompetition}"-->
-<!--                        th:value="${dropDownItem.getIdCompetitions()}"-->
-<!--                        th:text="${dropDownItem.getCompetitionName()}"-->
-<!--                />-->
-<!--            </select>-->
-<!--        </div>-->
-<!--    </form>-->
+        <form method="POST" class="form-signin" th:object="${competitionForm}" th:action="@{/chooseCompetitionForReferee}">
+            <h5>Wybierz zawody na których chcesz sędziować:</h5>
+            <div class="form-group">
+                <select th:field="*{idCompetitions}" class="form-control">
+                    <option th:each="dropDownItem : ${listOfCompetition}"
+                            th:value="${dropDownItem.getIdCompetitions()}"
+                            th:text="${dropDownItem.getCompetitionName()}"
+                    />
+                </select>
+            </div>
+            <button id="add-player" button class="btn btn-lg btn-primary btn-block" type="submit">Potwierdz</button>
+        </form>
 
-    <form method="POST" class="form-signin" th:object="${refereeRolesForm}" th:action="@{/judgingCompetitions}">
 
-        <h5>Wybierz rolę na zawodach:</h5>
-        <div class="form-group">
-            <select th:field="*{idrefereerole}" class="form-control">
-                <option th:each="dropDownItem : ${listOfRefereeRoles}"
-                        th:value="${dropDownItem.getIdrefereerole()}"
-                        th:text="${dropDownItem.getRefereerolename()}"
-                />
-            </select>
-        </div>
-
-        <button id="add-player" button class="btn btn-lg btn-primary btn-block" type="submit">Potwierdz</button>
-    </form>
-
-<!--    <form method="POST" class="form-signin" th:object="${refereeRolesForm}" th:action="@{/judgingCompetitions}">-->
-<!--        <h1>Wybierz swoją role</h1>-->
-<!--    <div class="form-group">-->
-<!--        <input type="text" th:field="*{refereerolename}" placeholder="Wpisz nazwę roli" autofocus="true">-->
-<!--        <span class="has-error" th:if="${#fields.hasErrors('refereerolename')}" th:errors="*{refereerolename}"></span>-->
-<!--    </div>-->
-<!--    <button class="btn btn-lg btn-primary btn-block" type="submit">Dodaj role</button>-->
-
-<!--    </form>-->
 
 </div>
 
