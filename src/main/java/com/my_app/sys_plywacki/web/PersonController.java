@@ -260,53 +260,49 @@ public class PersonController {
         return "/editCoach";
     }
     @PostMapping("/editCoach")
-    public String editCoach(@ModelAttribute Coach coach, @ModelAttribute Club club, Model model, BindingResult bindingResult) {
+    public String editCoach(@ModelAttribute Coach coach, Model model, BindingResult bindingResult) {
         System.out.println("Data wygasniecia dokumentacji zawodnika: "+coach.getCoachlegidate());
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Person p = personService.findByUsername(auth.getName());
 
-        coach = new Coach(club);
-        club = new Club(coach);
-        clubRepository.save(club);
         coachRepository.save(coach);
-
-
-
-        return "redirect:welcome";
+        return "redirect:registrationClub";
     }
 
 
 
-//    @GetMapping("/registrationClub")
-//    public String clubReg(@ModelAttribute Club club, Model model){
-//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        Person p = personService.findByUsername(auth.getName());
-//        Long x = p.getId();
-//        Optional<Coach> coach = coachRepository.findById(x);
-//
-//        model.addAttribute("club", new Club(coach.get()));
-//
-//        return "/registrationClub";
-//    }
+    @GetMapping("/registrationClub")
+    public String clubReg(Model model){
 
-//    @RequestMapping(value = "/redirectToRegClub", method = RequestMethod.GET)
-//    public String redirectToRegClub() {
-//        System.out.println("Redirecting Result To The Final Page");
-//        return "redirect:registrationClub";
-//    }
-//
-//    @PostMapping("/registrationClub")
-//    public String clubReg(@ModelAttribute("club") Club club){
-//        System.out.println("Jestem w PostMapping /clubRegistration");
-//        Coach coach = new Coach(club);
-//        Club clubb = new Club(coach);
-//        clubRepository.save(club);
-//        coachRepository.save(coach);
-//
-//
-//
-//        return "redirect:/welcome";
-//    }
+        model.addAttribute("clubForm", new Club());
+
+        return "/registrationClub";
+    }
+
+    @RequestMapping(value = "/redirectToRegClub", method = RequestMethod.GET)
+    public String redirectToRegClub() {
+        System.out.println("Redirecting Result To The Final Page");
+        return "redirect:registrationClub";
+    }
+
+    @PostMapping("/registrationClub")
+    public String clubReg(@ModelAttribute("clubForm") Club clubForm){
+        System.out.println("Jestem w PostMapping /clubRegistration");
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Person p = personService.findByUsername(auth.getName());
+        Long x = p.getId();
+        Optional<Coach> coach = coachRepository.findById(x);
+        Long id_coach = coach.get().getIdCoach();
+
+        clubService.save(clubForm);
+        clubForm.getId_club();
+        coach.get().setClub(clubForm);
+        clubForm.setCoach(coach.get());
+
+        coachRepository.saveAndFlush(coach.get());
+        clubRepository.saveAndFlush(clubForm);
+        return "redirect:/welcome";
+    }
 
 
     @GetMapping("/searchClubs")

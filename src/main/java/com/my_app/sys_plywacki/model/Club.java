@@ -17,7 +17,7 @@ public class Club {
     private String clubname;
     
     @OneToMany
-    @Column 
+    @Column (nullable = false)
     private List<ClubPlayerConnection> players;
 
     @OneToOne
@@ -26,6 +26,14 @@ public class Club {
 //    public Club(Coach coach) {
 //        this.coach = coach;
 //    }
+
+    public Coach getCoach() {
+        return coach;
+    }
+
+    public void setCoach(Coach coach) {
+        this.coach = coach;
+    }
 
     @Override
     public String toString() {

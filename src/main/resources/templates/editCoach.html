@@ -37,26 +37,28 @@
 </div>
 
 <div class="container">
-    <form method="POST" class="form-signin"  th:action="@{/editCoach}">
-        <div class="form-signin" th:object="${coach}">
+
+        <form method="POST" class="form-signin" th:object="${coach}" th:action="@{/editCoach}">
             <h2 class="form-signin-heading">Edytuj swój profil (trener)</h2>
             <div class="form-group">
                 <input type="date" th:field=*{coachlegidate} class="form-control" placeholder="Data ważności Twojej dokumentacji" autofocus="true" required="required">
                 <span class="has-error" th:if="${#fields.hasErrors('coachlegidate')}" th:errors="*{coachlegidate}"></span>
-            </div>
-        </div>
 
-        <div class="form-signin" th:object="${club}">
-            <h1>Rejestracja klubu</h1>
-            <div class="form-group">
-                <input type="text" th:field="*{clubname}" placeholder="Wpisz nazwę klubu" autofocus="true">
-                <span class="has-error" th:if="${#fields.hasErrors('clubname')}" th:errors="*{clubname}"></span>
             </div>
-<!--            <button id="add-player" button class="btn btn-lg btn-primary btn-block" type="submit">Potwierdz</button>-->
-        </div>
-        <button id="add-player" button class="btn btn-lg btn-primary btn-block" type="submit">Potwierdz</button>
+            <button id="add-player" button class="btn btn-lg btn-primary btn-block" type="submit">Potwierdz</button>
 
-    </form>
+        </form>
+
+<!--        <form method="POST" class="form-signin" th:object="${club}">-->
+<!--            <h1>Rejestracja klubu</h1>-->
+<!--            <div class="form-group">-->
+<!--                <input type="text" th:field="*{clubname}" placeholder="Wpisz nazwę klubu" autofocus="true">-->
+<!--                <span class="has-error" th:if="${#fields.hasErrors('clubname')}" th:errors="*{clubname}"></span>-->
+<!--            </div>-->
+<!--&lt;!&ndash;            <button id="add-player" button class="btn btn-lg btn-primary btn-block" type="submit">Potwierdz</button>&ndash;&gt;-->
+<!--        </form>-->
+<!--        <button id="add-player" button class="btn btn-lg btn-primary btn-block" type="submit">Potwierdz</button>-->
+
 </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
