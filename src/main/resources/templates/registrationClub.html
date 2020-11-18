@@ -36,8 +36,8 @@
     <div class="container">
         <form method="POST" class="form-signin" th:object="${clubForm}" th:action="@{/registrationClub}">
             <div class="form-group">
-                <input type="text" th:field="*{club_name}" placeholder="Wpisz nazwę klubu" autofocus="true">
-                <span class="has-error" th:if="${#fields.hasErrors('club_name')}" th:errors="*{club_name}"></span>
+                <input type="text" th:field="*{clubname}" placeholder="Wpisz nazwę klubu" autofocus="true">
+                <span class="has-error" th:if="${#fields.hasErrors('clubname')}" th:errors="*{clubname}"></span>
             </div>
             <button class="btn btn-lg btn-primary btn-block" type="submit">Zarejestruj klub</button>
 

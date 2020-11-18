@@ -198,7 +198,7 @@ public class PersonController {
     	List<Club> listOfAvailableClubs = clubService.findAll();
         for (Club x : listOfAvailableClubs) {
         	System.out.println("Id klubu: "+x.getId_club());
-            System.out.println("Nazwa klubu: "+x.getClub_name());
+            System.out.println("Nazwa klubu: "+x.getClubname());
         }
         return listOfAvailableClubs;
      }
