@@ -13,7 +13,7 @@ public class Club {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_club;
-    @Column(nullable = false)
+    @Column
     private String clubname;
     
     @OneToMany
@@ -40,7 +40,7 @@ public class Club {
         this.id_club = id_club;
     }
 
-    public String getClub_name() {
+    public String getClubname() {
         return clubname;
     }
 

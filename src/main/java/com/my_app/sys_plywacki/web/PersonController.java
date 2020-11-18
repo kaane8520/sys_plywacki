@@ -215,7 +215,7 @@ public class PersonController {
     	List<Club> listOfAvailableClubs = clubService.findAll();
         for (Club x : listOfAvailableClubs) {
         	System.out.println("Id klubu: "+x.getId_club());
-            System.out.println("Nazwa klubu: "+x.getClub_name());
+            System.out.println("Nazwa klubu: "+x.getClubname());
         }
         return listOfAvailableClubs;
      }
@@ -289,24 +289,24 @@ public class PersonController {
 //        return "/registrationClub";
 //    }
 
-    @RequestMapping(value = "/redirectToRegClub", method = RequestMethod.GET)
-    public String redirectToRegClub() {
-        System.out.println("Redirecting Result To The Final Page");
-        return "redirect:registrationClub";
-    }
-
-    @PostMapping("/registrationClub")
-    public String clubReg(@ModelAttribute("club") Club club){
-        System.out.println("Jestem w PostMapping /clubRegistration");
-        Coach coach = new Coach(club);
-        Club clubb = new Club(coach);
-        clubRepository.save(club);
-        coachRepository.save(coach);
-
-
-
-        return "redirect:/welcome";
-    }
+//    @RequestMapping(value = "/redirectToRegClub", method = RequestMethod.GET)
+//    public String redirectToRegClub() {
+//        System.out.println("Redirecting Result To The Final Page");
+//        return "redirect:registrationClub";
+//    }
+//
+//    @PostMapping("/registrationClub")
+//    public String clubReg(@ModelAttribute("club") Club club){
+//        System.out.println("Jestem w PostMapping /clubRegistration");
+//        Coach coach = new Coach(club);
+//        Club clubb = new Club(coach);
+//        clubRepository.save(club);
+//        coachRepository.save(coach);
+//
+//
+//
+//        return "redirect:/welcome";
+//    }
 
 
     @GetMapping("/searchClubs")
