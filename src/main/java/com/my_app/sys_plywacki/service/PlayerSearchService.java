@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 
-public interface PlayerSearchService extends JpaRepository<Player, Long> {
+public interface PlayerSearchService {
 
 //    @Query("SELECT p FROM Player p WHERE p.username LIKE %?1%")
 //    public List<Player> search (String keyword);

@@ -55,6 +55,8 @@ public class PersonController {
     private ClubPlayerConnectionRepository clubPlayerConnectionRepository;
     @Autowired
     private PlayerPersonConnectionRepository playerPersonConnectionRepository;
+    @Autowired
+    private PersonRepository personRepository;
 
 
 
@@ -175,7 +177,7 @@ public class PersonController {
     	List<Club> listOfAvailableClubs = clubService.findAll();
         for (Club x : listOfAvailableClubs) {
         	System.out.println("Id klubu: "+x.getId_club());
-            System.out.println("Nazwa klubu: "+x.getClub_name());
+            System.out.println("Nazwa klubu: "+x.getClubname());
         }
         return listOfAvailableClubs;
      }
@@ -273,23 +275,28 @@ public class PersonController {
 
     @GetMapping("/searchPlayers")
     public String viewPlayersPage(Model model){
-        List<Player> playerList = playerService.findAll();
+        List<Player> playerList = playerRepository.findAll();
         model.addAttribute("playerList", playerList);
-        System.out.println("Lista zawodnikow dodana do modelu");
-        
-        for (Player x : playerList) {
-        	System.out.println("Id zawodnika: "+x.getIdPlayer());
-            System.out.println("Id klubu: "+x.getIdClub());
-            
-            List<PlayerPersonConnection> person_player_connection = x.getPersons();
-            System.out.println("person_player_connection: "+x.getPersons());
-            for(PlayerPersonConnection p: person_player_connection) {
-            	//model.addAttribute("per",p.getPerson());
-            	System.out.println("Username"+p.getPerson().getUsername());
-            }
-        }
+
         return "/searchPlayers";
     }
+
+    @ModelAttribute("listOfPlayers")
+    public List<PlayerPersonConnection> viewPlayersPage() {
+
+        List<PlayerPersonConnection> listOfPlayers = playerPersonConnectionRepository.findAll();
+
+        return listOfPlayers;
+    }
+    @ModelAttribute("listOfClubs")
+    public List<ClubPlayerConnection> viewPlayersPageC() {
+
+        List<ClubPlayerConnection> listOfClubs = clubPlayerConnectionRepository.findAll();
+
+        return listOfClubs;
+    }
+
+
     @RequestMapping(value = "/redirectToSearchPlayersPage", method = RequestMethod.GET)
     public String redirectToSearchPlayersPage() {
         System.out.println("Redirecting Result To The Final Page");
@@ -337,7 +344,7 @@ public class PersonController {
 
     @PostMapping("registrationCompetitorsPlayer")
     public String registrationCompetitiorsPlayer(@ModelAttribute("competitiorsPlayerForm") Player competitiorsPlayerForm){
-        playerService.save(competitiorsPlayerForm);
+        playerRepository.save(competitiorsPlayerForm);
 
         return "/searchCompetitions";
     }

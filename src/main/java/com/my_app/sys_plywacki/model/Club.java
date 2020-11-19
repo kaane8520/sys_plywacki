@@ -6,7 +6,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Column;
 import java.util.List;
-import java.util.Set;
 import javax.persistence.*;
 
 @Entity
@@ -15,7 +14,7 @@ public class Club {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_club;
     @Column(nullable = false)
-    private String club_name;
+    private String clubname;
     
     @OneToMany
     @Column 
@@ -23,7 +22,7 @@ public class Club {
 
     @Override
     public String toString() {
-        return "Club [id=" + id_club + ", club name=" + club_name +"]";
+        return "Club [id=" + id_club + ", club name=" + clubname +"]";
     }
 
     public Long getId_club() {
@@ -34,12 +33,12 @@ public class Club {
         this.id_club = id_club;
     }
 
-    public String getClub_name() {
-        return club_name;
+    public String getClubname() {
+        return clubname;
     }
 
-    public void setClub_name(String club_name) {
-        this.club_name = club_name;
+    public void setClubname(String clubname) {
+        this.clubname = clubname;
     }
 
     public List<ClubPlayerConnection> getPlayers() {

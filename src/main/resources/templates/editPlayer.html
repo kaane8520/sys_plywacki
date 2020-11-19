@@ -49,7 +49,7 @@
 		         <select th:field="*{idClub}" class="form-control">
 		         	<option th:each="dropDownItem : ${listOfAvailableClubs}"
 		                                 th:value="${dropDownItem.getId_club()}"
-		                                 th:text="${dropDownItem.getClub_name()}" 
+		                                 th:text="${dropDownItem.getClubname()}"
 		                              />
 		         </select>
 		       <!-- </div> -->

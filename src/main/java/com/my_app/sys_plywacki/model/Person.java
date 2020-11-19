@@ -23,6 +23,13 @@ public class Person {
     @Column(nullable = false)
     private String password;
 
+    public List<PlayerPersonConnection> getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(List<PlayerPersonConnection> players) {
+        this.players = players;
+    }
 
     @Transient
     @Column //(name = "passwordConfirm")
