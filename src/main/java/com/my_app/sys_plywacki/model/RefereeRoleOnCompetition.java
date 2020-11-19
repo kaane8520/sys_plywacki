@@ -17,6 +17,38 @@ public class RefereeRoleOnCompetition {
     @ManyToOne
     Competition competition;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public RefereeRoles getRefereeRoles() {
+        return refereeRoles;
+    }
+
+    public void setRefereeRoles(RefereeRoles refereeRoles) {
+        this.refereeRoles = refereeRoles;
+    }
+
+    public Referee getReferee() {
+        return referee;
+    }
+
+    public void setReferee(Referee referee) {
+        this.referee = referee;
+    }
+
+    public Competition getCompetition() {
+        return competition;
+    }
+
+    public void setCompetition(Competition competition) {
+        this.competition = competition;
+    }
+
     public RefereeRoleOnCompetition() {
     }
 

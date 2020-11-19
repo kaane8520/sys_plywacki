@@ -10,10 +10,7 @@ import com.my_app.sys_plywacki.service.*;
 import com.my_app.sys_plywacki.repository.*;
 import org.springframework.security.core.Authentication;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -468,6 +465,7 @@ public class PersonController {
 
         return "/chooseCompetitionForReferee";
     }
+    private Long idRefereeOnCompetition;
     @PostMapping("/chooseCompetitionForReferee")
     public String chooseCompetitions(@ModelAttribute Competition competitionForm){
 
@@ -476,9 +474,12 @@ public class PersonController {
         Long x = p.getId();
         System.out.println("To jest id sedziego " +x);
         Optional<Referee> referee = refereeRepository.findById(x);
-//        competitionRepository.saveAndFlush(competitionForm);
         RefereeRoleOnCompetition refereeRoleOnCompetition = new RefereeRoleOnCompetition(referee.get(), competitionForm);
+        //zapisuje referee role on competition z id sędziego i id zawodów
         refereeRoleOnCompetitionRepository.save(refereeRoleOnCompetition);
+        //pobieram id rekordu referee role on competition
+        idRefereeOnCompetition = refereeRoleOnCompetitionRepository.save(refereeRoleOnCompetition).getId();
+        System.out.println("To jest id roli sędziego na zawodach: " + idRefereeOnCompetition);
         return "redirect:judgingCompetitions";
     }
     @RequestMapping(value = "/redirectToJudgingCompetitions", method = RequestMethod.GET)
@@ -489,7 +490,7 @@ public class PersonController {
 
     @ModelAttribute("listOfRefereeRoles")
     public List<RefereeRoles> judgingCompetitions() {
-        System.out.println("Jestem w funkcji editPlayer @ModelAttribute");
+
         List<RefereeRoles> listOfRefereeRoles = refereeRolesService.findAll();
 
         return listOfRefereeRoles;
@@ -503,14 +504,19 @@ public class PersonController {
     }
     @PostMapping("/judgingCompetitions")
     public String judgingCompetitions(@ModelAttribute("refereeRolesForm") RefereeRoles refereeRolesForm){
+        System.out.println("Jestem w funkcji judgingCompetitions @ModelAttribute");
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Person p = personService.findByUsername(auth.getName());
         Long x = p.getId();
         System.out.println("To jest id sedziego " +x);
         Optional<Referee> referee = refereeRepository.findById(x);
 
-
-        RefereeRoleOnCompetition refereeRoleOnCompetition = new RefereeRoleOnCompetition(refereeRolesForm);
+        System.out.println("To jest id roli sędziego na zawodach: " + idRefereeOnCompetition);
+        //edycja rekordu referee role on competition z poprzedniej karty
+        RefereeRoleOnCompetition refereeRoleOnCompetition = refereeRoleOnCompetitionRepository.getOne(idRefereeOnCompetition);
+        //ustawiam id referee roli w rokordzie
+        refereeRoleOnCompetition.setRefereeRoles(refereeRolesForm);
+        //update rekordu
         refereeRoleOnCompetitionRepository.saveAndFlush(refereeRoleOnCompetition);
         return "redirect:/welcome";
     }
