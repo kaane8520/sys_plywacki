@@ -53,10 +53,11 @@
             <tr th:if="${playerList.empty}">
                 <td colspan="3"> Nie ma zawodników</td>
             </tr>
+            
             <tr th:each="player : ${playerList}">
-<!--                <td th:text="${playerList.id_competitions}"></td>-->
-<!--                <td th:text="${playerList.competition_date}"></td>-->
-<!--                <td th:text="${playerList.competition_name}"></td>-->
+	               <td th:text="${player.getIdPlayer()}"></td>
+					<!-- <td th:text="${per.getUsername()}"></td> -->
+<!--                <td th:text="${playerList.getClubs().getClub_name()}"></td>-->
 
 
             </tr>

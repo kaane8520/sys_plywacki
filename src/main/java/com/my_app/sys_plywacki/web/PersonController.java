@@ -264,6 +264,7 @@ public class PersonController {
         return "/searchCompetitions";
     }
 
+
     @RequestMapping(value = "/redirectToSearchCompetitionsPage", method = RequestMethod.GET)
     public String redirectToSearchCompetitionsPage() {
         System.out.println("Redirecting Result To The Final Page");
@@ -274,10 +275,21 @@ public class PersonController {
     public String viewPlayersPage(Model model){
         List<Player> playerList = playerService.findAll();
         model.addAttribute("playerList", playerList);
+        System.out.println("Lista zawodnikow dodana do modelu");
+        
+        for (Player x : playerList) {
+        	System.out.println("Id zawodnika: "+x.getIdPlayer());
+            System.out.println("Id klubu: "+x.getIdClub());
+            
+            List<PlayerPersonConnection> person_player_connection = x.getPersons();
+            System.out.println("person_player_connection: "+x.getPersons());
+            for(PlayerPersonConnection p: person_player_connection) {
+            	//model.addAttribute("per",p.getPerson());
+            	System.out.println("Username"+p.getPerson().getUsername());
+            }
+        }
         return "/searchPlayers";
     }
-
-
     @RequestMapping(value = "/redirectToSearchPlayersPage", method = RequestMethod.GET)
     public String redirectToSearchPlayersPage() {
         System.out.println("Redirecting Result To The Final Page");

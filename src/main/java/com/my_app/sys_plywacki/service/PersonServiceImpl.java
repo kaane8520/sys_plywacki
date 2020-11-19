@@ -4,6 +4,7 @@ import com.my_app.sys_plywacki.model.Person;
 import com.my_app.sys_plywacki.model.Role;
 import com.my_app.sys_plywacki.repository.RoleRepository;
 import com.my_app.sys_plywacki.repository.PersonRepository;
+import com.my_app.sys_plywacki.repository.PlayerPersonConnectionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -29,7 +30,8 @@ public class PersonServiceImpl implements PersonService {
 	private RoleRepository roleRepository;
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
-
+	@Autowired
+	private PlayerPersonConnectionRepository playerPersonRepository;
 
 	public PersonServiceImpl() throws SQLException {
 	}

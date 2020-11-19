@@ -27,4 +27,7 @@ public class PlayerPersonConnection {
     public void setId(Long id) {
         this.id = id;
     }
+    public Person getPerson() {
+    	return this.person;
+    }
 }

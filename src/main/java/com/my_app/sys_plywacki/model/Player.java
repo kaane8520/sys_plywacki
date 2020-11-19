@@ -21,8 +21,7 @@ public class Player{
     private LocalDate medExDate;
 
     private Long idClub;
-
-
+    
     @OneToMany
     List<ClubPlayerConnection> clubs;
 
