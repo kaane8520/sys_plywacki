@@ -32,4 +32,30 @@ public class ClubPlayerConnection {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public Club getClub() {
+        return club;
+    }
+
+    public void setClub(Club club) {
+        this.club = club;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
+    public Long getIdplayer(){
+        return player.getIdPlayer();
+    }
+
+    public String getClubName(){
+        return club.getClubname();
+    }
+
+
 }

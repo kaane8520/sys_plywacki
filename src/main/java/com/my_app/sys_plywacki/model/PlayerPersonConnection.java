@@ -31,4 +31,33 @@ public class PlayerPersonConnection {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
+    public void getIdplayer(){
+        this.player.getIdPlayer();
+    }
+    public void getIdperson(){
+        this.person.getId_person();
+    }
+
+    public String getUsername() {
+        return person.getUsername();
+    }
+
+
 }

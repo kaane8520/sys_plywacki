@@ -21,4 +21,32 @@ public class OrganizerCompetitionConnection {
 
     public OrganizerCompetitionConnection() {
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Competition getCompetition() {
+        return competition;
+    }
+
+    public void setCompetition(Competition competition) {
+        this.competition = competition;
+    }
+
+    public Organizer getOrganizer() {
+        return organizer;
+    }
+
+    public void setOrganizer(Organizer organizer) {
+        this.organizer = organizer;
+    }
+
+    public void getIdorganizer(){
+        this.organizer.getId_organizer();
+    }
 }

@@ -21,4 +21,37 @@ public class CoachPersonConnection {
 
     public CoachPersonConnection() {
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Coach getCoach() {
+        return coach;
+    }
+
+    public void setCoach(Coach coach) {
+        this.coach = coach;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+    public Long getIdcoach(){
+
+        return coach.getIdCoach();
+    }
+    public Long getIdperson(){
+        return person.getId_person();
+    }
+
+
 }

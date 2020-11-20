@@ -22,4 +22,34 @@ public class OrganizerPersonConnection {
     public OrganizerPersonConnection() {
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Organizer getOrganizer() {
+        return organizer;
+    }
+
+    public void setOrganizer(Organizer organizer) {
+        this.organizer = organizer;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
+    public Long getIdperson(){
+        return person.getId_person();
+    }
+    public Long getIdorganizer(){
+        return organizer.getId_organizer();
+    }
 }

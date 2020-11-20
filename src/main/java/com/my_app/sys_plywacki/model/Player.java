@@ -1,5 +1,10 @@
 package com.my_app.sys_plywacki.model;
 
+import com.my_app.sys_plywacki.repository.ClubRepository;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import javax.persistence.*;
 
@@ -30,13 +36,7 @@ public class Player{
     @OneToMany
     List<PlayerPersonConnection> persons;
 
-//    public Set<Person> getPersons() {
-//        return persons;
-//    }
-//
-//    public void setPersons(Set<Person> persons) {
-//        this.persons = persons;
-//    }
+
 
     public Long getIdPlayer() {
         return idPlayer;
@@ -76,4 +76,6 @@ public class Player{
         this.medExDate = medExDate;
     }
     public void search(String keyword){}
+
+
 }

@@ -60,4 +60,10 @@ public class RefereeRoleOnCompetition {
         this.referee = referee;
         this.competition = competition;
     }
+    public void getIdreferee(){
+        this.referee.getIdReferee();
+    }
+    public void getIdrefereerole(){
+        this.refereeRoles.getIdrefereerole();
+    }
 }

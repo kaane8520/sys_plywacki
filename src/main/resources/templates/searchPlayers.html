@@ -43,20 +43,20 @@
         <br/><br/>
         <table border="1" cellpadding="10">
             <thead>
-<!--            <tr>-->
-<!--                <th>ID zawodów</th>-->
-<!--                <th>Data zawodów</th>-->
-<!--                <th>Nazwa zawodów</th>-->
-<!--            </tr>-->
+            <tr>
+                <th>Numer zawodnika</th>
+                <th>Nazwa zawodnika</th>
+                <th>Nazwa klubu</th>
+            </tr>
             </thead>
             <tbody>
-            <tr th:if="${playerList.empty}">
+            <tr th:if="${listOfPlayers.empty}">
                 <td colspan="3"> Nie ma zawodników</td>
             </tr>
-            <tr th:each="player : ${playerList}">
-<!--                <td th:text="${playerList.id_competitions}"></td>-->
-<!--                <td th:text="${playerList.competition_date}"></td>-->
-<!--                <td th:text="${playerList.competition_name}"></td>-->
+            <tr th:each="player : ${listOfPlayers}">
+                <td th:text="${player.id}"></td>
+                <td th:text="${player.getUsername()}"></td>
+<!--                <td th:text="${player.getClubname()}"></td>-->
 
 
             </tr>
