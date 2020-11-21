@@ -85,6 +85,12 @@ public class PersonController {
     @Autowired
     private CompetitionRepository competitionRepository;
 
+    @Autowired
+    private CategoriesService categoriesService;
+
+    @Autowired
+    private CategoriesRepository categoriesRepository;
+
     @GetMapping("/registration")
     public String registration(Model model) {
         if (securityService.isAuthenticated()) {
@@ -137,6 +143,9 @@ public class PersonController {
     	personService.update_user_role_if_exists();
         if(refereeRolesRepository.findAll().isEmpty()) {
             refereeRolesService.addRoles();
+        }
+        if(categoriesRepository.findAll().isEmpty()){
+            categoriesService.addCategories();
         }
         return "welcome";
     }
