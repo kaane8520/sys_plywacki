@@ -30,11 +30,14 @@ public class Player{
 
 
     @OneToMany
-    List<ClubPlayerConnection> clubs;
+    private List<ClubPlayerConnection> clubs;
 
 
     @OneToMany
-    List<PlayerPersonConnection> persons;
+    private List<PlayerPersonConnection> persons;
+
+    @OneToOne
+    private CategoriesOnCompetition categoriesOnCompetition;
 
 
 

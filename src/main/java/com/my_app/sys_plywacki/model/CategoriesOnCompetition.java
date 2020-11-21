@@ -1,15 +1,21 @@
 package com.my_app.sys_plywacki.model;
 
 import javax.persistence.*;
-import java.util.List;
+
 @Entity
-public class Result {
+public class CategoriesOnCompetition {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_result;
+    private Long id;
 
-    @OneToMany
-    private List<CategoriesOnCompetition> categoriesOnCompetition;
+    @OneToOne
+    private Categories categories;
+
     @ManyToOne
     private Competition competition;
+
+    @ManyToOne
+    private Result result;
+    @OneToOne
+    private Player player;
 }
