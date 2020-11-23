@@ -2,7 +2,7 @@
 <html lang="pl-PL" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="utf-8">
-    <title>Wyszukaj zawody</title>
+    <title>Edytuj konto</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link href="/css/main.css" rel="stylesheet">
 </head>
@@ -37,60 +37,21 @@
 </div>
 
 <div class="container">
-    <div align="center">
-        <h1>Lista zawodów</h1>
-        <br/><br/>
-        <!-- <div sec:authorize="isAuthenticated()"> -->
-        <div sec:authorize="hasAuthority('organizator')">
-            <form th:action="@{/registrationCompetitions}">
-                <input type="submit" value="Dodaj zawody"/>
-            </form>
+
+    <form method="POST" class="form-signin" th:object="${regCompetitorsPlayerForm}" th:action="@{/regCompetitorsPlayer}">
+        <h5>Wybierz zawodników:</h5>
+        <div class="form-group">
+                    <p th:each="dropDownItem : ${listOfPlayersInClub}">
+                        <input type="checkbox" th:value="${dropDownItem.getIdplayer()}" />
+                        <label th:text="${ dropDownItem.getIdplayer()}">Heating</label>
+                        <label th:text="${ dropDownItem.}">Heating</label>
+                    </p>
         </div>
-        <br/><br/>
-        <table border="1" cellpadding="10">
-            <thead>
-            <tr>
-                <th>ID zawodów</th>
-                <th>Data zawodów</th>
-                <th>Nazwa zawodów</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:if="${competitionList.empty}">
-                <td colspan="3"> Nie ma zawodów </td>
-            </tr>
-            <tr th:each="competition : ${competitionList}">
-                <td th:text="${competition.idCompetitions}"></td>
-                <td th:text="${competition.competitionDate}"></td>
-                <td th:text="${competition.competitionName}"></td>
-                <div sec:authorize="hasAuthority('trener')">
-                    <td>
-                        <form class="form-signin"  th:object="${competitiorsPlayerForm}" th:action="@{/redirectRegCompetitorsPlayer}">
-                            <input type="submit" value="Zarejestruj klub na zawody"/>
-                        </form>
-                    </td>
-                </div>
-                <div sec:authorize="hasAuthority('sedzia')">
-                    <td>
-                        <form class="form-signin" th:object="${competitiorsPlayerForm}" th:action="@{/redirectToJudgingCompetitions}">
-                             <input type="submit" value="Zapisz się na zawody"/>
-                         </form>
-                    </td>
-                </div>
-                <div sec:authorize="hasAuthority('organizator')">
-                    <td>
-                        <form class="form-signin" th:object="${competitiorsPlayerForm}" th:action="@{/redirectToJudgingCompetitions}">
-                            <input type="submit" value="Zobacz aplikacje"/>
-                        </form>
-                    </td>
-                </div>
 
+        <button id="add-player" button class="btn btn-lg btn-primary btn-block" type="submit">Potwierdz</button>
 
+    </form>
 
-            </tr>
-            </tbody>
-        </table>
-    </div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

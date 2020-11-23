@@ -40,6 +40,9 @@ public class Player{
     private CategoriesOnCompetition categoriesOnCompetition;
 
 
+    public Player() {
+    }
+
 
     public Long getIdPlayer() {
         return idPlayer;
@@ -50,6 +53,7 @@ public class Player{
     public void setIdClub(Long idClub) {
         this.idClub = idClub;
     }
+
 
     public List<ClubPlayerConnection> getClubs() {
         return clubs;
@@ -79,6 +83,5 @@ public class Player{
         this.medExDate = medExDate;
     }
     public void search(String keyword){}
-
 
 }

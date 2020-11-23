@@ -16,6 +16,8 @@ public class ClubPlayerConnection {
     @ManyToOne
     Player player;
 
+
+
     public ClubPlayerConnection(Club club, Player player) {
         this.club = club;
         this.player = player;

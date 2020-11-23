@@ -48,11 +48,8 @@ public class PlayerPersonConnection {
         this.person = person;
     }
 
-    public void getIdplayer(){
-        this.player.getIdPlayer();
-    }
-    public void getIdperson(){
-        this.person.getId_person();
+    public Long getIdplayer(){
+        return player.getIdPlayer();
     }
 
     public String getUsername() {

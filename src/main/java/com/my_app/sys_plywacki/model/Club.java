@@ -22,6 +22,7 @@ public class Club {
 
     @OneToOne
     private Coach coach;
+    private Long id_coach;
 
 //    public Club(Coach coach) {
 //        this.coach = coach;
@@ -33,6 +34,14 @@ public class Club {
 
     public void setCoach(Coach coach) {
         this.coach = coach;
+    }
+
+    public Long getId_coach() {
+        return id_coach;
+    }
+
+    public void setId_coach(Long id_coach) {
+        this.id_coach = id_coach;
     }
 
     @Override

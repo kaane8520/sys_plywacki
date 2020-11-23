@@ -52,14 +52,17 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:if="${clubList.empty}">
+                    <tr th:if="${clubList.isEmpty()}">
                         <td colspan="2"> Nie ma klubów </td>
                     </tr>
                     <tr th:each="club : ${clubList}">
                         <td th:text="${club.id_club}"></td>
-                        <td th:text="${club.club_name}"></td>
-
-
+                        <td th:text="${club.clubname}"></td>
+                        <div sec:authorize="hasAuthority('trener')">
+                            <td>
+                                <a th:href="@{/deleteClub/{id}(id=${club.id_club})}">Delete</a>
+                            </td>
+                        </div>
                     </tr>
                     </tbody>
                 </table>
@@ -75,7 +78,7 @@
             </div>
         </form>
         <form th:object="${clubList}" th:action="@{/searchClub}" method="post">
-            Filter: <input type="text" name="keyword" id="keyword" size="50" th:name="club_name" th:value="${search}" required />
+            Filter: <input type="text" name="keyword" id="keyword" size="50" th:name="clubname" th:value="${search}" required />
 
             <input type="submit" value="Wyszukaj" />
 
