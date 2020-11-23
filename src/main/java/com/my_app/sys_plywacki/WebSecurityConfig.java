@@ -12,6 +12,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import javax.sql.DataSource;
+
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -33,7 +35,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/judgingCompetitions").hasAuthority("sedzia")
                 .antMatchers("/registrationCompetitorsCoach", "/verificationMedicalExaminations").hasAuthority("trener")
                 .antMatchers("/registrationCompetitiorsPlayer","/test").hasAuthority("trener")
-                .antMatchers("/editPlayer").hasAuthority("zawodnik")
+                //.antMatchers("/editPlayer").hasAuthority("zawodnik")
                 .anyRequest().authenticated()
                 .and()
             .formLogin()
@@ -53,4 +55,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
     }
+
 }

@@ -47,7 +47,7 @@
 
           <h5>Twoja rola to: <span sec:authentication="authorities"></span></h5>
             <span sec:authentication="name">username</span>
-            <form th:action="@{/redirectToEditPage}">
+            <form th:action="@{/redirectToChangeYourRolePage}">
                 <input type="submit" value="Edytuj swoje konto"/>
             </form>
             <div sec:authorize="hasAuthority('trener')">
@@ -68,9 +68,15 @@
             <form th:action="@{/redirectToSearchClubPage}">
                 <input type="submit" value="wyszukaj klub"/>
             </form>
+            <div sec:authorize="hasAuthority('trener')">
+            <form th:action="@{/redirectToVerificationMedicalExaminations}">
+                <input type="submit" value="Weryfikuj dokumentacje"/>
+            </form>
+            </div>
 
         </div>
     </div>
+    <h1 th:text = "${message}"></h1>
 
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>

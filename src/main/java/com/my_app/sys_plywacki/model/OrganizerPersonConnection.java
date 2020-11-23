@@ -47,7 +47,7 @@ public class OrganizerPersonConnection {
     }
 
     public Long getIdperson(){
-        return person.getId_person();
+        return person.getIdPerson();
     }
     public Long getIdorganizer(){
         return organizer.getId_organizer();

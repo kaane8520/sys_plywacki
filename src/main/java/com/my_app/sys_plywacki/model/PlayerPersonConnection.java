@@ -52,7 +52,7 @@ public class PlayerPersonConnection {
         this.player.getIdPlayer();
     }
     public void getIdperson(){
-        this.person.getId_person();
+        this.person.getIdPerson();
     }
 
     public String getUsername() {

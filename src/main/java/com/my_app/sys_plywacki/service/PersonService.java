@@ -1,6 +1,7 @@
 package com.my_app.sys_plywacki.service;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 
@@ -17,4 +18,6 @@ public interface PersonService {
     Collection<? extends GrantedAuthority> getAuthorities(Role role);
     
     void update_user_role_if_exists();
+
+    List<Person> findAll();
 }

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>Twoje zgłoszenie zostało wysłane</h1>
+    <h2>Powrót do strony głównej</h2>
+    <form th:action="@{/redirectToWelcome}">
+        <input class="nav-items" type="submit" value="Strona główna"/>
+    </form>
+</body>
+</html>

@@ -50,7 +50,7 @@ public class CoachPersonConnection {
         return coach.getIdCoach();
     }
     public Long getIdperson(){
-        return person.getId_person();
+        return person.getIdPerson();
     }
 
 

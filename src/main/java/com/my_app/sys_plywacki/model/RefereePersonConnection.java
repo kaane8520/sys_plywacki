@@ -52,6 +52,6 @@ public class RefereePersonConnection {
         return referee.getIdReferee();
     }
     public Long getIdPerson(){
-        return person.getId_person();
+        return person.getIdPerson();
     }
 }

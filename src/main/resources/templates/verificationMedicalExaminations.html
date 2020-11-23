@@ -17,8 +17,43 @@
             </div>
         </div>
         <div class="container">
-            <form method="POST" class="form-signin" th:action="@{/verificationMedicalExaminations}">
+            <form method="POST" class="form-signin" th:object="${verificationForm}" th:action="@{/verificationMedicalExaminations}">
+                <table border="1" cellpadding="10">
+                    <thead>
+                    <tr>
+                        <th>Nazwa uzytkownika</th>
+                        <th>Aktualna rola</th>
+                        <th>Prośba o zmiane na</th>
+                        <th>Badania lekarskie</th>
+                        <th>Twoja akcja </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!--<tr th:if="${listOfUsers.empty}">
+                        <td colspan="3"> Nie ma żadnych prosb </td>
+                    </tr> -->
+                    <tr th:each="verification : ${listOfRequests}"> <!-- lista obiektów typu Verification -->
+                        <td th:block th:text="${verification.getUserName()}"></td>
+                        <td th:block th:text="${verification.getOldRole()}"></td>
+                        <td th:block th:text="${verification.new_role}"></td>
 
+
+                        <!--<td th:text="${verification.printYourRole()}"></td>-->
+                        <!--<td th:text="${verification.new_role}}"></td>-->
+                        <td >tu też nie wiem</td>
+                        <!-- <div sec:authorize="hasAuthority('')"> -->
+                        <td>
+                            <form method="POST" class="form-signin" th:object="${verifyForm}" th:action="@{/acceptVerifyForm}">
+                                <input type="submit" value="Zaakceptuj"/>
+                            </form>
+                            <form class="form-signin" th:object="${verifyForm}" th:action="@{/denyVerifyForm}">
+                                <input type="submit" value="Odrzuć"/>
+                            </form>
+                        </td>
+                        <!-- </div> -->
+                    </tr>
+                    </tbody>
+                </table>
             </form>
         </div>
 
