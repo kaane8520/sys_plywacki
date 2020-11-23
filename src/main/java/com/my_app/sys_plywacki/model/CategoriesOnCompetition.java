@@ -1,6 +1,7 @@
 package com.my_app.sys_plywacki.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class CategoriesOnCompetition {
@@ -16,15 +17,14 @@ public class CategoriesOnCompetition {
 
     @ManyToOne
     private Result result;
-    @OneToOne
-    private Player player;
-
-    public CategoriesOnCompetition(Player player) {
-        this.player = player;
-    }
+    @OneToMany
+    private List<Player> players;
 
     public CategoriesOnCompetition() {
+    }
 
+    public CategoriesOnCompetition(List<Player> players) {
+        this.players = players;
     }
 
     public Long getId() {
@@ -59,11 +59,5 @@ public class CategoriesOnCompetition {
         this.result = result;
     }
 
-    public Player getPlayer() {
-        return player;
-    }
 
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
 }

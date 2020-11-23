@@ -46,7 +46,7 @@
 				<span class="has-error" th:if="${#fields.hasErrors('medExDate')}" th:errors="*{medExDate}"></span>
             	<h3>Wybierz klub:</h3>
 		         <!-- <div th:if="${listOfAvailableClubs != null and not #lists.isEmpty(listOfAvailableClubs)}">-->
-		         <select th:field="*{idClub}" class="form-control">
+		         <select th:field="*{club}" class="form-control">
 		         	<option th:each="dropDownItem : ${listOfAvailableClubs}"
 		                                 th:value="${dropDownItem.getId_club()}"
 		                                 th:text="${dropDownItem.getClubname()}"

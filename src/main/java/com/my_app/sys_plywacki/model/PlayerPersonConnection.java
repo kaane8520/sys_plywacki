@@ -56,5 +56,7 @@ public class PlayerPersonConnection {
         return person.getUsername();
     }
 
-
+    public String getClubname(){
+        return player.getClubname();
+    }
 }

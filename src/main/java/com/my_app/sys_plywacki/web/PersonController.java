@@ -55,8 +55,8 @@ public class PersonController {
 
     private List <Club> clubs;
 
-    @Autowired
-    private ClubPlayerConnectionRepository clubPlayerConnectionRepository;
+//    @Autowired
+//    private ClubPlayerConnectionRepository clubPlayerConnectionRepository;
     @Autowired
     private PlayerPersonConnectionRepository playerPersonConnectionRepository;
 
@@ -247,13 +247,13 @@ public class PersonController {
         System.out.println("to jest model atrybut "+model.getAttribute("player.wartosc"));
 
         playerRepository.save(player);
-        Long x = player.getIdClub();
-        Optional<Club> club = clubRepository.findById(x);
-        System.out.println("to jest club get" + club.get().getId_club());
+//        Long x = player.getIdClub();
+//        Optional<Club> club = clubRepository.findById(x);
+//        System.out.println("to jest club get" + club.get().getId_club());
 
 //Tutaj trzeba wyciągnąć klub do którego sie zapisał zawododnik, żeby zapisać do bd
-        clubPlayerConnectionRepository.save(new ClubPlayerConnection(club.get(), player));
-
+//        clubPlayerConnectionRepository.save(new ClubPlayerConnection(club.get(), player));
+//        playerRepository.save(player);
         playerPersonConnectionRepository.save(new PlayerPersonConnection(player, p));
         System.out.println("to jest player id"+player.getIdPlayer());
     	return "redirect:welcome";
@@ -379,13 +379,13 @@ public class PersonController {
 
         return listOfPlayers;
     }
-    @ModelAttribute("listOfClubs")
-    public List<ClubPlayerConnection> viewPlayersPageC() {
-
-        List<ClubPlayerConnection> listOfClubs = clubPlayerConnectionRepository.findAll();
-
-        return listOfClubs;
-    }
+//    @ModelAttribute("listOfClubs")
+//    public List<ClubPlayerConnection> viewPlayersPageC() {
+//
+//        List<ClubPlayerConnection> listOfClubs = clubPlayerConnectionRepository.findAll();
+//
+//        return listOfClubs;
+//    }
 
     @RequestMapping(value = "/redirectToSearchPlayersPage", method = RequestMethod.GET)
     public String redirectToSearchPlayersPage() {
@@ -463,7 +463,7 @@ public class PersonController {
         Long id_coach = coachPersonConnectionRepository.findByPerson(p).getIdcoach();
         Optional<Coach> coach = coachRepository.findById(id_coach);
         Club club = coach.get().getClub();
-        List <ClubPlayerConnection> listOfPlayersInClub = clubPlayerConnectionRepository.findAllByClub(club);
+        List <Player> listOfPlayersInClub = playerRepository.findAllByClub(club);
 
         model.addAttribute("listOfPlayersInClub", listOfPlayersInClub);
 
@@ -471,15 +471,17 @@ public class PersonController {
     }
 
     @PostMapping("regCompetitorsPlayer")
-    public String regCompetitorsPlayer(@ModelAttribute("regCompetitorsPlayerForm") Player regCompetitorsPlayerForm, Model model, BindingResult bindingResult){
+    public String regCompetitorsPlayer(@ModelAttribute("regCompetitorsPlayerForm") List<Player> regCompetitorsPlayerForm, Model model, BindingResult bindingResult){
 
 
         CategoriesOnCompetition categoriesOnCompetition = new CategoriesOnCompetition(regCompetitorsPlayerForm);
-        categoriesOnCompetition.setPlayer(regCompetitorsPlayerForm);
+//        categoriesOnCompetition.setPlayer(regCompetitorsPlayerForm);
 //        categoriesOnCompetition.setCompetition();
-        System.out.println("To jest id playera z fromularza" + regCompetitorsPlayerForm.getIdPlayer());
+//        System.out.println("To jest id playera z fromularza" + regCompetitorsPlayerForm.getIdPlayer());
 
-        categoriesOnCompetitionRepository.save(categoriesOnCompetition);
+        System.out.println("To jest reg form zawodników: " + regCompetitorsPlayerForm);
+
+//        categoriesOnCompetitionRepository.save(categoriesOnCompetition);
 
         return "redirect:searchCompetitions";
     }

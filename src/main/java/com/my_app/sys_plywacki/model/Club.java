@@ -17,12 +17,12 @@ public class Club {
     private String clubname;
     
     @OneToMany
-    @Column (nullable = false)
-    private List<ClubPlayerConnection> players;
+    @Column
+    private List<Player> players;
 
     @OneToOne
     private Coach coach;
-    private Long id_coach;
+
 
 //    public Club(Coach coach) {
 //        this.coach = coach;
@@ -36,13 +36,7 @@ public class Club {
         this.coach = coach;
     }
 
-    public Long getId_coach() {
-        return id_coach;
-    }
 
-    public void setId_coach(Long id_coach) {
-        this.id_coach = id_coach;
-    }
 
     @Override
     public String toString() {
@@ -72,11 +66,7 @@ public class Club {
         this.coach = coach;
     }
 
-    public List<ClubPlayerConnection> getPlayers() {
-        return players;
-    }
-
-    public void setPlayers(List<ClubPlayerConnection> players) {
-        this.players = players;
+    public Long getId_coach(){
+        return coach.getIdCoach();
     }
 }

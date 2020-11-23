@@ -25,42 +25,42 @@ public class Player{
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate medExDate;
-
-    private Long idClub;
-
-
-    @OneToMany
-    private List<ClubPlayerConnection> clubs;
-
+    @ManyToOne
+    private Club club;
 
     @OneToMany
     private List<PlayerPersonConnection> persons;
 
-    @OneToOne
+    @ManyToOne
     private CategoriesOnCompetition categoriesOnCompetition;
 
 
     public Player() {
     }
 
+    public Player(Club club) {
+        this.club = club;
+    }
 
     public Long getIdPlayer() {
         return idPlayer;
     }
-    public Long getIdClub() {
-        return idClub;
-    }
-    public void setIdClub(Long idClub) {
-        this.idClub = idClub;
-    }
 
 
-    public List<ClubPlayerConnection> getClubs() {
-        return clubs;
+    public Club getClub() {
+        return club;
     }
 
-    public void setClubs(List<ClubPlayerConnection> clubs) {
-        this.clubs = clubs;
+    public void setClub(Club club) {
+        this.club = club;
+    }
+
+    public CategoriesOnCompetition getCategoriesOnCompetition() {
+        return categoriesOnCompetition;
+    }
+
+    public void setCategoriesOnCompetition(CategoriesOnCompetition categoriesOnCompetition) {
+        this.categoriesOnCompetition = categoriesOnCompetition;
     }
 
     public List<PlayerPersonConnection> getPersons() {
@@ -83,5 +83,13 @@ public class Player{
         this.medExDate = medExDate;
     }
     public void search(String keyword){}
+
+    public String getClubname(){
+        return club.getClubname();
+    }
+
+    public Long getIdClub(){
+        return club.getId_club();
+    }
 
 }
