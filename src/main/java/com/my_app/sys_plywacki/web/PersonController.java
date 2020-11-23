@@ -459,7 +459,7 @@ public class PersonController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Person p = personService.findByUsername(auth.getName());
         Long x = p.getId();
-        System.out.println("To jest id playera " +x);
+        System.out.println("To jest id trenera " +x);
         Long id_coach = coachPersonConnectionRepository.findByPerson(p).getIdcoach();
         Optional<Coach> coach = coachRepository.findById(id_coach);
         Club club = coach.get().getClub();
