@@ -22,8 +22,8 @@ public class Coach {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate coachlegidate;
 
-    @OneToMany
-    private List<CoachPersonConnection> persons;
+    @OneToOne
+    private Person person;
 
     public Coach() {
 

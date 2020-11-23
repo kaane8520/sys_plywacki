@@ -17,15 +17,12 @@ public class Club {
     private String clubname;
     
     @OneToMany
-    @Column (nullable = false)
-    private List<ClubPlayerConnection> players;
+    private List<Player> players;
 
     @OneToOne
     private Coach coach;
 
-//    public Club(Coach coach) {
-//        this.coach = coach;
-//    }
+
 
     public Coach getCoach() {
         return coach;
@@ -63,11 +60,11 @@ public class Club {
         this.coach = coach;
     }
 
-    public List<ClubPlayerConnection> getPlayers() {
+    public List<Player> getPlayers() {
         return players;
     }
 
-    public void setPlayers(List<ClubPlayerConnection> players) {
+    public void setPlayers(List<Player> players) {
         this.players = players;
     }
 }

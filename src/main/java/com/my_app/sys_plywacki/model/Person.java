@@ -33,17 +33,18 @@ public class Person {
     @Column //(name = "roles")
     private Set<Role> roles;
 
-    @OneToMany
-    private List<PlayerPersonConnection> players;
+    //role użytkowników
+    @OneToOne
+    private Player player;
 
-    @OneToMany
-    private List<OrganizerPersonConnection> organizers;
+    @OneToOne
+    private Organizer organizer;
 
-    @OneToMany
-    private List<CoachPersonConnection> coaches;
+    @OneToOne
+    private Coach coach;
 
-    @OneToMany
-    private List<RefereePersonConnection> referees;
+    @OneToOne
+    private Referee referee;
 
 
 
@@ -110,5 +111,9 @@ public class Person {
             roles = r.getName();
         }
         return roles;
+    }
+
+    public Long getIdCoach(){
+        return coach.getIdCoach();
     }
 }

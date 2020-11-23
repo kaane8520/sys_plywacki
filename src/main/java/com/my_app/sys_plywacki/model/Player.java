@@ -29,14 +29,11 @@ public class Player{
     private Long idClub;
 
 
-    @OneToMany
-    List<ClubPlayerConnection> clubs;
+    @ManyToOne
+    private Club club;
 
-
-    @OneToMany
-    List<PlayerPersonConnection> persons;
-
-
+    @OneToOne
+    private Person person;
 
     public Long getIdPlayer() {
         return idPlayer;
@@ -48,20 +45,21 @@ public class Player{
         this.idClub = idClub;
     }
 
-    public List<ClubPlayerConnection> getClubs() {
-        return clubs;
+
+    public Club getClub() {
+        return club;
     }
 
-    public void setClubs(List<ClubPlayerConnection> clubs) {
-        this.clubs = clubs;
+    public void setClub(Club club) {
+        this.club = club;
     }
 
-    public List<PlayerPersonConnection> getPersons() {
-        return persons;
+    public Person getPerson() {
+        return person;
     }
 
-    public void setPersons(List<PlayerPersonConnection> persons) {
-        this.persons = persons;
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
     public void setIdPlayer(Long idPlayer) {

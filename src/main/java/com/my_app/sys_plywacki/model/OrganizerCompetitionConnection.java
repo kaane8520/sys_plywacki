@@ -46,7 +46,7 @@ public class OrganizerCompetitionConnection {
         this.organizer = organizer;
     }
 
-    public void getIdorganizer(){
-        this.organizer.getId_organizer();
+    public Long getIdorganizer(){
+        return organizer.getId_organizer();
     }
 }

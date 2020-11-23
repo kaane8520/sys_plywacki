@@ -13,9 +13,8 @@ public class Organizer{
     @Column
     private List<OrganizerCompetitionConnection> competitions;
 
-    @OneToMany
-    @Column
-    private List<OrganizerPersonConnection> persons;
+    @OneToOne
+    private Person person;
 
     public Long getId_organizer() {
         return id_organizer;
@@ -33,11 +32,4 @@ public class Organizer{
         this.competitions = competitions;
     }
 
-    public List<OrganizerPersonConnection> getPersons() {
-        return persons;
-    }
-
-    public void setPersons(List<OrganizerPersonConnection> persons) {
-        this.persons = persons;
-    }
 }

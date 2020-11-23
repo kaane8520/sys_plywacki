@@ -15,8 +15,8 @@ public class Referee {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate refereelegidate;
 
-    @OneToMany
-    private List<RefereePersonConnection> persons;
+    @OneToOne
+    private Person person;
 
     @OneToOne
     private RefereeRoleOnCompetition refereeRoleOnCompetition;
