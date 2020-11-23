@@ -2,6 +2,7 @@ package com.my_app.sys_plywacki.web;
 
 import com.my_app.sys_plywacki.model.*;
 import com.my_app.sys_plywacki.repository.RefereeRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -353,6 +354,16 @@ public class PersonController {
         return "redirect:searchClubs";
     }
 
+    @RequestMapping("/searchClubKey")
+    public String viewClubPage(Model model, @Param("keyword") String keyword){
+//        List <Club> clubList = clubService.listAll(keyword);
+//        model.addAttribute("clubList", clubList);
+//        model.addAttribute("keyword", keyword);
+        List<Club> clubList = clubRepository.findClubByClubname(keyword);
+        model.addAttribute("clubList", clubList);
+        return "/searchClubs";
+    }
+
 
     @GetMapping("/searchCompetitions")
     public String viewComptetionPage(Model model){
@@ -365,6 +376,10 @@ public class PersonController {
     public String redirectToSearchCompetitionsPage() {
         System.out.println("Redirecting Result To The Final Page");
         return "redirect:searchCompetitions";
+    }
+    @PostMapping("/searchCompetitions")
+    public String viewCompetitionPage(){
+        return "/";
     }
 
     @GetMapping("/searchPlayers")
@@ -436,21 +451,16 @@ public class PersonController {
         return "/searchCompetitions";
     }
 
+    private Long idCompetitionForPlayers;
     @RequestMapping(value = "/redirectRegCompetitorsPlayer", method = RequestMethod.GET)
-    public String redirectRegCompetitorsPlayer() {
-        System.out.println("Redirecting Result To Reg Competitors Player");
+    public String redirectRegCompetitorsPlayer(@Param("keyword") Long keyword) {
+        System.out.println("Redirecting Result To Reg Competitors Player:" + keyword);
+
+        Competition competition = competitionRepository.findByIdCompetitions(keyword);
+        categoriesOnCompetitionRepository.save(new CategoriesOnCompetition(competition));
         return "redirect:regCompetitorsPlayer";
     }
 
-//    @ModelAttribute("listOfPlayersInClub")
-//    public List<ClubPlayerConnection> listOfPlayersInClub() {
-//        System.out.println("Jestem w funkcji listOfPlayersInClub");
-//
-////        List <ClubPlayerConnection> listOfPlayersInClub = clubPlayerConnectionRepository.findAllByClub();
-////        model.addAttribute("listOfPlayersInClub", new ClubPlayerConnection());
-//
-//        return listOfPlayersInClub;
-//    }
 
     @GetMapping("regCompetitorsPlayer")
     public String regCompetitorsPlayer(Model model){

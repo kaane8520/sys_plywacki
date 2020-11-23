@@ -69,4 +69,6 @@ public class Club {
     public Long getId_coach(){
         return coach.getIdCoach();
     }
+
+
 }

@@ -42,8 +42,8 @@
         <h5>Wybierz zawodników:</h5>
         <div class="form-group">
             <p th:each="dropDownItem : ${listOfPlayersInClub}">
-                <input type="checkbox" id="${dropDownItem}" th:value="${dropDownItem.getIdPlayer()}" />
-                <label for="${dropDownItem}">${drppDownItem.get}</label>
+                <input type="checkbox" id="${dropDownItem.getIdPlayer()}" th:value="${dropDownItem.getIdPlayer()}" />
+                <label th:text="${dropDownItem.getIdPlayer()}">${dropDownItem.get}</label>
 <!--                   <label th:text="${ dropDownItem.}">Heating</label>-->
             </p>
         </div>

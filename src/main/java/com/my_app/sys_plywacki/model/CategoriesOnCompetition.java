@@ -23,6 +23,10 @@ public class CategoriesOnCompetition {
     public CategoriesOnCompetition() {
     }
 
+    public CategoriesOnCompetition(Competition competition) {
+        this.competition = competition;
+    }
+
     public CategoriesOnCompetition(List<Player> players) {
         this.players = players;
     }

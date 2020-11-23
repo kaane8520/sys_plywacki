@@ -11,6 +11,7 @@ import java.util.List;
 
 public interface ClubService {
 
+//    public List<Club> listAll(String keyword);
 
 	void save(Club club);
 
