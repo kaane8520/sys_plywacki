@@ -15,8 +15,8 @@ public class Referee {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate refereelegidate;
 
-    @OneToMany
-    private List<RefereePersonConnection> persons;
+    @OneToOne
+    private Person person;
 
     @OneToOne
     private RefereeRoleOnCompetition refereeRoleOnCompetition;
@@ -35,5 +35,21 @@ public class Referee {
 
     public void setRefereelegidate(LocalDate refereelegidate) {
         this.refereelegidate = refereelegidate;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
+    public RefereeRoleOnCompetition getRefereeRoleOnCompetition() {
+        return refereeRoleOnCompetition;
+    }
+
+    public void setRefereeRoleOnCompetition(RefereeRoleOnCompetition refereeRoleOnCompetition) {
+        this.refereeRoleOnCompetition = refereeRoleOnCompetition;
     }
 }

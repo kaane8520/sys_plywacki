@@ -33,17 +33,17 @@ public class Person {
     @Column //(name = "roles")
     private Set<Role> roles;
 
-    @OneToMany
-    private List<PlayerPersonConnection> players;
+    @OneToOne
+    private Player player;
 
-    @OneToMany
-    private List<OrganizerPersonConnection> organizers;
+    @OneToOne
+    private Organizer organizer;
 
-    @OneToMany
-    private List<CoachPersonConnection> coaches;
+    @OneToOne
+    private Coach coach;
 
-    @OneToMany
-    private List<RefereePersonConnection> referees;
+    @OneToOne
+    private Referee referee;
 
 
 
@@ -104,5 +104,35 @@ public class Person {
         this.roles = roles;
     }
 
+    public Player getPlayers() {
+        return player;
+    }
 
+    public void setPlayers(Player players) {
+        this.player = player;
+    }
+
+    public Organizer getOrganizer() {
+        return organizer;
+    }
+
+    public void setOrganizer(Organizer organizer) {
+        this.organizer = organizer;
+    }
+
+    public Coach getCoach() {
+        return coach;
+    }
+
+    public void setCoach(Coach coach) {
+        this.coach = coach;
+    }
+
+    public Referee getReferee() {
+        return referee;
+    }
+
+    public void setReferee(Referee referee) {
+        this.referee = referee;
+    }
 }

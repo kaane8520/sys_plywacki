@@ -54,7 +54,7 @@
                 <td colspan="3"> Nie ma zawodników</td>
             </tr>
             <tr th:each="player : ${listOfPlayers}">
-                <td th:text="${player.id}"></td>
+                <td th:text="${player.idPlayer}"></td>
                 <td th:text="${player.getUsername()}"></td>
                 <td th:text="${player.getClubname()}"></td>
 

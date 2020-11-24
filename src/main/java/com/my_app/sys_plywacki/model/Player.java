@@ -28,8 +28,8 @@ public class Player{
     @ManyToOne
     private Club club;
 
-    @OneToMany
-    private List<PlayerPersonConnection> persons;
+    @OneToOne
+    private Person person;
 
     @ManyToOne
     private CategoriesOnCompetition categoriesOnCompetition;
@@ -63,12 +63,12 @@ public class Player{
         this.categoriesOnCompetition = categoriesOnCompetition;
     }
 
-    public List<PlayerPersonConnection> getPersons() {
-        return persons;
+    public Person getPerson() {
+        return person;
     }
 
-    public void setPersons(List<PlayerPersonConnection> persons) {
-        this.persons = persons;
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
     public void setIdPlayer(Long idPlayer) {
@@ -90,6 +90,10 @@ public class Player{
 
     public Long getIdClub(){
         return club.getId_club();
+    }
+
+    public String getUsername(){
+        return person.getUsername();
     }
 
 }

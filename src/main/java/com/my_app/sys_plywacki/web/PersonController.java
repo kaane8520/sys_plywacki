@@ -56,23 +56,10 @@ public class PersonController {
 
     private List <Club> clubs;
 
-//    @Autowired
-//    private ClubPlayerConnectionRepository clubPlayerConnectionRepository;
-    @Autowired
-    private PlayerPersonConnectionRepository playerPersonConnectionRepository;
-
     @Autowired
     private OrganizerCompetitionConnectionRepository organizerCompetitionConnectionRepository;
     @Autowired
     private OrganizerRepository organizerRepository;
-
-    @Autowired
-    private OrganizerPersonConnectionRepository organizerPersonConnectionRepository;
-
-    @Autowired
-    private CoachPersonConnectionRepository coachPersonConnectionRepository;
-    @Autowired
-    private RefereePersonConnectionRepository refereePersonConnectionRepository;
 
     @Autowired
     private RefereeRolesRepository refereeRolesRepository;
@@ -201,8 +188,9 @@ public class PersonController {
 
             Organizer organizer = new Organizer();
             model.addAttribute("organizer", organizer);
+            organizer.setPerson(p);
             organizerRepository.save(organizer);
-            organizerPersonConnectionRepository.save(new OrganizerPersonConnection(organizer, p));
+//            organizerPersonConnectionRepository.save(new OrganizerPersonConnection(organizer, p));
             return "redirect:welcome";
         }
         else if (role.getName().equals("trener")) {
@@ -246,7 +234,7 @@ public class PersonController {
         System.out.println("to jest person id"+p.getId());
         System.out.println("to jest player id"+player.getIdPlayer());
         System.out.println("to jest model atrybut "+model.getAttribute("player.wartosc"));
-
+        player.setPerson(p);
         playerRepository.save(player);
 //        Long x = player.getIdClub();
 //        Optional<Club> club = clubRepository.findById(x);
@@ -255,7 +243,7 @@ public class PersonController {
 //Tutaj trzeba wyciągnąć klub do którego sie zapisał zawododnik, żeby zapisać do bd
 //        clubPlayerConnectionRepository.save(new ClubPlayerConnection(club.get(), player));
 //        playerRepository.save(player);
-        playerPersonConnectionRepository.save(new PlayerPersonConnection(player, p));
+//        playerPersonConnectionRepository.save(new PlayerPersonConnection(player, p));
         System.out.println("to jest player id"+player.getIdPlayer());
     	return "redirect:welcome";
     }
@@ -280,9 +268,9 @@ public class PersonController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Person p = personService.findByUsername(auth.getName());
 
-
+        coach.setPerson(p);
         coachRepository.save(coach);
-        coachPersonConnectionRepository.save(new CoachPersonConnection(coach, p));
+//        coachPersonConnectionRepository.save(new CoachPersonConnection(coach, p));
         return "redirect:registrationClub";
     }
 
@@ -311,18 +299,15 @@ public class PersonController {
         //id użytkownika
         Long x = p.getId();
 
-        System.out.println("Id połączenia: " + coachPersonConnectionRepository.findByPerson(p).getIdcoach());
-
-
-        Long id_coach = coachPersonConnectionRepository.findByPerson(p).getIdcoach();
-        Optional<Coach> coach = coachRepository.findById(id_coach);
-
+//        Long id_coach = coachRepository.findCoachByPerson(p).getIdCoach();
+//        Optional<Coach> coach = coachRepository.findById(id_coach);
+        Coach coach = coachRepository.findCoachByPerson(p);
         clubService.save(clubForm);
         clubForm.getId_club();
-        coach.get().setClub(clubForm);
-        clubForm.setCoach(coach.get());
+        coach.setClub(clubForm);
+        clubForm.setCoach(coach);
 
-        coachRepository.saveAndFlush(coach.get());
+        coachRepository.saveAndFlush(coach);
         clubRepository.saveAndFlush(clubForm);
         return "redirect:/welcome";
     }
@@ -388,9 +373,9 @@ public class PersonController {
         return "/searchPlayers";
     }
     @ModelAttribute("listOfPlayers")
-    public List<PlayerPersonConnection> viewPlayersPage() {
+    public List<Player> viewPlayersPage() {
 
-        List<PlayerPersonConnection> listOfPlayers = playerPersonConnectionRepository.findAll();
+        List<Player> listOfPlayers = playerRepository.findAll();
 
         return listOfPlayers;
     }
@@ -423,7 +408,7 @@ public class PersonController {
         Person p = personService.findByUsername(auth.getName());
         //id osoby
         Long x = p.getId();
-        Long id_organizer = organizerPersonConnectionRepository.findByPerson(p).getIdorganizer();
+        Long id_organizer = organizerRepository.findOrganizerByPerson(p).getId_organizer();
         Optional<Organizer> organizer = organizerRepository.findById(id_organizer);
 
         organizerCompetitionConnectionRepository.save(new OrganizerCompetitionConnection(competitionForm, organizer.get()));
@@ -470,7 +455,7 @@ public class PersonController {
         Person p = personService.findByUsername(auth.getName());
         Long x = p.getId();
         System.out.println("To jest id trenera " +x);
-        Long id_coach = coachPersonConnectionRepository.findByPerson(p).getIdcoach();
+        Long id_coach = coachRepository.findCoachByPerson(p).getIdCoach();
         Optional<Coach> coach = coachRepository.findById(id_coach);
         Club club = coach.get().getClub();
         List <Player> listOfPlayersInClub = playerRepository.findAllByClub(club);
@@ -515,9 +500,10 @@ public class PersonController {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Person p = personService.findByUsername(auth.getName());
+        referee.setPerson(p);
         refereeRepository.save(referee);
 
-        refereePersonConnectionRepository.save(new RefereePersonConnection(referee, p));
+//        refereePersonConnectionRepository.save(new RefereePersonConnection(referee, p));
 
         return "redirect:welcome";
     }
@@ -552,7 +538,7 @@ public class PersonController {
         Person p = personService.findByUsername(auth.getName());
         Long x = p.getId();
         System.out.println("To jest id sedziego " +x);
-        Long id_referee = refereePersonConnectionRepository.findByPerson(p).getIdReferee();
+        Long id_referee = refereeRepository.findRefereeByPerson(p).getIdReferee();
         Optional<Referee> referee = refereeRepository.findById(id_referee);
         RefereeRoleOnCompetition refereeRoleOnCompetition = new RefereeRoleOnCompetition(referee.get(), competitionForm);
         //zapisuje referee role on competition z id sędziego i id zawodów
@@ -589,7 +575,7 @@ public class PersonController {
         Person p = personService.findByUsername(auth.getName());
         Long x = p.getId();
         System.out.println("To jest id sedziego " +x);
-        Long id_referee = refereePersonConnectionRepository.findByPerson(p).getIdReferee();
+        Long id_referee = refereeRepository.findRefereeByPerson(p).getIdReferee();
         Optional<Referee> referee = refereeRepository.findById(id_referee);
 
         System.out.println("To jest id roli sędziego na zawodach: " + idRefereeOnCompetition);
