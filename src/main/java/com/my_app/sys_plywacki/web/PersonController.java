@@ -218,39 +218,29 @@ public class PersonController {
     }
     @ModelAttribute("listOfAvailableClubs")
     public List<Club> editPlayer() {
-    	System.out.println("Jestem w funkcji editPlayer @ModelAttribute");
+//    	System.out.println("Jestem w funkcji editPlayer @ModelAttribute");
     	List<Club> listOfAvailableClubs = clubService.findAll();
-        for (Club x : listOfAvailableClubs) {
-        	System.out.println("Id klubu: "+x.getId_club());
-            System.out.println("Nazwa klubu: "+x.getClubname());
-        }
+//        for (Club x : listOfAvailableClubs) {
+//        	System.out.println("Id klubu: "+x.getId_club());
+//            System.out.println("Nazwa klubu: "+x.getClubname());
+//        }
         return listOfAvailableClubs;
      }
     @PostMapping("/editPlayer")
     public String editPlayer(@ModelAttribute Player player, Model model, BindingResult bindingResult) {
-    	System.out.println("Data wygasniecia dokumentacji zawodnika: "+player.getMedExDate());
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Person p = personService.findByUsername(auth.getName());
-        System.out.println("to jest person id"+p.getId());
-        System.out.println("to jest player id"+player.getIdPlayer());
-        System.out.println("to jest model atrybut "+model.getAttribute("player.wartosc"));
+
         player.setPerson(p);
         playerRepository.save(player);
-//        Long x = player.getIdClub();
-//        Optional<Club> club = clubRepository.findById(x);
-//        System.out.println("to jest club get" + club.get().getId_club());
 
-//Tutaj trzeba wyciągnąć klub do którego sie zapisał zawododnik, żeby zapisać do bd
-//        clubPlayerConnectionRepository.save(new ClubPlayerConnection(club.get(), player));
-//        playerRepository.save(player);
-//        playerPersonConnectionRepository.save(new PlayerPersonConnection(player, p));
-        System.out.println("to jest player id"+player.getIdPlayer());
     	return "redirect:welcome";
     }
 
     @RequestMapping(value = "/redirectToEditCoach", method = RequestMethod.GET)
     public String redirectToEditCoach() {
-        System.out.println("Redirecting Result To Edit CoachPage");
+
         return "redirect:editCoach";
     }
 
@@ -264,7 +254,7 @@ public class PersonController {
     }
     @PostMapping("/editCoach")
     public String editCoach(@ModelAttribute Coach coach, Model model, BindingResult bindingResult) {
-        System.out.println("Data wygasniecia dokumentacji zawodnika: "+coach.getCoachlegidate());
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Person p = personService.findByUsername(auth.getName());
 
@@ -292,7 +282,7 @@ public class PersonController {
 
     @PostMapping("/registrationClub")
     public String clubReg(@ModelAttribute("clubForm") Club clubForm){
-        System.out.println("Jestem w PostMapping /clubRegistration");
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         //nazwa użytkownika
         Person p = personService.findByUsername(auth.getName());
@@ -415,31 +405,13 @@ public class PersonController {
         return "redirect:searchCompetitions";
     }
 
-    @RequestMapping("/")
-    public String showNewCompetitionPage(Model model){
-        Competition competition = new Competition();
-        model.addAttribute("Competition", competition);
-        return "registrationCompetitions";
-    }
 
-    @GetMapping("registrationCompetitorsPlayer")
-    public String registrationCompetitiorsPlayer(Model model){
-        model.addAttribute("competitiorsPlayerForm", new Player());
-
-        return "registrationCompetitiorsPlayer";
-    }
-
-    @PostMapping("registrationCompetitorsPlayer")
-    public String registrationCompetitiorsPlayer(@ModelAttribute("competitiorsPlayerForm") Player competitiorsPlayerForm){
-        playerService.save(competitiorsPlayerForm);
-
-        return "/searchCompetitions";
-    }
 
     private Long idCompetitionForPlayers;
     @RequestMapping(value = "/redirectRegCompetitorsPlayer", method = RequestMethod.GET)
     public String redirectRegCompetitorsPlayer(@Param("keyword") Long keyword) {
         System.out.println("Redirecting Result To Reg Competitors Player:" + keyword);
+
 
         Competition competition = competitionRepository.findByIdCompetitions(keyword);
         categoriesOnCompetitionRepository.save(new CategoriesOnCompetition(competition));
@@ -449,6 +421,7 @@ public class PersonController {
 
     @GetMapping("regCompetitorsPlayer")
     public String regCompetitorsPlayer(Model model){
+
         model.addAttribute("regCompetitorsPlayerForm", new Player());
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -456,8 +429,9 @@ public class PersonController {
         Long x = p.getId();
         System.out.println("To jest id trenera " +x);
         Long id_coach = coachRepository.findCoachByPerson(p).getIdCoach();
-        Optional<Coach> coach = coachRepository.findById(id_coach);
-        Club club = coach.get().getClub();
+        Coach coach = coachRepository.findCoachByIdCoach(id_coach);
+
+        Club club = coach.getClub();
         List <Player> listOfPlayersInClub = playerRepository.findAllByClub(club);
 
         model.addAttribute("listOfPlayersInClub", listOfPlayersInClub);
@@ -466,19 +440,43 @@ public class PersonController {
     }
 
     @PostMapping("regCompetitorsPlayer")
-    public String regCompetitorsPlayer(@ModelAttribute("regCompetitorsPlayerForm") List<Player> regCompetitorsPlayerForm, Model model, BindingResult bindingResult){
+    public String regCompetitorsPlayer(){
+
+//        System.out.println("To jest reg form zawodników: " + regCompetitorsPlayerForm);
 
 
-        CategoriesOnCompetition categoriesOnCompetition = new CategoriesOnCompetition(regCompetitorsPlayerForm);
-//        categoriesOnCompetition.setPlayer(regCompetitorsPlayerForm);
-//        categoriesOnCompetition.setCompetition();
-//        System.out.println("To jest id playera z fromularza" + regCompetitorsPlayerForm.getIdPlayer());
+        return "redirect:/registrationCompetitorsPlayer";
+    }
+//TO NIE DZIAŁA ALE MNIEJ WIĘCEJ TAK TRZEBA ZROBIĆ, może w request mappingu, może gdzieś indziej
+    @PutMapping(value="/registrationCompetitorsPlayer")
+    public List<Long> showNewCompetitionPage(@RequestParam("playersList") List<Long> playersList, Model model){
+        //to ważne
+        List <Player> players = playerRepository.findAllById(playersList);
+        model.addAttribute("playerstList", playersList);
+        categoriesOnCompetitionRepository.save(new CategoriesOnCompetition(players));
+        //to już nieważne
+        System.out.println("PlayerList: " + playersList);
+        System.out.println("Players: " + players + " players z: " +players.isEmpty());
 
-        System.out.println("To jest reg form zawodników: " + regCompetitorsPlayerForm);
+        return playersList;
+    }
+    @RequestMapping(value = "/registrationCompetitorsPlayer", method = RequestMethod.GET)
+    public String showCompetitorsPage(){
+        return "redirect:/registrationCompetitiorsPlayer";
+    }
 
-//        categoriesOnCompetitionRepository.save(categoriesOnCompetition);
+    @GetMapping("registrationCompetitiorsPlayer")
+    public String registrationCompetitiorsPlayer(Model model){
+        model.addAttribute("competitiorsPlayerForm", new Player());
 
-        return "redirect:searchCompetitions";
+        return "registrationCompetitiorsPlayer";
+    }
+
+    @PostMapping("registrationCompetitiorsPlayer")
+    public String registrationCompetitiorsPlayer(@ModelAttribute("competitiorsPlayerForm") Player competitiorsPlayerForm){
+        playerService.save(competitiorsPlayerForm);
+
+        return "/searchCompetitions";
     }
 
 
@@ -608,5 +606,7 @@ public class PersonController {
     public String test() {
         return "redirect:/welcome";
     }
+
+
 }
 

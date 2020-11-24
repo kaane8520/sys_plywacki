@@ -11,4 +11,5 @@ public interface CoachRepository extends JpaRepository<Coach, Long> {
     @Override
     Optional<Coach> findById(Long aLong);
     Coach findCoachByPerson(Person person);
+    Coach findCoachByIdCoach(Long aLong);
 }
