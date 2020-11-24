@@ -23,6 +23,9 @@ public class Competition {
     @OneToMany
     private List<RefereeRoleOnCompetition> refereeRoleOnCompetitionList;
 
+    @OneToMany
+    private List<Result> results;
+
     public Long getIdCompetitions() {
         return idCompetitions;
     }

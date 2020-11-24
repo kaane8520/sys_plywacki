@@ -65,8 +65,15 @@
                 <td th:text="${competition.competitionName}"></td>
                 <div sec:authorize="hasAuthority('trener')">
                     <td>
-                        <form class="form-signin" th:object="${competitiorsPlayerForm}" th:action="@{/registrationCompetitiorsPlayer}">
-                            <input type="submit" value="Zarejestruj klub na zawody"/>
+<!--                        <form class="form-signin" th:object="${competitiorsPlayerForm}" th:action="@{/redirectRegCompetitorsPlayer}">-->
+<!--                            <input type="hidden" th:value="${competition.idCompetitions}">-->
+<!--                            <input type="submit" value="Zarejestruj klub na zawody"/>-->
+<!--                        </form>-->
+                        <form  class="form-signin" th:object="${competitiorsPlayerForm}" th:action="@{/redirectRegCompetitorsPlayer}">
+                            <div class="form-group">
+                                <input type="hidden" name="keyword" id="keyword" th:value="${competition.idCompetitions}">
+                            </div>
+                            <button class="btn btn-lg btn-primary btn-block" type="submit">Zarejestruj klub na zawody</button>
                         </form>
                     </td>
                 </div>
@@ -77,6 +84,14 @@
                          </form>
                     </td>
                 </div>
+                <div sec:authorize="hasAuthority('organizator')">
+                    <td>
+                        <form class="form-signin" th:object="${competitiorsPlayerForm}" th:action="@{/redirectToJudgingCompetitions}">
+                            <input type="submit" value="Zobacz aplikacje"/>
+                        </form>
+                    </td>
+                </div>
+
 
 
             </tr>

@@ -5,6 +5,7 @@ import com.my_app.sys_plywacki.repository.RefereeRepository;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -86,28 +87,12 @@ public class PersonController {
     private List <Club> clubs;
 
     @Autowired
-    private ClubPlayerConnectionRepository clubPlayerConnectionRepository;
-    @Autowired
-    private PlayerPersonConnectionRepository playerPersonConnectionRepository;
-
-    @Autowired
     private OrganizerCompetitionConnectionRepository organizerCompetitionConnectionRepository;
     @Autowired
     private OrganizerRepository organizerRepository;
 
     @Autowired
-    private OrganizerPersonConnectionRepository organizerPersonConnectionRepository;
-
-    @Autowired
-    private CoachPersonConnectionRepository coachPersonConnectionRepository;
-    @Autowired
-    private RefereePersonConnectionRepository refereePersonConnectionRepository;
-
-    @Autowired
     private RefereeRolesRepository refereeRolesRepository;
-
-    @Autowired
-    private MessageRepository messageRepository;
 
     @Autowired
     private RefereeRoleOnCompetitionRepository refereeRoleOnCompetitionRepository;
@@ -117,6 +102,20 @@ public class PersonController {
 
     @Autowired
     private CompetitionRepository competitionRepository;
+
+    @Autowired
+    private MessageRepository messageRepository;
+
+
+    //private RefereeRoleOnCompetitionRepository refereeRoleOnCompetitionRepository;*/
+    @Autowired
+    private CategoriesService categoriesService;
+
+    @Autowired
+    private CategoriesRepository categoriesRepository;
+
+    @Autowired
+    private CategoriesOnCompetitionRepository categoriesOnCompetitionRepository;
 
     @Autowired
     private VerificationService verificationService;
@@ -180,6 +179,9 @@ public class PersonController {
     	personService.update_user_role_if_exists();
         if(refereeRolesRepository.findAll().isEmpty()) {
             refereeRolesService.addRoles();
+        }
+        if(categoriesRepository.findAll().isEmpty()){
+            categoriesService.addCategories();
         }
         return "welcome";
     }
@@ -297,8 +299,9 @@ public class PersonController {
 
             Organizer organizer = new Organizer();
             model.addAttribute("organizer", organizer);
+            organizer.setPerson(p);
             organizerRepository.save(organizer);
-            organizerPersonConnectionRepository.save(new OrganizerPersonConnection(organizer, p));
+//            organizerPersonConnectionRepository.save(new OrganizerPersonConnection(organizer, p));
             return "redirect:welcome";
         }
         else if (role.getName().equals("trener")) {
@@ -340,7 +343,7 @@ public class PersonController {
         }
         else return "redirect:welcome";*/
     }
-    @GetMapping("/editOrganizer")
+   /* @GetMapping("/editOrganizer")
     public String editOrganizer(Model model) {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -351,7 +354,7 @@ public class PersonController {
         organizerPersonConnectionRepository.save(new OrganizerPersonConnection(organizer, p));
 
         return "redirect:/welcome";
-    }
+    }*/
     //------------edycja zawodnika, utworzenie nowego obiektu Zawodnik:
     @RequestMapping(value = "/redirectToEditPlayer", method = RequestMethod.GET)
     public String redirectToEditPlayer() {
@@ -367,39 +370,39 @@ public class PersonController {
     }
     @ModelAttribute("listOfAvailableClubs")
     public List<Club> editPlayer() {
-    	System.out.println("Jestem w funkcji editPlayer @ModelAttribute");
+//    	System.out.println("Jestem w funkcji editPlayer @ModelAttribute");
     	List<Club> listOfAvailableClubs = clubService.findAll();
-        for (Club x : listOfAvailableClubs) {
+       // for (Club x : listOfAvailableClubs) {
         	//System.out.println("Id klubu: "+x.getId_club());
             //System.out.println("Nazwa klubu: "+x.getClubname());
-        }
+       // }
+
+//        for (Club x : listOfAvailableClubs) {
+//        	System.out.println("Id klubu: "+x.getId_club());
+//            System.out.println("Nazwa klubu: "+x.getClubname());
+//        }
         return listOfAvailableClubs;
      }
     @PostMapping("/editPlayer")
     public String editPlayer(@ModelAttribute Player player, Model model, BindingResult bindingResult) {
-    	System.out.println("Data wygasniecia dokumentacji zawodnika: "+player.getMedExDate());
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Person p = personService.findByUsername(auth.getName());
-        //System.out.println("to jest person id"+p.getId());
-        //System.out.println("to jest player id"+player.getIdPlayer());
-        //System.out.println("to jest model atrybut "+model.getAttribute("player.wartosc"));
 
+        player.setPerson(p);
         playerRepository.save(player);
+
         Long x = player.getIdClub();
         Optional<Club> club = clubRepository.findById(x);
         //System.out.println("to jest club get" + club.get().getId_club());
 
-//Tutaj trzeba wyciągnąć klub do którego sie zapisał zawododnik, żeby zapisać do bd
-        clubPlayerConnectionRepository.save(new ClubPlayerConnection(club.get(), player));
 
-        playerPersonConnectionRepository.save(new PlayerPersonConnection(player, p));
-        System.out.println("to jest player id"+player.getIdPlayer());
     	return "redirect:welcome";
     }
 
     @RequestMapping(value = "/redirectToEditCoach", method = RequestMethod.GET)
     public String redirectToEditCoach() {
-        System.out.println("Redirecting Result To Edit CoachPage");
+
         return "redirect:editCoach";
     }
 
@@ -413,13 +416,13 @@ public class PersonController {
     }
     @PostMapping("/editCoach")
     public String editCoach(@ModelAttribute Coach coach, Model model, BindingResult bindingResult) {
-        System.out.println("Data wygasniecia dokumentacji zawodnika: "+coach.getCoachlegidate());
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Person p = personService.findByUsername(auth.getName());
 
-
+        coach.setPerson(p);
         coachRepository.save(coach);
-        coachPersonConnectionRepository.save(new CoachPersonConnection(coach, p));
+//        coachPersonConnectionRepository.save(new CoachPersonConnection(coach, p));
         return "redirect:registrationClub";
     }
 
@@ -441,27 +444,37 @@ public class PersonController {
 
     @PostMapping("/registrationClub")
     public String clubReg(@ModelAttribute("clubForm") Club clubForm){
-        System.out.println("Jestem w PostMapping /clubRegistration");
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         //nazwa użytkownika
         Person p = personService.findByUsername(auth.getName());
         //id użytkownika
         Long x = p.getId();
 
-        System.out.println("Id połączenia: " + coachPersonConnectionRepository.findByPerson(p).getIdcoach());
-
-
-        Long id_coach = coachPersonConnectionRepository.findByPerson(p).getIdcoach();
-        Optional<Coach> coach = coachRepository.findById(id_coach);
-
+//        Long id_coach = coachRepository.findCoachByPerson(p).getIdCoach();
+//        Optional<Coach> coach = coachRepository.findById(id_coach);
+        Coach coach = coachRepository.findCoachByPerson(p);
         clubService.save(clubForm);
         clubForm.getId_club();
-        coach.get().setClub(clubForm);
-        clubForm.setCoach(coach.get());
+        coach.setClub(clubForm);
+        clubForm.setCoach(coach);
 
-        coachRepository.saveAndFlush(coach.get());
+        coachRepository.saveAndFlush(coach);
         clubRepository.saveAndFlush(clubForm);
         return "redirect:/welcome";
+    }
+
+
+    @GetMapping("/deleteClub/{id}")
+    public String deleteClub(@PathVariable("id") long id, Model model) {
+        Coach coach = new Coach();
+        Club club = clubRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid club Id:" + id));
+        if(coach.getIdCoach() == club.getId_coach())
+            clubRepository.delete(club);
+
+        //model.addAttribute("clubs", clubRepository.findAll());
+        return "redirect:/searchClubs";
     }
 
 
@@ -478,6 +491,16 @@ public class PersonController {
         return "redirect:searchClubs";
     }
 
+    @RequestMapping("/searchClubKey")
+    public String viewClubPage(Model model, @Param("keyword") String keyword){
+//        List <Club> clubList = clubService.listAll(keyword);
+//        model.addAttribute("clubList", clubList);
+//        model.addAttribute("keyword", keyword);
+        List<Club> clubList = clubRepository.findClubByClubname(keyword);
+        model.addAttribute("clubList", clubList);
+        return "/searchClubs";
+    }
+
 
     @GetMapping("/searchCompetitions")
     public String viewComptetionPage(Model model){
@@ -491,6 +514,10 @@ public class PersonController {
         System.out.println("Redirecting Result To The Final Page");
         return "redirect:searchCompetitions";
     }
+    @PostMapping("/searchCompetitions")
+    public String viewCompetitionPage(){
+        return "/";
+    }
 
     @GetMapping("/searchPlayers")
     public String viewPlayersPage(Model model){
@@ -498,19 +525,19 @@ public class PersonController {
         return "/searchPlayers";
     }
     @ModelAttribute("listOfPlayers")
-    public List<PlayerPersonConnection> viewPlayersPage() {
+    public List<Player> viewPlayersPage() {
 
-        List<PlayerPersonConnection> listOfPlayers = playerPersonConnectionRepository.findAll();
+        List<Player> listOfPlayers = playerRepository.findAll();
 
         return listOfPlayers;
     }
-    @ModelAttribute("listOfClubs")
-    public List<ClubPlayerConnection> viewPlayersPageC() {
-
-        List<ClubPlayerConnection> listOfClubs = clubPlayerConnectionRepository.findAll();
-
-        return listOfClubs;
-    }
+//    @ModelAttribute("listOfClubs")
+//    public List<ClubPlayerConnection> viewPlayersPageC() {
+//
+//        List<ClubPlayerConnection> listOfClubs = clubPlayerConnectionRepository.findAll();
+//
+//        return listOfClubs;
+//    }
 
     @RequestMapping(value = "/redirectToSearchPlayersPage", method = RequestMethod.GET)
     public String redirectToSearchPlayersPage() {
@@ -533,28 +560,81 @@ public class PersonController {
         Person p = personService.findByUsername(auth.getName());
         //id osoby
         Long x = p.getId();
-        Long id_organizer = organizerPersonConnectionRepository.findByPerson(p).getIdorganizer();
+        Long id_organizer = organizerRepository.findOrganizerByPerson(p).getId_organizer();
         Optional<Organizer> organizer = organizerRepository.findById(id_organizer);
 
         organizerCompetitionConnectionRepository.save(new OrganizerCompetitionConnection(competitionForm, organizer.get()));
         return "redirect:searchCompetitions";
     }
 
-    @RequestMapping("/")
-    public String showNewCompetitionPage(Model model){
-        Competition competition = new Competition();
-        model.addAttribute("Competition", competition);
-        return "registrationCompetitions";
+
+
+    private Long idCompetitionForPlayers;
+    @RequestMapping(value = "/redirectRegCompetitorsPlayer", method = RequestMethod.GET)
+    public String redirectRegCompetitorsPlayer(@Param("keyword") Long keyword) {
+        System.out.println("Redirecting Result To Reg Competitors Player:" + keyword);
+
+
+        Competition competition = competitionRepository.findByIdCompetitions(keyword);
+        categoriesOnCompetitionRepository.save(new CategoriesOnCompetition(competition));
+        return "redirect:regCompetitorsPlayer";
     }
 
-    @GetMapping("registrationCompetitorsPlayer")
+
+    @GetMapping("regCompetitorsPlayer")
+    public String regCompetitorsPlayer(Model model){
+
+        model.addAttribute("regCompetitorsPlayerForm", new Player());
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Person p = personService.findByUsername(auth.getName());
+        Long x = p.getId();
+        System.out.println("To jest id trenera " +x);
+        Long id_coach = coachRepository.findCoachByPerson(p).getIdCoach();
+        Coach coach = coachRepository.findCoachByIdCoach(id_coach);
+
+        Club club = coach.getClub();
+        List <Player> listOfPlayersInClub = playerRepository.findAllByClub(club);
+
+        model.addAttribute("listOfPlayersInClub", listOfPlayersInClub);
+
+        return "regCompetitorsPlayer";
+    }
+
+    @PostMapping("regCompetitorsPlayer")
+    public String regCompetitorsPlayer(){
+
+//        System.out.println("To jest reg form zawodników: " + regCompetitorsPlayerForm);
+
+
+        return "redirect:/registrationCompetitorsPlayer";
+    }
+//TO NIE DZIAŁA ALE MNIEJ WIĘCEJ TAK TRZEBA ZROBIĆ, może w request mappingu, może gdzieś indziej
+    @PutMapping(value="/registrationCompetitorsPlayer")
+    public List<Long> showNewCompetitionPage(@RequestParam("playersList") List<Long> playersList, Model model){
+        //to ważne
+        List <Player> players = playerRepository.findAllById(playersList);
+        model.addAttribute("playerstList", playersList);
+        categoriesOnCompetitionRepository.save(new CategoriesOnCompetition(players));
+        //to już nieważne
+        System.out.println("PlayerList: " + playersList);
+        System.out.println("Players: " + players + " players z: " +players.isEmpty());
+
+        return playersList;
+    }
+    @RequestMapping(value = "/registrationCompetitorsPlayer", method = RequestMethod.GET)
+    public String showCompetitorsPage(){
+        return "redirect:/registrationCompetitiorsPlayer";
+    }
+
+    @GetMapping("registrationCompetitiorsPlayer")
     public String registrationCompetitiorsPlayer(Model model){
         model.addAttribute("competitiorsPlayerForm", new Player());
 
         return "registrationCompetitiorsPlayer";
     }
 
-    @PostMapping("registrationCompetitorsPlayer")
+    @PostMapping("registrationCompetitiorsPlayer")
     public String registrationCompetitiorsPlayer(@ModelAttribute("competitiorsPlayerForm") Player competitiorsPlayerForm){
         playerService.save(competitiorsPlayerForm);
 
@@ -580,8 +660,10 @@ public class PersonController {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Person p = personService.findByUsername(auth.getName());
+        referee.setPerson(p);
         refereeRepository.save(referee);
-        refereePersonConnectionRepository.save(new RefereePersonConnection(referee, p));
+
+        //refereePersonConnectionRepository.save(new RefereePersonConnection(referee, p));
 
         return "redirect:welcome";
     }
@@ -630,7 +712,7 @@ public class PersonController {
         Person p = personService.findByUsername(auth.getName());
         Long x = p.getId();
         System.out.println("To jest id sedziego " +x);
-        Long id_referee = refereePersonConnectionRepository.findByPerson(p).getIdReferee();
+        Long id_referee = refereeRepository.findRefereeByPerson(p).getIdReferee();
         Optional<Referee> referee = refereeRepository.findById(id_referee);
         RefereeRoleOnCompetition refereeRoleOnCompetition = new RefereeRoleOnCompetition(referee.get(), competitionForm);
         //zapisuje referee role on competition z id sędziego i id zawodów
@@ -667,7 +749,7 @@ public class PersonController {
         Person p = personService.findByUsername(auth.getName());
         Long x = p.getId();
         System.out.println("To jest id sedziego " +x);
-        Long id_referee = refereePersonConnectionRepository.findByPerson(p).getIdReferee();
+        Long id_referee = refereeRepository.findRefereeByPerson(p).getIdReferee();
         Optional<Referee> referee = refereeRepository.findById(id_referee);
 
         System.out.println("To jest id roli sędziego na zawodach: " + idRefereeOnCompetition);
@@ -679,6 +761,7 @@ public class PersonController {
         refereeRoleOnCompetitionRepository.saveAndFlush(refereeRoleOnCompetition);
         return "redirect:/welcome";
     }
+
 /*
 
     @RequestMapping("/searchCompetition")
@@ -905,5 +988,6 @@ public class PersonController {
         model.addAttribute("message",message);
         return "redirect:/welcome";
     }
+
 }
 

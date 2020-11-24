@@ -25,43 +25,50 @@ public class Player{
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate medExDate;
+    @ManyToOne
+    private Club club;
 
-    private Long idClub;
+    @OneToOne
+    private Person person;
 
-
-    @OneToMany
-    List<ClubPlayerConnection> clubs;
-
-
-    @OneToMany
-    List<PlayerPersonConnection> persons;
+    @ManyToOne
+    private CategoriesOnCompetition categoriesOnCompetition;
 
 
+    public Player() {
+    }
+
+    public Player(Club club) {
+        this.club = club;
+    }
 
     public Long getIdPlayer() {
         return idPlayer;
     }
-    public Long getIdClub() {
-        return idClub;
-    }
-    public void setIdClub(Long idClub) {
-        this.idClub = idClub;
+
+
+    public Club getClub() {
+        return club;
     }
 
-    public List<ClubPlayerConnection> getClubs() {
-        return clubs;
+    public void setClub(Club club) {
+        this.club = club;
     }
 
-    public void setClubs(List<ClubPlayerConnection> clubs) {
-        this.clubs = clubs;
+    public CategoriesOnCompetition getCategoriesOnCompetition() {
+        return categoriesOnCompetition;
     }
 
-    public List<PlayerPersonConnection> getPersons() {
-        return persons;
+    public void setCategoriesOnCompetition(CategoriesOnCompetition categoriesOnCompetition) {
+        this.categoriesOnCompetition = categoriesOnCompetition;
     }
 
-    public void setPersons(List<PlayerPersonConnection> persons) {
-        this.persons = persons;
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
     public void setIdPlayer(Long idPlayer) {
@@ -77,5 +84,16 @@ public class Player{
     }
     public void search(String keyword){}
 
+    public String getClubname(){
+        return club.getClubname();
+    }
+
+    public Long getIdClub(){
+        return club.getId_club();
+    }
+
+    public String getUsername(){
+        return person.getUsername();
+    }
 
 }
