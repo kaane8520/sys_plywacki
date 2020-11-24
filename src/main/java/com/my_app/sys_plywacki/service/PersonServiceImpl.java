@@ -58,8 +58,7 @@ public class PersonServiceImpl implements PersonService {
             System.out.println(x.getName());
         }
 		person.setRoles(newRole);
-		//szukam id_roli
-		roleRepository.save(role); //takie zapisywanie powinno się odbywać przy starcie aplikacji
+		roleRepository.save(role);
 	}
 
 	@Override

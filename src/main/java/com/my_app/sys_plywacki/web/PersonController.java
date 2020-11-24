@@ -839,7 +839,7 @@ public class PersonController {
         System.out.println("Dodano nowa role do zbioru rol");
         personService.add_role(p.get(), role);
         System.out.println("Dodano nowa role do serwisu");
-        p.get().setRoles(roles);
+        //p.get().setRoles(roles);
 
         Message message = new Message();
         message.setIdPerson(verification.get().getIdPerson());
