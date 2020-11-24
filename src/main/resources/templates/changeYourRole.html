@@ -51,17 +51,14 @@
                 <option th:value="'organizator'" th:text="Organizator"></option>
             </select>
         </div>
-        <h1 th:text = "${message}"></h1>
-
-
-        <p>Aktualizuj swoją dokumentację:</p>
-        <form method="post" class="form-signin" enctype="multipart/form-data"  th:action="@{/doUpload}" >
-            <input type="file" id="documentation" class="form-control">
-            <button class="btn btn-lg btn-primary btn-block" type="submit" name="addDocumentationButton">Zaakceptuj dokumentacje</button>
-        </form>
-
-        <button class="btn btn-lg btn-primary btn-block" type="submit" name="changeYourRoleButton">Potwierdz</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Potwierdz</button>
     </form>
+
+    <!--<p>Aktualizuj swoją dokumentację:</p>
+    <form method="post" class="form-signin" enctype="multipart/form-data"  action="doUpload">
+        <input type="file" id="documentation" class="form-control">
+        <button class="btn btn-lg btn-primary btn-block" type="submit" name="action" value="addDocumentationButton">Zaakceptuj dokumentacje</button>
+    </form>-->
 
 </div>
 

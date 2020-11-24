@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -74,7 +75,13 @@ public class PersonController {
     private CoachRepository coachRepository;
 
     @Autowired
+    private VerificationRepository verificationRepository;
+
+    @Autowired
     private FileDBService storageService;
+
+    @Autowired
+    private MessageService messageService;
 
     private List <Club> clubs;
 
@@ -98,6 +105,9 @@ public class PersonController {
 
     @Autowired
     private RefereeRolesRepository refereeRolesRepository;
+
+    @Autowired
+    private MessageRepository messageRepository;
 
     @Autowired
     private RefereeRoleOnCompetitionRepository refereeRoleOnCompetitionRepository;
@@ -182,15 +192,14 @@ public class PersonController {
     }
     @GetMapping("/changeYourRole")
     public String changeYourRole(Model model) {
-        System.out.println("\n\nJestem w postMapping changeYourRole");
+        System.out.println("\n\nJestem w editMapping changeYourRole");
         model.addAttribute("role", new Role());
-        //model.addAttribute("dokumentation",)
-        System.out.println("Jestem w ChangeYourRole /edit");
         //personService.update_user_role_if_exists();
         //Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         //System.out.println("Twoj login to: "+auth.getPrincipal().toString());
         return "/changeYourRole";
     }
+    /*
     @RequestMapping(value="/changeYourRole",params="changeYourRoleButton",method=RequestMethod.POST)
     public void acction_changeYourRole(){
 
@@ -199,7 +208,7 @@ public class PersonController {
     @RequestMapping(value="/changeYourRole",params="addDocumentationButton",method=RequestMethod.POST)
     public void acction_uploadFile(){
 
-    }
+    }*/
 
     @PostMapping("/changeYourRole")
     public String changeYourRole(@ModelAttribute Role role, Model model, BindingResult bindingResult) {
@@ -225,6 +234,15 @@ public class PersonController {
         model.addAttribute("message",message);
         return "redirect:welcome";
 
+    }
+    @GetMapping("/addDocumentation")
+    public String addDocumentation(Model model) {
+        return "/addDocumentation";
+    }
+
+    @PostMapping("/addDocumentation")
+    public String addDocumentation() {
+        return "redirect:/addDocumentation";
     }
 
 //EDIT
@@ -563,7 +581,6 @@ public class PersonController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Person p = personService.findByUsername(auth.getName());
         refereeRepository.save(referee);
-
         refereePersonConnectionRepository.save(new RefereePersonConnection(referee, p));
 
         return "redirect:welcome";
@@ -582,13 +599,27 @@ public class PersonController {
 
         return listOfCompetition;
     }
+/*
+    @ModelAttribute("messagesForUser")
+    public List<Message> getMyMessage() {
+        String content = "Brak nowych wiadomosci";
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Person p = personService.findByUsername(auth.getName());
 
+        List<Message> messages = new ArrayList<>();
+        messages.add(new Message(content));
+
+        if(messageService.findByPersonId(p.getIdPerson()) != null){
+            messages.clear();
+            messages = messageService.findByPersonId(p.getIdPerson());
+        }
+
+        return messages;
+    }
+*/
     @GetMapping("/chooseCompetitionForReferee")
     public String chooseCompetitions(Model model){
         model.addAttribute("competitionForm", new Competition());
-
-
-
         return "/chooseCompetitionForReferee";
     }
     private Long idRefereeOnCompetition;
@@ -648,9 +679,6 @@ public class PersonController {
         refereeRoleOnCompetitionRepository.saveAndFlush(refereeRoleOnCompetition);
         return "redirect:/welcome";
     }
-
-
-
 /*
 
     @RequestMapping("/searchCompetition")
@@ -703,6 +731,80 @@ public class PersonController {
 
     //akceptacja weryfikacji
 
+    @GetMapping("/acceptVerifyForm/{id_verification}")
+    public String acceptVerifyForm(@PathVariable(name = "id_verification") Long id, Model model) {
+
+        System.out.println("Jestem w /acceptVerifyForm/{id_verification}\n\n\n");
+
+        Optional <Verification> verification = verificationRepository.findById(id);
+        model.addAttribute("verification", verification.get());
+
+        Long id_person = verification.get().getIdPerson();
+
+        System.out.println("Id person, verification.getIdPerson() = "+id_person);
+        Optional <Person> p = personRepository.findById(id_person);
+        if(p==null) System.out.println("Nie znaleziono takiej osoby!");
+        else System.out.println("Znaleziono osobe z takim id, username = "+p.get().getUsername());
+        String r = verification.get().getNew_role();
+        System.out.println("Nowa rola: "+r);
+        Set<Role> roles = p.get().getRoles();
+        Role role = new Role();
+        System.out.println("Utworzono nowa role Role role = new Role()");
+        role.setName(r);
+        System.out.println("Ustawiono nazwe roli na: "+role.getName());
+        roles.add(role);
+        System.out.println("Dodano nowa role do zbioru rol");
+        personService.add_role(p.get(), role);
+        System.out.println("Dodano nowa role do serwisu");
+        p.get().setRoles(roles);
+
+        Message message = new Message();
+        message.setIdPerson(verification.get().getIdPerson());
+        message.setContent("Twoja rola zostala zmieniona na: "+role.getName());
+        messageRepository.save(message);
+        System.out.println("Zapiano wiadomosc do uzytkownika");
+
+        usun_zadanie(id);
+        //System.out.println("Usuwam to zadanie");
+        //verificationRepository.deleteById(verification.get().getId_verification());
+
+        return "redirect:/welcome";
+    }
+    @PostMapping("/deleteVerification")
+    public String acceptVerifyForm(@ModelAttribute Verification verification, Model model, BindingResult bindingResult){
+        System.out.println("Jestem w postMapping acceptVerifyForm");
+        return "redirect:/welcome";
+    }
+    public void usun_zadanie(Long id){
+        Optional <Verification> verification = verificationRepository.findById(id);
+        if(verification==null) System.out.println("Nie znaleziono takiej weryfikacji");
+        else {
+            System.out.println("Znaleziono taka weryfikacje: "+verification.get().getId_verification());
+            verificationRepository.deleteById(verification.get().getId_verification());
+        }
+    }
+
+    //odrzucanie weryfikacji
+    @GetMapping("/rejectVerifyForm/{id_verification}")
+    public String rejectVerifyForm(@PathVariable(name = "id_verification") Long id, Model model) {
+
+        System.out.println("Jestem w /rejectVerifyForm/{id_verification}\n\n\n");
+        System.out.println("Usuwam to zadanie");
+        Optional <Verification> verification = verificationRepository.findById(id);
+        if(verification==null) System.out.println("Nie znaleziono takiej weryfikacji");
+        else System.out.println("Znaleziono taka weryfikacje: "+verification.get().getId_verification());
+
+
+        Message message = new Message();
+        message.setIdPerson(verification.get().getIdPerson());
+        message.setContent("Twoja prosba zmiany roli zostala odrzucona");
+        messageRepository.save(message);
+
+        verificationRepository.deleteById(verification.get().getId_verification());
+
+        return "redirect:/welcome";
+    }
+/*
     @GetMapping("/acceptVerifyForm")
     public String acceptVerifyForm(Model model) {
         System.out.println("Jestem w funkcji acceptVerifyForm /GetMapping");
@@ -726,7 +828,7 @@ public class PersonController {
         p.get().setRoles(roles);
         return "redirect:/welcome";
     }
-
+*/
 
 
 
@@ -779,6 +881,11 @@ public class PersonController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileDB.getName() + "\"")
                 .body(fileDB.getData());
     }
+    /*@GetMapping("/doUpload")
+    public String handleFileUpload(Model model){
+        System.out.println("Jestem w doUpload GetMapping");
+        return "/doUpload";
+    }*/
     @RequestMapping(value = "/doUpload", method = RequestMethod.POST)
     public String handleFileUpload(HttpServletRequest request,
                                    @RequestParam CommonsMultipartFile[] fileUpload, Model model) throws Exception {
@@ -796,7 +903,7 @@ public class PersonController {
         }
         String message = "Pomyslnie przeslano dokumentacje";
         model.addAttribute("message",message);
-        return "redirect:/changeYourRole";
+        return "redirect:/welcome";
     }
 }
 
