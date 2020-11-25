@@ -20,4 +20,6 @@ public interface PersonService {
     void update_user_role_if_exists();
 
     List<Person> findAll();
+
+    public void addModerator();
 }

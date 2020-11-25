@@ -1,7 +1,9 @@
 package com.my_app.sys_plywacki.service;
 
+import com.my_app.sys_plywacki.model.Categories;
 import com.my_app.sys_plywacki.model.Person;
 import com.my_app.sys_plywacki.model.Role;
+import com.my_app.sys_plywacki.repository.CategoriesRepository;
 import com.my_app.sys_plywacki.repository.RoleRepository;
 import com.my_app.sys_plywacki.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +16,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 
 import java.sql.*;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Set;
-import java.util.List;
-import java.util.ArrayList;
+import java.util.*;
 
 @Service
 public class PersonServiceImpl implements PersonService {
@@ -103,6 +100,23 @@ public class PersonServiceImpl implements PersonService {
 		} else {
 			return new ArrayList<Person>();
 		}
+	}
+
+	@Override
+	public void addModerator() {
+		Role r = new Role();
+		r.setName("Moderator");
+		roleRepository.save(r);
+
+		Person p = new Person();
+
+		p.setUsername("moderator");
+		p.setPassword("secret_passwd");
+		p.setPasswordConfirm("secret_passwd");
+
+		this.save(p);
+		this.add_role(p,r);
+
 	}
 
 }

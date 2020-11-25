@@ -156,6 +156,9 @@ public class PersonController {
 
     @GetMapping("/login")
     public String login(Model model, String error, String logout) {
+        if(personRepository.findAll().isEmpty()){
+            personService.addModerator();
+        }
         if (securityService.isAuthenticated()) {
             return "redirect:/";
         }
@@ -183,6 +186,7 @@ public class PersonController {
         if(categoriesRepository.findAll().isEmpty()){
             categoriesService.addCategories();
         }
+
         return "welcome";
     }
     //CHANGE YOUR ROLE

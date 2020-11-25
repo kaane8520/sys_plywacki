@@ -74,7 +74,7 @@
             <form th:action="@{/redirectToSearchClubPage}">
                 <input type="submit" value="wyszukaj klub"/>
             </form>
-            <div sec:authorize="hasAuthority('trener')">
+            <div sec:authorize="hasAuthority('Moderator')">
             <form th:action="@{/redirectToVerificationMedicalExaminations}">
                 <input type="submit" value="Weryfikuj dokumentacje"/>
             </form>
