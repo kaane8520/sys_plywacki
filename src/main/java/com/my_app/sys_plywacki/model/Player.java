@@ -34,7 +34,7 @@ public class Player{
     @ManyToOne
     private CategoriesOnCompetition categoriesOnCompetition;
 
-
+    private Long idPerson;
     public Player() {
     }
 
@@ -46,6 +46,8 @@ public class Player{
         return idPlayer;
     }
 
+    public Long getIdPerson() {return idPerson; }
+    public void setIdPerson(Long idPerson) {this.idPerson = idPerson; }
 
     public Club getClub() {
         return club;

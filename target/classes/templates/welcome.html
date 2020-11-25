@@ -49,8 +49,9 @@
 
             <tr th:each="message : ${messagesForUser}">
                 <td th:block th:text="${message.getContent()}"></td>
-                <a th:href="@{'/deleteMessage/' + ${message.getIdMessage()}}" style="text-indent: 20px;">OK</a>
-            </tr>
+
+                <a th:href="@{'/deleteMessage/' + ${message.getIdMessage()}}" style="text-indent: 20px;">OK</a> <br>
+        </tr>
 
 
             <form th:action="@{/redirectToChangeYourRolePage}">
@@ -77,6 +78,11 @@
             <div sec:authorize="hasAuthority('Moderator')">
             <form th:action="@{/redirectToVerificationMedicalExaminations}">
                 <input type="submit" value="Weryfikuj dokumentacje"/>
+            </form>
+            </div>
+            <div sec:authorize="hasAuthority('zawodnik')">
+            <form th:action="@{/redirectToEditPlayer}">
+                <input type="submit" value="Edytuj swoje dane"/>
             </form>
             </div>
 

@@ -192,6 +192,9 @@ public class PersonController {
         if(messageRepository.findByIdPerson(p.getIdPerson()).isEmpty()){
             messageService.addMessage();
         }
+        if(clubRepository.findAll().isEmpty()){
+            clubService.add_no_club();
+        }
 
         return "welcome";
     }
@@ -243,7 +246,7 @@ public class PersonController {
             return "changeYourRole";
         }
         Message message = new Message();
-        String content = "Zadanie zmiany roli zostało wysłane\n";
+        String content = "Zadanie zmiany roli zostalo wyslane\n";
         message.setContent(content);
         message.setIdPerson(p.getIdPerson());
         messageRepository.save(message);
@@ -401,9 +404,15 @@ public class PersonController {
         Person p = personService.findByUsername(auth.getName());
 
 
-
         Long x = player.getIdClub();
         Optional<Club> club = clubRepository.findById(x);
+
+        ///!!!!!!!!!!!!!!!!!!!!
+        List<Player> saved_player = playerRepository.findByIdPerson(p.getIdPerson());
+        System.out.println("Znaleziono "+saved_player.size()+" zawodnikow");
+        saved_player.get(0).setClub(club.get());
+        saved_player.get(0).setMedExDate(player.getMedExDate());
+        playerRepository.save(saved_player.get(0));
         //System.out.println("to jest club get" + club.get().getId_club());
 
 
@@ -862,6 +871,12 @@ public class PersonController {
         if(role.getName().equals("zawodnik")) {
             Player player = new Player();
             player.setPerson(p.get());
+            player.setIdPerson(id_person);
+
+            //Ustawiam brak klubu jako klub
+            Optional<Club> club = clubRepository.findById(Integer.toUnsignedLong(1));
+            player.setClub(club.get());
+
             playerRepository.save(player);
 
         }

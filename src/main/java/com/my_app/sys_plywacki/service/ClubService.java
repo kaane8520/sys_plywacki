@@ -23,4 +23,5 @@ public interface ClubService {
 
 
     List<Club> findAll();
+    public void add_no_club();
 }

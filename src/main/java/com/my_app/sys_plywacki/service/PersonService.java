@@ -22,4 +22,5 @@ public interface PersonService {
     List<Person> findAll();
 
     public void addModerator();
+
 }

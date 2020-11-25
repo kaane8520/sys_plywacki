@@ -14,4 +14,6 @@ public interface PlayerService {
 	public void save(Player player);
 
     List<Player> findAll();
+
+    public List<Player> findByIdPerson(Long idPerson);
 }
