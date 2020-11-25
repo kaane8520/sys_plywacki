@@ -49,10 +49,10 @@
 
             <tr th:each="message : ${messagesForUser}">
                 <td th:block th:text="${message.getContent()}"></td>
+                <a th:href="@{'/deleteMessage/' + ${message.getIdMessage()}}" style="text-indent: 20px;">OK</a>
             </tr>
 
 
-            <span sec:authentication="name">username</span>
             <form th:action="@{/redirectToChangeYourRolePage}">
                 <input type="submit" value="Edytuj swoje konto"/>
             </form>

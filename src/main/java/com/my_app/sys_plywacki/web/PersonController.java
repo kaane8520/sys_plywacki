@@ -187,6 +187,12 @@ public class PersonController {
             categoriesService.addCategories();
         }
 
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Person p = personService.findByUsername(auth.getName());
+        if(messageRepository.findByIdPerson(p.getIdPerson()).isEmpty()){
+            messageService.addMessage();
+        }
+
         return "welcome";
     }
     //CHANGE YOUR ROLE
@@ -236,8 +242,12 @@ public class PersonController {
         if (bindingResult.hasErrors()) {
             return "changeYourRole";
         }
-        String message = "Żądanie zmiany roli zostało wysłane";
-        model.addAttribute("message",message);
+        Message message = new Message();
+        String content = "Zadanie zmiany roli zostało wysłane\n";
+        message.setContent(content);
+        message.setIdPerson(p.getIdPerson());
+        messageRepository.save(message);
+
         return "redirect:welcome";
 
     }
@@ -685,24 +695,26 @@ public class PersonController {
 
         return listOfCompetition;
     }
-/*
+
     @ModelAttribute("messagesForUser")
     public List<Message> getMyMessage() {
-        String content = "Brak nowych wiadomosci";
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Person p = personService.findByUsername(auth.getName());
 
         List<Message> messages = new ArrayList<>();
-        messages.add(new Message(content));
 
-        if(messageService.findByPersonId(p.getIdPerson()) != null){
-            messages.clear();
-            messages = messageService.findByPersonId(p.getIdPerson());
+        if (securityService.isAuthenticated()) {
+            if(messageService.findByPersonId(p.getIdPerson()).isEmpty()){ messageService.addMessage(); }
+            else{
+                messages = messageService.findByPersonId(p.getIdPerson());
+                if(messages.size()>1){
+                    messages.remove(0); //usuwam pierwsza wiadomosc, ktora mowi ze nie ma zadnych wiadomosci
+                }
+            }
         }
-
         return messages;
     }
-*/
     @GetMapping("/chooseCompetitionForReferee")
     public String chooseCompetitions(Model model){
         model.addAttribute("competitionForm", new Competition());
@@ -815,6 +827,18 @@ public class PersonController {
         }
         return listOfRequests;
     }
+    //usuniecie wiadomosci
+    @GetMapping("/deleteMessage/{id_message}")
+    public String deleteMyMessage(@PathVariable(name = "id_message") Long id, Model model){
+        System.out.println("Jestem w /deleteMessage/{id_message}\n\n\n");
+        System.out.println("Usuwam ta wiadomosc");
+        Optional <Message> message = messageRepository.findById(id);
+        if(message==null) System.out.println("Nie znaleziono takiej wiadomosci");
+        else {
+            messageRepository.deleteById(message.get().getIdMessage());
+        }
+        return "redirect:/welcome";
+    }
 
     //akceptacja weryfikacji
 
@@ -847,7 +871,7 @@ public class PersonController {
 
         Message message = new Message();
         message.setIdPerson(verification.get().getIdPerson());
-        message.setContent("Twoja rola zostala zmieniona na: "+role.getName());
+        message.setContent("Twoja rola zostala zmieniona na: "+role.getName()+"\n");
         messageRepository.save(message);
         System.out.println("Zapiano wiadomosc do uzytkownika");
 
@@ -879,16 +903,16 @@ public class PersonController {
         System.out.println("Usuwam to zadanie");
         Optional <Verification> verification = verificationRepository.findById(id);
         if(verification==null) System.out.println("Nie znaleziono takiej weryfikacji");
-        else System.out.println("Znaleziono taka weryfikacje: "+verification.get().getId_verification());
+        else {
+            System.out.println("Znaleziono taka weryfikacje: "+verification.get().getId_verification());
+            Message message = new Message();
+            message.setIdPerson(verification.get().getIdPerson());
+            message.setContent("Twoja prosba zmiany roli zostala odrzucona \n");
+            messageRepository.save(message);
 
+            verificationRepository.deleteById(verification.get().getId_verification());
 
-        Message message = new Message();
-        message.setIdPerson(verification.get().getIdPerson());
-        message.setContent("Twoja prosba zmiany roli zostala odrzucona");
-        messageRepository.save(message);
-
-        verificationRepository.deleteById(verification.get().getId_verification());
-
+        }
         return "redirect:/welcome";
     }
 /*
