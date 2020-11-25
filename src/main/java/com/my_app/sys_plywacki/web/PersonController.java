@@ -362,10 +362,7 @@ public class PersonController {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Person p = personService.findByUsername(auth.getName());
-        Organizer organizer = new Organizer();
-        model.addAttribute("organizer", organizer);
-        organizerRepository.save(organizer);
-        organizerPersonConnectionRepository.save(new OrganizerPersonConnection(organizer, p));
+
 
         return "redirect:/welcome";
     }*/
@@ -403,8 +400,7 @@ public class PersonController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Person p = personService.findByUsername(auth.getName());
 
-        player.setPerson(p);
-        playerRepository.save(player);
+
 
         Long x = player.getIdClub();
         Optional<Club> club = clubRepository.findById(x);
@@ -434,9 +430,7 @@ public class PersonController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Person p = personService.findByUsername(auth.getName());
 
-        coach.setPerson(p);
-        coachRepository.save(coach);
-//        coachPersonConnectionRepository.save(new CoachPersonConnection(coach, p));
+
         return "redirect:registrationClub";
     }
 
@@ -674,10 +668,6 @@ public class PersonController {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Person p = personService.findByUsername(auth.getName());
-        referee.setPerson(p);
-        refereeRepository.save(referee);
-
-        //refereePersonConnectionRepository.save(new RefereePersonConnection(referee, p));
 
         return "redirect:welcome";
     }
@@ -868,6 +858,35 @@ public class PersonController {
         personService.add_role(p.get(), role);
         System.out.println("Dodano nowa role do serwisu");
         //p.get().setRoles(roles);
+
+        if(role.getName().equals("zawodnik")) {
+            Player player = new Player();
+            player.setPerson(p.get());
+            playerRepository.save(player);
+
+        }
+        else if (role.getName().equals("organizator")) {
+
+            Organizer organizer = new Organizer();
+
+            organizer.setPerson(p.get());
+            organizerRepository.save(organizer);
+
+        }
+        else if (role.getName().equals("trener")) {
+
+            Coach coach = new Coach();
+            coach.setPerson(p.get());
+            coachRepository.save(coach);
+
+        }
+        else if(role.getName().equals("sedzia")) {
+
+            Referee referee = new Referee();
+            referee.setPerson(p.get());
+            refereeRepository.save(referee);
+        }
+
 
         Message message = new Message();
         message.setIdPerson(verification.get().getIdPerson());
