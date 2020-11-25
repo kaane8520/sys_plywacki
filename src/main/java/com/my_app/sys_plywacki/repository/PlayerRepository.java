@@ -14,4 +14,8 @@ public interface PlayerRepository extends JpaRepository<Player, Long>{
 //    List<Player> findByIdPlayer(String keyword);
     @Nullable
     List<Player> findByIdPerson(Long idPerson);
+    List<Player> findAllByPersonUsernameContains(String keyword);
+
+
+    List<Player> findPlayersByClubCoachPersonUsernameContains(String keyword);
 }

@@ -50,10 +50,10 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:if="${listOfPlayers.empty}">
+            <tr th:if="${playersList.empty}">
                 <td colspan="3"> Nie ma zawodników</td>
             </tr>
-            <tr th:each="player : ${listOfPlayers}">
+            <tr th:each="player : ${playersList}">
                 <td th:text="${player.idPlayer}"></td>
                 <td th:text="${player.getUsername()}"></td>
                 <td th:text="${player.getClubname()}"></td>
@@ -63,6 +63,12 @@
             </tbody>
         </table>
     </div>
+    <form  th:action="@{/searchPlayerKey}" >
+        Filter: <input type="text" name="keywordPlayer" id="keywordPlayer" size="50" th:value="${keywordPlayer}" required />
+
+        <input type="submit" value="Wyszukaj" />
+
+    </form>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
