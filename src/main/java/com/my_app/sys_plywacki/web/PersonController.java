@@ -120,6 +120,9 @@ public class PersonController {
     @Autowired
     private VerificationService verificationService;
 
+    @Autowired
+    private RoleRepository roleRepository;
+
 
     @Autowired
     private UserDetailsService personDetailsService;
@@ -681,6 +684,72 @@ public class PersonController {
 
         return listOfCompetition;
     }
+    @ModelAttribute("playerWelcomeClubname")
+    public String getPlayerClubname(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Person p = personService.findByUsername(auth.getName());
+        Role role = roleRepository.findByPerson(p);
+        if(roleRepository.existsByPerson(p)) {
+            if (role.getName().contains("zawodnik")) {
+                if (playerRepository.existsByIdPerson(p.getId())) {
+                    Player player = playerRepository.findPlayerByPerson(p);
+
+                    if (player.getClubname() != null) {
+                        if (player.getClubname().contains("Brak klubu")) {
+                            return "Musisz wybrać swój klub!";
+                        }
+                        String cbnm = player.getClubname();
+                        return cbnm;
+                    } else {
+                        return "Musisz wybrać swój klub!";
+                    }
+
+                }
+                return "Musisz wysłać dokumentacje aby dostać uprawnienia";
+            }
+        }
+
+        return "Musisz wysłać dokumentacje aby dostać uprawnienia";
+    }
+    @ModelAttribute("coachWelcomeClubname")
+    public String getCoachClubname(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Person p = personService.findByUsername(auth.getName());
+        Role role = roleRepository.findByPerson(p);
+        if(roleRepository.existsByPerson(p)) {
+            if (role.getName().contains("trener")) {
+                System.out.println("Nie weszłeś");
+                Coach coach = coachRepository.findCoachByPerson(p);
+                if (clubRepository.existsClubByCoach(coach)) {
+                    return coach.getClub().getClubname();
+                }
+                return "Stwórz klub!";
+            }
+        }
+
+        return "Musisz wysłać dokumentacje aby dostać uprawnienia";
+    }
+
+
+    @ModelAttribute("playersListInCoachClub")
+    public List<Player> getPlayersInCoachClub(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Person p = personService.findByUsername(auth.getName());
+        Role role = roleRepository.findByPerson(p);
+        if(roleRepository.existsByPerson(p)) {
+            if (role.getName().contains("trener")) {
+                System.out.println("Nie weszłeś");
+                Coach coach = coachRepository.findCoachByPerson(p);
+                if (clubRepository.existsClubByCoach(coach)) {
+                    List<Player> playersListInCoachClub = playerRepository.findPlayersByClubCoach(coach);
+                    return playersListInCoachClub;
+                }
+            }
+        }
+
+
+        return null;
+    }
 
     @ModelAttribute("messagesForUser")
     public List<Message> getMyMessage() {
@@ -797,7 +866,7 @@ public class PersonController {
 
     @PostMapping("/verificationMedicalExaminations")
     public String verificationMedicalExaminations() {
-        return "redirect:/welcome";
+        return "/verificationMedicalExaminations";
     }
 
     @ModelAttribute("listOfRequests")
@@ -851,6 +920,8 @@ public class PersonController {
         roles.add(role);
         System.out.println("Dodano nowa role do zbioru rol");
         personService.add_role(p.get(), role);
+        role.setPerson(p.get());
+        roleRepository.save(role);
         System.out.println("Dodano nowa role do serwisu");
         //p.get().setRoles(roles);
 

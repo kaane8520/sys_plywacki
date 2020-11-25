@@ -10,6 +10,9 @@ public class Role {
 
     private String name;
 
+    @ManyToOne
+    private Person person;
+
 
     public Long getId() {
         return id_role;
@@ -25,5 +28,14 @@ public class Role {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
     }
 }

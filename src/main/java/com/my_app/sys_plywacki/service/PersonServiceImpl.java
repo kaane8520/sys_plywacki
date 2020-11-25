@@ -106,15 +106,15 @@ public class PersonServiceImpl implements PersonService {
 	public void addModerator() {
 		Role r = new Role();
 		r.setName("Moderator");
-		roleRepository.save(r);
 
 		Person p = new Person();
-
 		p.setUsername("moderator");
 		p.setPassword("secret_passwd");
 		p.setPasswordConfirm("secret_passwd");
 
 		this.save(p);
+		r.setPerson(p);
+		roleRepository.save(r);
 		this.add_role(p,r);
 
 	}

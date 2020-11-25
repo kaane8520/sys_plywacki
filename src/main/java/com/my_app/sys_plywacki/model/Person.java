@@ -29,7 +29,7 @@ public class Person {
     @Column //(name = "passwordConfirm")
     private String passwordConfirm;
 
-    @ManyToMany
+    @OneToMany
     @Column //(name = "roles")
     private Set<Role> roles;
 
