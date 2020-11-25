@@ -38,4 +38,8 @@ public class PlayerServiceImpl implements PlayerService{
         }
     }
 
+    public List<Player> findByIdPerson(Long idPerson){
+        return repository.findByIdPerson(idPerson);
+    }
+
 }

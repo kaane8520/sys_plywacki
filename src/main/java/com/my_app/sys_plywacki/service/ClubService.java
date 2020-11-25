@@ -11,6 +11,7 @@ import java.util.List;
 
 public interface ClubService {
 
+//    public List<Club> listAll(String keyword);
 
 	void save(Club club);
 
@@ -22,4 +23,5 @@ public interface ClubService {
 
 
     List<Club> findAll();
+    public void add_no_club();
 }

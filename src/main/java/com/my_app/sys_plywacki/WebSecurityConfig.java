@@ -12,6 +12,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import javax.sql.DataSource;
+
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -26,14 +28,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable();
         http
             .authorizeRequests()
                 .antMatchers("/css/**", "/js/**", "/registration", "/searchClubs", "/serachCompetitions", "/searchPlayers", "/registrationClub").permitAll()
                 .antMatchers("/enterResults", "/acceptApplications", "/registrationCompetitions").hasAuthority("organizator")
                 .antMatchers("/judgingCompetitions").hasAuthority("sedzia")
-                .antMatchers("/registrationCompetitorsCoach", "/verificationMedicalExaminations").hasAuthority("trener")
+                .antMatchers("/registrationCompetitorsCoach").hasAuthority("trener")
                 .antMatchers("/registrationCompetitiorsPlayer","/test").hasAuthority("trener")
-                .antMatchers("/editPlayer").hasAuthority("zawodnik")
+                .antMatchers("/verificationMedicalExaminations").hasAuthority("Moderator")
+                //.antMatchers("/editPlayer").hasAuthority("zawodnik")
                 .anyRequest().authenticated()
                 .and()
             .formLogin()
@@ -53,4 +57,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
     }
+
 }

@@ -1,7 +1,9 @@
 package com.my_app.sys_plywacki.service;
 
+import com.my_app.sys_plywacki.model.Categories;
 import com.my_app.sys_plywacki.model.Person;
 import com.my_app.sys_plywacki.model.Role;
+import com.my_app.sys_plywacki.repository.CategoriesRepository;
 import com.my_app.sys_plywacki.repository.RoleRepository;
 import com.my_app.sys_plywacki.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +16,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 
 import java.sql.*;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Set;
-import java.util.List;
-import java.util.ArrayList;
+import java.util.*;
 
 @Service
 public class PersonServiceImpl implements PersonService {
@@ -58,8 +55,7 @@ public class PersonServiceImpl implements PersonService {
             System.out.println(x.getName());
         }
 		person.setRoles(newRole);
-		//szukam id_roli
-		roleRepository.save(role); //takie zapisywanie powinno się odbywać przy starcie aplikacji
+		roleRepository.save(role);
 	}
 
 	@Override
@@ -71,7 +67,7 @@ public class PersonServiceImpl implements PersonService {
 	}
 	@Override
 	public void update_user_role_if_exists() {
-       	System.out.println("update_user_role_if_exists");
+       	//System.out.println("update_user_role_if_exists");
     	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Person p = this.findByUsername(auth.getName());
         System.out.println("User name: "+p.getUsername());
@@ -80,7 +76,7 @@ public class PersonServiceImpl implements PersonService {
         
         List<SimpleGrantedAuthority> updatedAuthorities = new ArrayList<SimpleGrantedAuthority>();
         
-        System.out.println("Checking user authorities...");
+        //System.out.println("Checking user authorities...");
         
         for (Role x : roles) {
         	System.out.println("Your role is: "+x.getName());
@@ -96,6 +92,31 @@ public class PersonServiceImpl implements PersonService {
         		);
         System.out.println("Authorities updates during login process");
         System.out.println(updatedAuthorities);
+	}
+	public List<Person> findAll(){
+		List<Person> result = (List<Person>) personRepository.findAll();
+		if(result.size() > 0) {
+			return result;
+		} else {
+			return new ArrayList<Person>();
+		}
+	}
+
+	@Override
+	public void addModerator() {
+		Role r = new Role();
+		r.setName("Moderator");
+		roleRepository.save(r);
+
+		Person p = new Person();
+
+		p.setUsername("moderator");
+		p.setPassword("secret_passwd");
+		p.setPasswordConfirm("secret_passwd");
+
+		this.save(p);
+		this.add_role(p,r);
+
 	}
 
 }

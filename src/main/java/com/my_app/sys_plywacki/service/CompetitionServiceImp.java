@@ -16,8 +16,10 @@ public class CompetitionServiceImp {
     public List<Competition> listAll(String keyword){
         //if(keyword != null){
             //return repository.search(keyword);
+
         //}
         return repository.findAll();
     }
+
 
 }

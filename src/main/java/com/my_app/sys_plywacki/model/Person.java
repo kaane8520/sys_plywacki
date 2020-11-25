@@ -13,7 +13,7 @@ public class Person {
     @NotNull private BigDecimal price;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_person;
+    private Long idPerson;
     @Column(nullable = false)
     private String username;
 //    @Column
@@ -33,30 +33,30 @@ public class Person {
     @Column //(name = "roles")
     private Set<Role> roles;
 
-    @OneToMany
-    private List<PlayerPersonConnection> players;
+    @OneToOne
+    private Player player;
 
-    @OneToMany
-    private List<OrganizerPersonConnection> organizers;
+    @OneToOne
+    private Organizer organizer;
 
-    @OneToMany
-    private List<CoachPersonConnection> coaches;
+    @OneToOne
+    private Coach coach;
 
-    @OneToMany
-    private List<RefereePersonConnection> referees;
+    @OneToOne
+    private Referee referee;
 
 
 
-    public Long getId_person() {
-        return id_person;
+    public Long getIdPerson() {
+        return idPerson;
     }
 
-    public void setId_person(Long id_person) {
-        this.id_person = id_person;
+    public void setIdPerson(Long idPerson) {
+        this.idPerson = idPerson;
     }
 
     public Person(Long id_person, String username, String password, String passwordConfirm) {
-        this.id_person = id_person;
+        this.idPerson = id_person;
         this.username = username;
         this.password = password;
         this.passwordConfirm = passwordConfirm;
@@ -65,11 +65,11 @@ public class Person {
     public Person() {}
 
     public Long getId() {
-        return id_person;
+        return idPerson;
     }
 
     public void setId(Long id) {
-        this.id_person = id;
+        this.idPerson = id;
     }
 
     public String getUsername() {
@@ -103,6 +103,44 @@ public class Person {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+    public String printYourRole() {
+        Set<Role> yourRole = this.getRoles();
+        String roles = "";
+        for (Role r : yourRole) {
+            roles = r.getName();
+        }
+        return roles;
+    }
 
+    public Player getPlayers() {
+            return player;
+    }
 
+    public void setPlayers(Player players) {
+        this.player = player;
+    }
+
+    public Organizer getOrganizer() {
+        return organizer;
+    }
+
+    public void setOrganizer(Organizer organizer) {
+        this.organizer = organizer;
+    }
+
+    public Coach getCoach() {
+        return coach;
+    }
+
+    public void setCoach(Coach coach) {
+        this.coach = coach;
+    }
+
+    public Referee getReferee() {
+        return referee;
+    }
+
+    public void setReferee(Referee referee) {
+        this.referee = referee;
+    }
 }

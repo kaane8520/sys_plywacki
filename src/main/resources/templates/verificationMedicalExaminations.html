@@ -8,17 +8,78 @@
         <link href="/css/main.css" rel="stylesheet">
     </head>
     <body>
-        <div class="navbar">
-            <div sec:authorize="isAuthenticated()">
-                <form id="logoutForm" method="POST" th:action="@{/logout}">
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                </form>
-                <a onclick="document.forms['logoutForm'].submit()">Logout</a>
-            </div>
-        </div>
-        <div class="container">
-            <form method="POST" class="form-signin" th:action="@{/verificationMedicalExaminations}">
+    <div class="navbar">
+        <span>To jest navbar</span>
+        <form th:action="@{/redirectToWelcome}">
+            <input class="nav-items" type="submit" value="Strona główna"/>
+        </form>
 
+        <form th:action="@{/redirectToSearchClubPage}">
+            <input class="nav-items" type="submit" value="wyszukaj klub"/>
+        </form>
+        <form th:action="@{/redirectToSearchCompetitionsPage}">
+            <input class="nav-items" type="submit" value="wyszukaj zawody"/>
+        </form>
+        <form th:action="@{/redirectToSearchPlayersPage}">
+            <input class="nav-items" type="submit" value="wyszukaj zawodników"/>
+        </form>
+        <div sec:authorize="isAuthenticated()">
+            <form th:action="@{/redirectToEditPage}">
+                <input class="nav-items" type="submit" value="Edytuj swoje konto"/>
+            </form>
+        </div>
+        <div sec:authorize="isAuthenticated()">
+            <form id="logoutForm" method="POST" th:action="@{/logout}">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+            </form>
+            <a onclick="document.forms['logoutForm'].submit()">Logout</a>
+        </div>
+    </div>
+
+        <div class="container">
+            <h2 class="form-signin-heading">Żądania zmiany uprawnień</h2>
+            <form method="POST" class="form-signin" th:object="${verificationForm}" th:action="@{/verificationMedicalExaminations}">
+                <table border="1" cellpadding="10">
+                    <thead>
+                    <tr>
+                        <th>Id weryfikacji</th>
+                        <th>Nazwa uzytkownika</th>
+                        <th>Aktualna rola</th>
+                        <th>Prośba o zmiane na</th>
+                        <th>Badania lekarskie</th>
+                        <th>Twoja akcja </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!--<tr th:if="${listOfUsers.empty}">
+                        <td colspan="3"> Nie ma żadnych prosb </td>
+                    </tr> -->
+                    <tr th:each="verification : ${listOfRequests}"> <!-- lista obiektów typu Verification -->
+                        <td th:block th:text="${verification.getId_verification()}"></td>
+                        <td th:block th:text="${verification.getUserName()}"></td>
+                        <td th:block th:text="${verification.getOldRole()}"></td>
+                        <td th:block th:text="${verification.new_role}"></td>
+
+
+                        <!--<td th:text="${verification.printYourRole()}"></td>-->
+                        <!--<td th:text="${verification.new_role}}"></td>-->
+                        <td >tu też nie wiem</td>
+                        <!-- <div sec:authorize="hasAuthority('')"> -->
+                        <td>
+                            <!--<form method="POST" class="form-signin" th:object="${verifyForm}" th:action="@{/acceptVerifyForm}">
+                                <input type="submit" value="Zaakceptuj"/>
+                            </form>
+                            <form class="form-signin" th:object="${verifyForm}" th:action="@{/denyVerifyForm}">
+                                <input type="submit" value="Odrzuć"/>
+                            </form>-->
+                           <a th:href="@{'/acceptVerifyForm/' + ${verification.id_verification}}">Akceptuj</a>
+                            &nbsp;&nbsp;&nbsp;
+                            <a th:href="@{'/rejectVerifyForm/' + ${verification.id_verification}}">Odrzuc</a>
+                        </td>
+                        <!-- </div> -->
+                    </tr>
+                    </tbody>
+                </table>
             </form>
         </div>
 

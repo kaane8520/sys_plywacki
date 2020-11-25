@@ -52,34 +52,31 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:if="${clubList.empty}">
-                        <td colspan="2"> Nie ma klubów </td>
-                    </tr>
+<!--                    <tr th:if="${clubList.isEmpty()}">-->
+<!--                        <td colspan="2"> Nie ma klubów </td>-->
+<!--                    </tr>-->
                     <tr th:each="club : ${clubList}">
                         <td th:text="${club.id_club}"></td>
-                        <td th:text="${club.club_name}"></td>
-
-
+                        <td th:text="${club.clubname}"></td>
+                        <div sec:authorize="hasAuthority('trener')">
+                            <td>
+                                <a th:href="@{/deleteClub/{id}(id=${club.id_club})}">Delete</a>
+                            </td>
+                        </div>
                     </tr>
                     </tbody>
                 </table>
             </div>
 
-            <div class="form-group">
-                <span th:text="${message}"></span>
-                <input name="club_name" type="text" class="form-control" placeholder="Wpisz nazwę klubu"
-                       autofocus="true"/>
 
-                <button class="btn btn-lg btn-primary btn-block" type="submit">Wyszukaj</button>
-
-            </div>
         </form>
-        <form th:object="${clubList}" th:action="@{/searchClub}" method="post">
-            Filter: <input type="text" name="keyword" id="keyword" size="50" th:name="club_name" th:value="${search}" required />
+        <form  th:action="@{/searchClubKey}" >
+            Filter: <input type="text" name="keyword" id="keyword" size="50" th:value="${keyword}" required />
 
             <input type="submit" value="Wyszukaj" />
 
         </form>
+
     </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

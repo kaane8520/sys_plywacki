@@ -39,7 +39,11 @@ public class ClubServiceImp implements ClubService{
 
 
 
-
+    public void add_no_club(){
+        Club club = new Club();
+        club.setClubname("Brak klubu");
+        repository.save(club);
+    }
 
 
 //    public void save (Club club){
