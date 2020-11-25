@@ -11,6 +11,7 @@ import com.my_app.sys_plywacki.service.*;
 import com.my_app.sys_plywacki.repository.*;
 import org.springframework.security.core.Authentication;
 
+import java.time.LocalDate;
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -334,12 +335,17 @@ public class PersonController {
 //        List <Club> clubList = clubService.listAll(keyword);
 //        model.addAttribute("clubList", clubList);
 //        model.addAttribute("keyword", keyword);
-        List<Club> clubList = clubRepository.findClubByClubname(keyword);
+        List<Club> clubList = clubRepository.findClubsByClubnameContains(keyword);
         model.addAttribute("clubList", clubList);
         return "/searchClubs";
     }
 
-
+    @RequestMapping("/searchCompKey")
+    public String viewCompetitionPage(Model model, @Param("keywordComp") String keywordComp){
+        List<Competition> competitionList = competitionRepository.findCompetitionsByCompetitionNameContains(keywordComp);
+        model.addAttribute("competitionList", competitionList);
+        return "/searchCompetitions";
+    }
     @GetMapping("/searchCompetitions")
     public String viewComptetionPage(Model model){
         List<Competition> competitionList = competitionService.findAll();
@@ -359,16 +365,17 @@ public class PersonController {
 
     @GetMapping("/searchPlayers")
     public String viewPlayersPage(Model model){
-
+        List<Player> playersList = playerRepository.findAll();
+        model.addAttribute("playersList", playersList);
         return "/searchPlayers";
     }
-    @ModelAttribute("listOfPlayers")
-    public List<Player> viewPlayersPage() {
-
-        List<Player> listOfPlayers = playerRepository.findAll();
-
-        return listOfPlayers;
+    @RequestMapping("/searchPlayerKey")
+    public String viewPlayersPage(Model model, @Param("keywordPlayer") String keywordPlayer){
+        List<Player> playersList = playerRepository.findAllByPersonUsernameContains(keywordPlayer);
+        model.addAttribute("playersList", playersList);
+        return "/searchPlayers";
     }
+
 //    @ModelAttribute("listOfClubs")
 //    public List<ClubPlayerConnection> viewPlayersPageC() {
 //

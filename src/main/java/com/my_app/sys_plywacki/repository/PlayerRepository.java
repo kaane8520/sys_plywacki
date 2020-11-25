@@ -9,5 +9,9 @@ import java.util.List;
 
 public interface PlayerRepository extends JpaRepository<Player, Long>{
     List<Player> findAllByClub(Club club);
-//    List<Player> findByIdPlayer(String keyword);
+
+    List<Player> findAllByPersonUsernameContains(String keyword);
+
+
+    List<Player> findPlayersByClubCoachPersonUsernameContains(String keyword);
 }
