@@ -43,7 +43,7 @@
     <!--            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
     <!--        </form>-->
 
-            <h2>Welcome <span sec:authentication="name"></span> | <a onclick="document.forms['logoutForm'].submit()">Logout</a></h2>
+            <h2>Witaj <span sec:authentication="name"></span> | <a onclick="document.forms['logoutForm'].submit()">Logout</a></h2>
 
           <h5>Twoja rola to: <span sec:authentication="authorities"></span></h5>
 
