@@ -14,6 +14,7 @@ public interface ClubRepository extends JpaRepository<Club, Long>{
     Club findClubByCoach(Coach coach);
     List<Club> findClubsByClubnameContains(String keyword);
     boolean existsClubByCoach(Coach coach);
+    Club findByIdCoach(Long idCoach);
 //    List<Club> findClubByClubname(String keyword);
 
 

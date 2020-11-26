@@ -46,6 +46,10 @@ public class Coach {
         this.club = club;
     }
 
+    public Long getIdClub(){
+        return club.getId_club();
+    }
+
     public LocalDate getCoachlegidate() {
         return coachlegidate;
     }

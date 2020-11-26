@@ -38,7 +38,31 @@
 
 <div class="container">
 
-    <form method="POST" class="form-signin" th:object="${regCompetitorsPlayerForm}" th:action="@{/regCompetitorsPlayer}">
+    <form method="POST" class="form-signin" th:object="${regClubForCompetitionForm}" th:action="@{/regClubForCompetition}">
+
+        <div class="form-group">
+            <h3>Wybierz zawody</h3>
+            <select th:field="*{competition}" class="form-control">
+                <option th:each="dropDownItem : ${listOfAvailableCompetitions}"
+                        th:value="${dropDownItem.getIdCompetitions()}"
+                        th:text="${dropDownItem.getCompetitionName()}"
+                />
+            </select>
+        </div>
+
+        <div class="form-group">
+            <h3>Wybierz zawodników</h3>
+            <select th:field="*{competition}" class="form-control">
+                <option th:each="dropDownItem : ${listOfPlayersInClub}"
+                        th:value="${dropDownItem.getIdPlayer()}"
+                        th:text="${dropDownItem.getIdPlayer()}"
+                />
+            </select>
+        </div>
+        <button id="add-player" button class="btn btn-lg btn-primary btn-block" type="submit">Potwierdz</button>
+    </form>
+
+    <!--<form method="POST" class="form-signin" th:object="${regCompetitorsPlayerForm}" th:action="@{/regCompetitorsPlayer}">
         <h5>Wybierz zawodników:</h5>
         <div class="form-group">
             <p th:each="dropDownItem : ${listOfPlayersInClub}">
@@ -51,7 +75,7 @@
 
         <button id="add-player" button class="btn btn-lg btn-primary btn-block" type="submit">Potwierdz</button>
 
-    </form>
+    </form>-->
 
 </div>
 

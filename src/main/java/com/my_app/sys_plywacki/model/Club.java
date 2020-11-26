@@ -22,6 +22,10 @@ public class Club {
 
     @OneToOne
     private Coach coach;
+    private Long idCoach;
+
+    @ManyToOne
+    private Competition competition;
 
 
 //    public Club(Coach coach) {
@@ -70,5 +74,17 @@ public class Club {
         return coach.getIdCoach();
     }
 
+    public Competition getCompetition() {
+        return competition;
+    }
 
+    public void setCompetition(Competition competition) {
+        this.competition = competition;
+    }
+
+
+
+    public Long getIdCompetition(){
+        return competition.getIdCompetitions();
+    }
 }

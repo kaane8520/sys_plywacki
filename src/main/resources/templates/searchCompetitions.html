@@ -63,20 +63,20 @@
                 <td th:text="${competition.idCompetitions}"></td>
                 <td th:text="${competition.competitionDate}"></td>
                 <td th:text="${competition.competitionName}"></td>
-                <div sec:authorize="hasAuthority('trener')">
+                <!--<div sec:authorize="hasAuthority('trener')">
                     <td>
-<!--                        <form class="form-signin" th:object="${competitiorsPlayerForm}" th:action="@{/redirectRegCompetitorsPlayer}">-->
+                        <form class="form-signin" th:object="${competitiorsPlayerForm}" th:action="@{/redirectRegCompetitorsPlayer}">-->
 <!--                            <input type="hidden" th:value="${competition.idCompetitions}">-->
 <!--                            <input type="submit" value="Zarejestruj klub na zawody"/>-->
 <!--                        </form>-->
-                        <form  class="form-signin" th:object="${competitiorsPlayerForm}" th:action="@{/redirectRegCompetitorsPlayer}">
+<!--                        <form  class="form-signin" th:object="${competitiorsPlayerForm}" th:action="@{/redirectRegCompetitorsPlayer}">
                             <div class="form-group">
                                 <input type="hidden" name="keyword" id="keyword" th:value="${competition.idCompetitions}">
                             </div>
                             <button class="btn btn-lg btn-primary btn-block" type="submit">Zarejestruj klub na zawody</button>
                         </form>
                     </td>
-                </div>
+                </div>-->
                 <div sec:authorize="hasAuthority('sedzia')">
                     <td>
                         <form class="form-signin" th:object="${competitiorsPlayerForm}" th:action="@{/redirectToJudgingCompetitions}">

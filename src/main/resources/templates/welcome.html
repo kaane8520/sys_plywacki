@@ -84,6 +84,11 @@
                     <input type="submit" value="dodaj klub"/>
                 </form>
             </div>
+            <div sec:authorize="hasAuthority('trener')">
+                <form th:action="@{/redirectRegClubForCompetition}">
+                    <input type="submit" value="Zarejestruj klub na zawody"/>
+                </form>
+            </div>
             <div sec:authorize="hasAuthority('organizator')">
                 <form th:action="@{/registrationCompetitions}">
                     <input type="submit" value="Dodaj zawody"/>

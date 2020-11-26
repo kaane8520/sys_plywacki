@@ -21,6 +21,10 @@ public class Competition {
     private List<OrganizerCompetitionConnection> organizers;
 
     @OneToMany
+    @Column
+    private List<Club> clubs;
+
+    @OneToMany
     private List<RefereeRoleOnCompetition> refereeRoleOnCompetitionList;
 
     @OneToMany
@@ -52,4 +56,11 @@ public class Competition {
 
     public void search(String keyword){}
 
+    public List<Club> getClubs() {
+        return clubs;
+    }
+
+    public void setClubs(List<Club> clubs) {
+        this.clubs = clubs;
+    }
 }
