@@ -1,5 +1,6 @@
 package com.my_app.sys_plywacki.service;
 
+import com.my_app.sys_plywacki.model.Coach;
 import com.my_app.sys_plywacki.model.Referee;
 import com.my_app.sys_plywacki.repository.RefereeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,9 @@ public class RefereeServiceImp implements RefereeService{
     @Override
     public void save(Referee referee) {
         repository.save(referee);
+    }
+    public List<Referee> findByIdPerson(Long idPerson){
+        return repository.findByIdPerson(idPerson);
     }
 //    @Override
 //    public void saveReferee(Referee referee) {

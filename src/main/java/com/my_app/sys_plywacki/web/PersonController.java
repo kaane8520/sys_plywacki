@@ -16,6 +16,7 @@ import org.springframework.security.core.Authentication;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.Ref;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -418,10 +419,10 @@ public class PersonController {
     }
 
     @GetMapping("/editCoach")
-    public String editCoach(@ModelAttribute Club club, Model model) {
+    public String editCoach(@ModelAttribute Coach coach, Model model) {
         model.addAttribute("coach",new Coach());
 
-        model.addAttribute("club", new Club());
+        //model.addAttribute("club", new Club());
         System.out.println("Jestem w funkcji editCoach");
         return "/editCoach";
     }
@@ -431,8 +432,42 @@ public class PersonController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Person p = personService.findByUsername(auth.getName());
 
+        List<Coach> saved_coach = coachRepository.findByIdPerson(p.getIdPerson());
 
-        return "redirect:registrationClub";
+        saved_coach.get(0).setCoachlegidate(coach.getCoachlegidate());
+
+        coachRepository.save(saved_coach.get(0));
+
+        return "redirect:welcome";
+    }
+    //edycja sedziego
+    @RequestMapping(value = "/redirectToEditReferee", method = RequestMethod.GET)
+    public String redirectToEditReferee() {
+
+        return "redirect:editReferee";
+    }
+
+    @GetMapping("/editReferee")
+    public String editReferee(@ModelAttribute Coach referee, Model model) {
+        model.addAttribute("referee",new Referee());
+
+        //model.addAttribute("club", new Club());
+        System.out.println("Jestem w funkcji editReferee");
+        return "/editReferee";
+    }
+    @PostMapping("/editReferee")
+    public String editReferee(@ModelAttribute Referee referee, Model model, BindingResult bindingResult) {
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Person p = personService.findByUsername(auth.getName());
+
+        List<Referee> saved_referee = refereeRepository.findByIdPerson(p.getIdPerson());
+
+        saved_referee.get(0).setRefereelegidate(referee.getRefereelegidate());
+
+        refereeRepository.save(saved_referee.get(0));
+
+        return "redirect:welcome";
     }
 
 
@@ -654,7 +689,7 @@ public class PersonController {
         System.out.println("Redirecting Result To Edit Referee Page");
         return "redirect:editReferee";
     }
-
+/*
     @GetMapping("/editReferee")
     public String editReferee(Model model) {
         model.addAttribute("referee", new Referee());
@@ -670,7 +705,7 @@ public class PersonController {
 
         return "redirect:welcome";
     }
-
+*/
     @RequestMapping(value = "/redirectChooseCompetitionForReferee", method = RequestMethod.GET)
     public String redirectToChooseCompetitions() {
         System.out.println("Redirecting Result To Judging Competitions Page");
@@ -729,7 +764,42 @@ public class PersonController {
 
         return "Musisz wysłać dokumentacje aby dostać uprawnienia";
     }
+    @ModelAttribute("coachWelcomeMedExDate")
+    public String getCoachMedExDate(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Person p = personService.findByUsername(auth.getName());
+        Role role = roleRepository.findByPerson(p);
+        if(roleRepository.existsByPerson(p)) {
+            if (role.getName().contains("trener")) {
+                System.out.println("Nie weszłeś");
+                Coach coach = coachRepository.findCoachByPerson(p);
+                if (coach.getCoachlegidate()!=null) {
+                    return coach.getCoachlegidate().toString();
+                }
+                return "Edytuj date wygaśnięcia dokumentacji";
+            }
+        }
 
+        return "Musisz wysłać dokumentacje aby dostać uprawnienia";
+    }
+    @ModelAttribute("refereeWelcomeMedExDate")
+    public String getRefereeMedExDate(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Person p = personService.findByUsername(auth.getName());
+        Role role = roleRepository.findByPerson(p);
+        if(roleRepository.existsByPerson(p)) {
+            if (role.getName().contains("sedzia")) {
+                System.out.println("Nie weszłeś");
+                Referee referee = refereeRepository.findRefereeByPerson(p);
+                if (referee.getRefereelegidate()!=null) {
+                    return referee.getRefereelegidate().toString();
+                }
+                return "Edytuj date wygaśnięcia dokumentacji";
+            }
+        }
+
+        return "Musisz wysłać dokumentacje aby dostać uprawnienia";
+    }
 
     @ModelAttribute("playersListInCoachClub")
     public List<Player> getPlayersInCoachClub(){
@@ -949,6 +1019,7 @@ public class PersonController {
 
             Coach coach = new Coach();
             coach.setPerson(p.get());
+            coach.setIdPerson(id_person);
             coachRepository.save(coach);
 
         }
@@ -956,6 +1027,7 @@ public class PersonController {
 
             Referee referee = new Referee();
             referee.setPerson(p.get());
+            referee.setIdPerson(id_person);
             refereeRepository.save(referee);
         }
 

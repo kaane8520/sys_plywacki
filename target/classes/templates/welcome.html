@@ -53,9 +53,41 @@
                 <a th:href="@{'/deleteMessage/' + ${message.getIdMessage()}}" style="text-indent: 20px;">OK</a> <br>
         </tr>
 
+            <div sec:authorize="hasAuthority('zawodnik')">
+                <p>
+                    Klub do którego należysz: <span th:text="${playerWelcomeClubname}"></span>
+                </p>
+            </div>
+            <div sec:authorize="hasAuthority('trener')">
+                <p>
+                    Twój klub: <span th:text="${coachWelcomeClubname}"></span>
+                </p>
+            </div>
+            <div sec:authorize="hasAuthority('trener')">
+                <p>
+                    Data wygaśnięcia dokumentacji: <span th:text="${coachWelcomeMedExDate}"></span>
+                </p>
+            </div>
+            <div sec:authorize="hasAuthority('sedzia')">
+                <p>
+                    Data wygaśnięcia dokumentacji: <span th:text="${refereeWelcomeMedExDate}"></span>
+                </p>
+            </div>
+            <div sec:authorize="hasAuthority('trener')">
+                <p>
+                    <h3>Lista Twoich zawodników</h3>
+                    <tr th:each="player : ${playersListInCoachClub}">
+    <!--                    <td th:text="${player}"></td>-->
+                        <td th:text="${player.getUsername()}"></td>
+
+
+                    </tr>
+                </p>
+            </div>
+
 
             <form th:action="@{/redirectToChangeYourRolePage}">
-                <input type="submit" value="Edytuj swoje konto"/>
+                <input type="submit" value="Zmień swoją rolę"/>
             </form>
             <div sec:authorize="hasAuthority('trener')">
                 <form th:action="@{/redirectToRegClub}">
@@ -85,7 +117,16 @@
                 <input type="submit" value="Edytuj swoje dane"/>
             </form>
             </div>
-
+            <div sec:authorize="hasAuthority('trener')">
+                <form th:action="@{/redirectToEditCoach}">
+                    <input type="submit" value="Edytuj swoje dane"/>
+                </form>
+            </div>
+            <div sec:authorize="hasAuthority('sedzia')">
+                <form th:action="@{/redirectToEditReferee}">
+                    <input type="submit" value="Edytuj swoje dane"/>
+                </form>
+            </div>
         </div>
     </div>
     <h1 th:text = "${message}"></h1>

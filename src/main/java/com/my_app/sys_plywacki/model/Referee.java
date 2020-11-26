@@ -18,6 +18,8 @@ public class Referee {
     @OneToOne
     private Person person;
 
+    private Long idPerson;
+
     @OneToOne
     private RefereeRoleOnCompetition refereeRoleOnCompetition;
 
@@ -27,6 +29,14 @@ public class Referee {
 
     public void setIdReferee(Long idReferee) {
         this.idReferee = idReferee;
+    }
+
+    public Long getIdPerson() {
+        return idPerson;
+    }
+
+    public void setIdPerson(Long idPerson) {
+        this.idPerson = idPerson;
     }
 
     public LocalDate getRefereelegidate() {
