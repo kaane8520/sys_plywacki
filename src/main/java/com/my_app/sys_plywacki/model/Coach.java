@@ -25,6 +25,8 @@ public class Coach {
     @OneToOne
     private Person person;
 
+    private Long idPerson;
+
     public Coach() {
 
     }
@@ -36,6 +38,14 @@ public class Coach {
 
     public void setIdCoach(Long idCoach) {
         this.idCoach = idCoach;
+    }
+
+    public Long getIdPerson() {
+        return idPerson;
+    }
+
+    public void setIdPerson(Long idPerson) {
+        this.idPerson = idPerson;
     }
 
     public Club getClub() {

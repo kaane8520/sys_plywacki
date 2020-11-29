@@ -1,5 +1,6 @@
 package com.my_app.sys_plywacki.service;
 
+import com.my_app.sys_plywacki.model.Coach;
 import com.my_app.sys_plywacki.model.Referee;
 import com.my_app.sys_plywacki.repository.RefereeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,7 @@ public interface RefereeService {
     void save(Referee referee);
 //    List<Referee> findAll();
 
-
+    public List<Referee> findByIdPerson(Long idPerson);
 
 
 }

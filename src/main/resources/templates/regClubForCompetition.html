@@ -40,7 +40,7 @@
 
     <form method="POST" class="form-signin" th:object="${regClubForCompetitionForm}" th:action="@{/regClubForCompetition}">
 
-        <div class="form-group">
+        <!--<div class="form-group">
             <h3>Wybierz zawody</h3>
             <select th:field="*{competition}" class="form-control">
                 <option th:each="dropDownItem : ${listOfAvailableCompetitions}"
@@ -48,14 +48,14 @@
                         th:text="${dropDownItem.getCompetitionName()}"
                 />
             </select>
-        </div>
+        </div>-->
 
         <div class="form-group">
             <h3>Wybierz zawodników</h3>
-            <select th:field="*{competition}" class="form-control">
-                <option th:each="dropDownItem : ${listOfPlayersInClub}"
+            <select th:field="*{players}" class="form-control">
+                <option th:each="dropDownItem : ${playersListInCoachClub}"
                         th:value="${dropDownItem.getIdPlayer()}"
-                        th:text="${dropDownItem.getIdPlayer()}"
+                        th:text="${dropDownItem.getUsername()}"
                 />
             </select>
         </div>

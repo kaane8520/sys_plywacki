@@ -82,9 +82,16 @@ public class Club {
         this.competition = competition;
     }
 
-
-
     public Long getIdCompetition(){
         return competition.getIdCompetitions();
     }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(List<Player> players) {
+        this.players = players;
+    }
+
 }
