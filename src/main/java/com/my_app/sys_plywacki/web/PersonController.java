@@ -87,8 +87,6 @@ public class PersonController {
     private List <Club> clubs;
 
     @Autowired
-    private OrganizerCompetitionConnectionRepository organizerCompetitionConnectionRepository;
-    @Autowired
     private OrganizerRepository organizerRepository;
 
     @Autowired
@@ -106,8 +104,6 @@ public class PersonController {
     @Autowired
     private MessageRepository messageRepository;
 
-
-    //private RefereeRoleOnCompetitionRepository refereeRoleOnCompetitionRepository;*/
     @Autowired
     private CategoriesService categoriesService;
 
@@ -129,6 +125,12 @@ public class PersonController {
 
     @Autowired
     private FileUploadDAO fileUploadDao;
+
+    @Autowired
+    private DisqualificationRepository disqualificationRepository;
+
+    @Autowired
+    private DisqualificationService disqualificationService;
 
     @GetMapping("/registration")
     public String registration(Model model) {
@@ -188,6 +190,9 @@ public class PersonController {
         }
         if(categoriesRepository.findAll().isEmpty()){
             categoriesService.addCategories();
+        }
+        if(disqualificationRepository.findAll().isEmpty()){
+            disqualificationService.addDisqualifications();
         }
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -565,12 +570,11 @@ public class PersonController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         //username
         Person p = personService.findByUsername(auth.getName());
-        //id osoby
-        Long x = p.getId();
-        Long id_organizer = organizerRepository.findOrganizerByPerson(p).getId_organizer();
-        Optional<Organizer> organizer = organizerRepository.findById(id_organizer);
 
-        organizerCompetitionConnectionRepository.save(new OrganizerCompetitionConnection(competitionForm, organizer.get()));
+        Organizer organizer = organizerRepository.findOrganizerByPerson(p);
+        competitionForm.setOrganizer(organizer);
+
+        competitionRepository.save(competitionForm);
         return "redirect:searchCompetitions";
     }
 
@@ -853,6 +857,8 @@ public class PersonController {
     }
 
 
+
+
     @RequestMapping(value = "/redirectToVerificationMedicalExaminations", method = RequestMethod.GET)
     public String redirectToVerificationMedicalExaminations() {
         System.out.println("Redirecting Result ToVerificationMedicalExaminations Page");
@@ -1105,5 +1111,77 @@ public class PersonController {
         model.addAttribute("message",message);
         return "redirect:/welcome";
     }
+
+    @RequestMapping(value = "/redirectToOrganizerCompetitionView", method = RequestMethod.GET)
+    public String redirectToOrganizerCompetitionView() {
+
+        return "redirect:/organizerCompetitionView";
+    }
+
+    @GetMapping("/organizerCompetitionView")
+    public String organizerCompetitionView(Model model) {
+        return "/organizerCompetitionView";
+    }
+
+
+    @ModelAttribute("organizerCompetitionList")
+    public List<Competition> getOrganizerCompetitions(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Person p = personService.findByUsername(auth.getName());
+        Role role = roleRepository.findByPerson(p);
+        if(roleRepository.existsByPerson(p)) {
+            if (role.getName().contains("organizator")) {
+                System.out.println("Nie weszłeś");
+                Organizer organizer = organizerRepository.findOrganizerByPerson(p);
+                if (competitionRepository.existsCompetitionByOrganizer(organizer)) {
+                    List<Competition> organizerCompetitionList = competitionRepository.findCompetitionsByOrganizer(organizer);
+                    return organizerCompetitionList;
+                }
+            }
+        }
+        return null;
+    }
+
+    @ModelAttribute("listOfDisqualifiacations")
+    public List<Disqualification>chooseDis(){
+        List<Disqualification> listOfDisqualifiacations = disqualificationRepository.findAll();
+        return listOfDisqualifiacations;
+    }
+
+
+    @GetMapping("/insertResults/{idCompetitions}")
+    public String insertResults(@PathVariable(name = "idCompetitions") Long id, Model model) {
+        model.addAttribute("result", new Result());
+
+        return "/insertResults";
+    }
+
+    @PostMapping("/insertResults/{idCompetitions}")
+    public String insertResults(@ModelAttribute Result result, Model model){
+        return "/insertResults";
+    }
+
+
+    @GetMapping("/refereesOnCompetitionView/{idCompetitions}")
+    public String refereesOnCompetitionView(@PathVariable(name = "idCompetitions") Long id, Model model) {
+        System.out.println("Jestem w @GetMapping( refereesOnCompetitionView/{idCompetitions} ");
+        Competition competition = competitionRepository.findByIdCompetitions(id);
+        List<RefereeRoleOnCompetition> refereeList = refereeRoleOnCompetitionRepository.findRefereeRoleOnCompetitionByCompetition(competition);
+        System.out.println("Lista sedziow: " +refereeList ) ;
+        model.addAttribute("refereeList", refereeList);
+                for (RefereeRoleOnCompetition x : refereeList) {
+        	System.out.println("Id klubu: "+x.getRefereeName());
+            System.out.println("Nazwa klubu: "+x.getRefereeRoleName());
+        }
+
+        return "/refereesOnCompetitionView";
+    }
+
+    @PostMapping("/refereesOnCompetitionView")
+    public String refereesOnCompetitionView() {
+        return "/refereesOnCompetitionView";
+    }
+
+
 
 }

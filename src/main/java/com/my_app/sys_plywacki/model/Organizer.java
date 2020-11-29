@@ -10,8 +10,7 @@ public class Organizer{
     private Long id_organizer;
 
     @OneToMany
-    @Column
-    private List<OrganizerCompetitionConnection> competitions;
+    private List<Competition> competitions;
 
     @OneToOne
     private Person person;
@@ -24,11 +23,11 @@ public class Organizer{
         this.id_organizer = id_organizer;
     }
 
-    public List<OrganizerCompetitionConnection> getCompetitions() {
+    public List<Competition> getCompetitions() {
         return competitions;
     }
 
-    public void setCompetitions(List<OrganizerCompetitionConnection> competitions) {
+    public void setCompetitions(List<Competition> competitions) {
         this.competitions = competitions;
     }
 

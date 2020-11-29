@@ -107,6 +107,11 @@
                 <input type="submit" value="Edytuj swoje dane"/>
             </form>
             </div>
+            <div sec:authorize="hasAuthority('organizator')">
+                <form th:action="@{/redirectToOrganizerCompetitionView}">
+                    <input type="submit" value="Zobacz zawody które organizujesz"/>
+                </form>
+            </div>
 
         </div>
     </div>

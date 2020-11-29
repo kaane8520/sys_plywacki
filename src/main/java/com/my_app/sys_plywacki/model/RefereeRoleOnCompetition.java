@@ -60,10 +60,16 @@ public class RefereeRoleOnCompetition {
         this.referee = referee;
         this.competition = competition;
     }
-    public void getIdreferee(){
-        this.referee.getIdReferee();
+    public Long getIdreferee(){
+        return referee.getIdReferee();
+    }
+    public String getRefereeName(){
+        return referee.getPerson().getUsername();
     }
     public void getIdrefereerole(){
         this.refereeRoles.getIdrefereerole();
+    }
+    public String getRefereeRoleName(){
+        return refereeRoles.getRefereerolename();
     }
 }

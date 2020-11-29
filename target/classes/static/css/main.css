@@ -1,42 +1,7 @@
-body {
-    padding-bottom: 5%;
-    background-color: #505291;
-}
-
 .form-signin {
     margin-top: 10%;
     padding: 15px;
     margin: 0 auto;
-}
-
-.container {
-    padding-top: 5%;
-    width: 80%;
-    background: #ECECEC;
-    border: 1px solid white;
-    box-shadow: 0 5px 5px 5px;
-    padding: 5%;
-}
-
-.navbar{
-    color: white;
-    text-transform: uppercase;
-    font-size: 1em;
-    /*position: absolute;*/
-    width: 100%;
-    height: 10%;
-    background: #535353;
-    margin: 0;
-    padding: 2%;
-    box-shadow: 0 5px 5px 5px black;
-}
-.nav-items{
-    text-decoration: none;
-    background: none;
-    border: none;
-    color: white;
-    text-transform: uppercase;
-    font-size: 1em;
 }
 
 .form-signin .form-signin-heading,
@@ -47,16 +12,6 @@ body {
 
 .form-signin .checkbox {
     font-weight: normal;
-}
-
-.form-signin .form-control {
-    position: relative;
-    height: auto;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    padding: 10px;
-    font-size: 16px;
 }
 
 .form-signin .form-control:focus {
@@ -75,4 +30,157 @@ body {
 
 .has-error {
     color: red
+}
+
+@media screen and (min-device-width: 781px){
+    body {
+        padding-bottom: 5%;
+        /*background-color: #505291;*/
+        background-image: url('img/background2.jpg');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: 100% 100%;
+    }
+
+    .container {
+        padding-top: 5%;
+        width: 80%;
+        background: #ECECEC;
+        border: 1px solid white;
+        box-shadow: 0 5px 5px 5px;
+        padding: 5%;
+    }
+
+    .navbar{
+        color: white;
+        text-transform: uppercase;
+        font-size: 1em;
+        /*position: absolute;*/
+        width: 100%;
+        height: 10%;
+        background: #535353;
+        margin: 0;
+        padding: 2%;
+        box-shadow: 0 5px 5px 5px black;
+    }
+
+    .nav-items{
+        text-decoration: none;
+        background: none;
+        border: none;
+        color: white;
+        text-transform: uppercase;
+        font-size: 1em;
+    }
+
+    .form-signin .form-control {
+        position: relative;
+        height: auto;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        padding: 10px;
+        font-size: 1em;
+    }
+}
+
+@media screen and (max-device-width: 768px){
+    body {
+        /*padding-bottom: 5%;*/
+        /*background-color: #505291;*/
+        background-image: url('img/background-mobile.jpg');
+        background-repeat: no-repeat;
+        /*background-attachment: fixed;*/
+        /*background-size: 100% 100%;*/
+    }
+    .container {
+        font-size: 1.5em;
+        padding-top: 3%;
+        min-width: 85%;
+        background: #ECECEC;
+        border: 1px solid white;
+        box-shadow: 0 5px 5px 5px;
+        padding: 5%;
+    }
+    .navbar{
+        color: white;
+        text-transform: uppercase;
+        font-size: 1.5em;
+        /*position: absolute;*/
+        width: 100%;
+        height: 30%;
+        background: #535353;
+        margin: 0;
+        padding: 2%;
+        box-shadow: 0 5px 5px 5px black;
+    }
+    .nav-items{
+        text-decoration: none;
+        background: none;
+        border: none;
+        color: white;
+        text-transform: uppercase;
+        font-size: 1em;
+    }
+
+    .form-signin .form-control {
+        position: relative;
+        height: auto;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        padding: 10px;
+        font-size: 1.5em;
+    }
+}
+
+@media only screen and (max-device-width: 480px){
+    body {
+        /*padding-bottom: 5%;*/
+        /*background-color: #505291;*/
+        background-image: url('img/background-mobile.jpg');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: 100% 100%;
+    }
+    .container {
+        font-size: 2em;
+        padding-top: 2%;
+        min-width: 95%;
+        background: #ECECEC;
+        border: 1px solid white;
+        box-shadow: 0 5px 5px 5px;
+        padding: 5%;
+        margin: auto;
+    }
+    .navbar{
+        color: white;
+        text-transform: uppercase;
+        font-size: 2em;
+        /*position: absolute;*/
+        width: 100%;
+        height: 40%;
+        background: #535353;
+        margin: 0;
+        padding: 2%;
+        box-shadow: 0 5px 5px 5px black;
+    }
+    .nav-items{
+        text-decoration: none;
+        background: none;
+        border: none;
+        color: white;
+        text-transform: uppercase;
+        font-size: 1em;
+    }
+
+    .form-signin .form-control {
+        position: relative;
+        height: auto;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        padding: 10px;
+        font-size: 1em;
+    }
 }

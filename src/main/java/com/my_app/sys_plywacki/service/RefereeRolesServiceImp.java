@@ -20,7 +20,7 @@ public class RefereeRolesServiceImp implements RefereeRolesService {
     public void addRoles(){
         //jesli w tabeli nie ma ról
 //        if(repository.findAll() == null){
-        {
+
             List<String> refereeRoles = Arrays.asList("Sedzia glowny", "Starter", "Kierownik wyscigu",
                     "Kierownik inspektorow nawrotow", "Sedzia mierzacy czas", "Inspektor nawrotow", "Sedzia stylu");
             Long i = 1L;
@@ -31,7 +31,7 @@ public class RefereeRolesServiceImp implements RefereeRolesService {
                 repository.save(role);
                 i++;
             }
-        }
+
 
     }
 
