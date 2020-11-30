@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pl-PL" xmlns:th="http://www.thymeleaf.org">
+<html lang="pl-PL" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
   <head>
       <meta charset="utf-8">
       <title>Zaloguj się</title>
@@ -8,26 +8,55 @@
   </head>
 
   <body>
-        <div class="navbar">
-            <span>To jest navbar</span>
-            <form th:action="@{/redirectToWelcome}">
-                <input class="nav-items" type="submit" value="Strona główna"/>
-            </form>
-            <form th:action="@{/redirectToSearchClubPage}">
-                <input class="nav-items" type="submit" value="wyszukaj klub"/>
-            </form>
-            <form th:action="@{/redirectToSearchCompetitionsPage}">
-                <input class="nav-items" type="submit" value="wyszukaj zawody"/>
-            </form>
-            <form th:action="@{/redirectToSearchPlayersPage}">
-                <input class="nav-items" type="submit" value="wyszukaj zawodników"/>
-            </form>
 
-        </div>
+  <div class="navbar">
+      <input id="navbar-toggle" type="checkbox" />
+      <label class="navbar-btn" for="navbar-toggle">
+          <span></span>
+      </label>
 
-        <div class="container">
+      <ul class="navbar-box">
+          <li>
+              <form class="navbar-item" th:action="@{/redirectToWelcome}">
+                  <input class="nav-items" type="submit" value="Strona główna"/>
+              </form>
+          </li>
+          <li>
+              <form th:action="@{/redirectToSearchClubPage}">
+                  <input class="nav-items" type="submit" value="Wyszukaj klub"/>
+              </form>
+          </li>
+          <li>
+              <form th:action="@{/redirectToSearchCompetitionsPage}">
+                  <input class="nav-items" type="submit" value="Wyszukaj zawody"/>
+              </form>
+          </li>
+          <li>
+              <form th:action="@{/redirectToSearchPlayersPage}">
+                  <input class="nav-items" type="submit" value="Wyszukaj zawodników"/>
+              </form>
+          </li>
+          <li>
+              <div sec:authorize="isAuthenticated()">
+                  <form th:action="@{/redirectToEditPage}">
+                      <input class="nav-items" type="submit" value="Edytuj swoje konto"/>
+                  </form>
+              </div>
+          </li>
+          <li>
+              <div sec:authorize="isAuthenticated()">
+                  <form id="logoutForm" method="POST" th:action="@{/logout}">
+                      <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                  </form>
+                  <button onclick="document.forms['logoutForm'].submit()">Logout</button>
+              </div>
+          </li>
+      </ul>
+  </div>
+
+    <div class="container">
       <form class="form-signin" method="POST" th:action="@{/login}">
-        <h2 class="form-heading">Logowanie</h2>
+        <h2 class="form-signin-heading">Logowanie</h2>
 
         <div class="form-group">
             <span th:text="${message}"></span>

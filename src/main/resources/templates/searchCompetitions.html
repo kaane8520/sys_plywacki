@@ -8,63 +8,88 @@
 </head>
 
 <body>
-<div class="navbar">
-    <span>To jest navbar</span>
-    <form th:action="@{/redirectToWelcome}">
-        <input class="nav-items" type="submit" value="Strona główna"/>
-    </form>
 
-    <form th:action="@{/redirectToSearchClubPage}">
-        <input class="nav-items" type="submit" value="wyszukaj klub"/>
-    </form>
-    <form th:action="@{/redirectToSearchCompetitionsPage}">
-        <input class="nav-items" type="submit" value="wyszukaj zawody"/>
-    </form>
-    <form th:action="@{/redirectToSearchPlayersPage}">
-        <input class="nav-items" type="submit" value="wyszukaj zawodników"/>
-    </form>
-    <div sec:authorize="isAuthenticated()">
-        <form th:action="@{/redirectToEditPage}">
-            <input class="nav-items" type="submit" value="Edytuj swoje konto"/>
-        </form>
-    </div>
-    <div sec:authorize="isAuthenticated()">
-        <form id="logoutForm" method="POST" th:action="@{/logout}">
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-        </form>
-        <a onclick="document.forms['logoutForm'].submit()">Logout</a>
-    </div>
-</div>
+    <div class="navbar">
+        <input id="navbar-toggle" type="checkbox" />
+        <label class="navbar-btn" for="navbar-toggle">
+            <span></span>
+        </label>
 
-<div class="container">
-    <div align="center">
-        <h1>Lista zawodów</h1>
-        <br/><br/>
-        <!-- <div sec:authorize="isAuthenticated()"> -->
-        <div sec:authorize="hasAuthority('organizator')">
-            <form th:action="@{/registrationCompetitions}">
-                <input type="submit" value="Dodaj zawody"/>
-            </form>
-        </div>
-        <br/><br/>
-        <table border="1" cellpadding="10">
-            <thead>
-            <tr>
-                <th>ID zawodów</th>
-                <th>Data zawodów</th>
-                <th>Nazwa zawodów</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:if="${competitionList.empty}">
-                <td colspan="3"> Nie ma zawodów </td>
-            </tr>
-            <tr th:each="competition : ${competitionList}">
-                <td th:text="${competition.idCompetitions}"></td>
-                <td th:text="${competition.competitionDate}"></td>
-                <td th:text="${competition.competitionName}"></td>
-                <div sec:authorize="hasAuthority('trener')">
-                    <td>
+        <ul class="navbar-box">
+            <li>
+                <form class="navbar-item" th:action="@{/redirectToWelcome}">
+                    <input class="nav-items" type="submit" value="Strona główna"/>
+                </form>
+            </li>
+            <li>
+                <form th:action="@{/redirectToSearchClubPage}">
+                    <input class="nav-items" type="submit" value="Wyszukaj klub"/>
+                </form>
+            </li>
+            <li>
+                <form th:action="@{/redirectToSearchCompetitionsPage}">
+                    <input class="nav-items" type="submit" value="Wyszukaj zawody"/>
+                </form>
+            </li>
+            <li>
+                <form th:action="@{/redirectToSearchPlayersPage}">
+                    <input class="nav-items" type="submit" value="Wyszukaj zawodników"/>
+                </form>
+            </li>
+            <li>
+                <div sec:authorize="isAuthenticated()">
+                    <form th:action="@{/redirectToEditPage}">
+                        <input class="nav-items" type="submit" value="Edytuj swoje konto"/>
+                    </form>
+                </div>
+            </li>
+            <li>
+                <div sec:authorize="isAuthenticated()">
+                    <form id="logoutForm" method="POST" th:action="@{/logout}">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    </form>
+                    <button onclick="document.forms['logoutForm'].submit()">Logout</button>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="container search-forms">
+
+        <form  th:action="@{/searchCompKey}" >
+            <h1 class="form-heading">Lista zawodów</h1>
+            Filter: <input type="text" name="keywordComp" class="form-control" size="50" th:value="${keywordComp}" required />
+
+            <button type="submit" class="btn btn-lg btn-primary btn-block">Wyszukaj</button>
+        </form>
+
+        <div align="center">
+            <br/><br/>
+            <!-- <div sec:authorize="isAuthenticated()"> -->
+            <div sec:authorize="hasAuthority('organizator')">
+                <form th:action="@{/registrationCompetitions}">
+                    <input type="submit" value="Dodaj zawody"/>
+                </form>
+            </div>
+            <br/><br/>
+            <table border="1" cellpadding="10">
+                <thead>
+                <tr>
+                    <th>ID zawodów</th>
+                    <th>Data zawodów</th>
+                    <th>Nazwa zawodów</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${competitionList.empty}">
+                    <td colspan="3"> Nie ma zawodów </td>
+                </tr>
+                <tr th:each="competition : ${competitionList}">
+                    <td th:text="${competition.idCompetitions}"></td>
+                    <td th:text="${competition.competitionDate}"></td>
+                    <td th:text="${competition.competitionName}"></td>
+                    <div sec:authorize="hasAuthority('trener')">
+                        <td>
 <!--                        <form class="form-signin" th:object="${competitiorsPlayerForm}" th:action="@{/redirectRegCompetitorsPlayer}">-->
 <!--                            <input type="hidden" th:value="${competition.idCompetitions}">-->
 <!--                            <input type="submit" value="Zarejestruj klub na zawody"/>-->
@@ -96,11 +121,7 @@
         </table>
     </div>
     <br/>
-    <form  th:action="@{/searchCompKey}" >
-        Filter: <input type="text" name="keywordComp" id="keywordComp" size="50" th:value="${keywordComp}" required />
 
-        <input type="submit" value="Wyszukaj" />
-    </form>
 
 </div>
 

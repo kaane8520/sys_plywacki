@@ -8,32 +8,48 @@
 </head>
 <body>
     <div class="navbar">
-        <span>To jest navbar</span>
-        <form th:action="@{/redirectToWelcome}">
-            <input class="nav-items" type="submit" value="Strona główna"/>
-        </form>
+        <input id="navbar-toggle" th:type="checkbox" />
+        <label class="navbar-btn" for="navbar-toggle">
+            <span></span>
+        </label>
 
-        <form th:action="@{/redirectToSearchClubPage}">
-            <input class="nav-items" type="submit" value="wyszukaj klub"/>
-        </form>
-        <form th:action="@{/redirectToSearchCompetitionsPage}">
-            <input class="nav-items" type="submit" value="wyszukaj zawody"/>
-        </form>
-        <form th:action="@{/redirectToSearchPlayersPage}">
-            <input class="nav-items" type="submit" value="wyszukaj zawodników"/>
-        </form>
-
-        <div sec:authorize="isAuthenticated()">
-            <form th:action="@{/redirectToEditPage}">
-                <input class="nav-items" type="submit" value="Edytuj swoje konto"/>
-            </form>
-        </div>
-        <div sec:authorize="isAuthenticated()">
-            <form id="logoutForm" method="POST" th:action="@{/logout}">
-                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-            </form>
-            <a onclick="document.forms['logoutForm'].submit()">Logout</a>
-        </div>
+        <ul class="navbar-box">
+            <li>
+                <form class="navbar-item" th:action="@{/redirectToWelcome}">
+                <input class="nav-items" type="submit" value="Strona główna"/>
+                </form>
+            </li>
+            <li>
+                <form th:action="@{/redirectToSearchClubPage}">
+                    <input class="nav-items" type="submit" value="Wyszukaj klub"/>
+                </form>
+            </li>
+            <li>
+                <form th:action="@{/redirectToSearchCompetitionsPage}">
+                    <input class="nav-items" type="submit" value="Wyszukaj zawody"/>
+                </form>
+            </li>
+            <li>
+                <form th:action="@{/redirectToSearchPlayersPage}">
+                    <input class="nav-items" type="submit" value="Wyszukaj zawodników"/>
+                </form>
+            </li>
+            <li>
+                <div sec:authorize="isAuthenticated()">
+                    <form th:action="@{/redirectToEditPage}">
+                        <input class="nav-items" type="submit" value="Edytuj swoje konto"/>
+                    </form>
+                </div>
+            </li>
+            <li>
+                <div sec:authorize="isAuthenticated()">
+                    <form id="logoutForm" method="POST" th:action="@{/logout}">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    </form>
+                    <button onclick="document.forms['logoutForm'].submit()">Logout</button>
+                </div>
+            </li>
+        </ul>
     </div>
 
     <div class="container">
@@ -43,7 +59,7 @@
     <!--            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
     <!--        </form>-->
 
-            <h2>Welcome <span sec:authentication="name"></span> | <a onclick="document.forms['logoutForm'].submit()">Logout</a></h2>
+            <h1 class="form-heading">Witaj <span sec:authentication="name">!</span></h1>
 
           <h5>Twoja rola to: <span sec:authentication="authorities"></span></h5>
 
@@ -63,6 +79,39 @@
                     Twój klub: <span th:text="${coachWelcomeClubname}"></span>
                 </p>
             </div>
+
+            <form th:action="@{/redirectToChangeYourRolePage}">
+                <input type="submit" class="btn btn-lg btn-primary welcome-buttons" value="Zmień swoją rolę"/>
+            </form>
+            <div sec:authorize="hasAuthority('trener')">
+                <form th:action="@{/redirectToRegClub}">
+                    <input type="submit" class="btn btn-lg btn-primary welcome-buttons" value="dodaj klub"/>
+                </form>
+            </div>
+            <div sec:authorize="hasAuthority('organizator')">
+                <form th:action="@{/registrationCompetitions}">
+                    <input type="submit" class="btn btn-lg btn-primary welcome-buttons" value="Dodaj zawody"/>
+                </form>
+            </div>
+            <div sec:authorize="hasAuthority('sedzia')">
+                <form th:action="@{/chooseCompetitionForReferee}">
+                    <input type="submit" class="btn btn-lg btn-primary welcome-buttons" value="Sędziuj na zawodach"/>
+                </form>
+            </div>
+            <form th:action="@{/redirectToSearchClubPage}">
+                <input type="submit" class="btn btn-lg btn-primary welcome-buttons" value="wyszukaj klub"/>
+            </form>
+            <div sec:authorize="hasAuthority('Moderator')">
+                <form th:action="@{/redirectToVerificationMedicalExaminations}">
+                    <input type="submit" class="btn btn-lg btn-primary welcome-buttons" value="Weryfikuj dokumentacje"/>
+                </form>
+            </div>
+            <div sec:authorize="hasAuthority('zawodnik')">
+                <form th:action="@{/redirectToEditPlayer}">
+                    <input type="submit" class="btn btn-lg btn-primary welcome-buttons" value="Edytuj swoje dane"/>
+                </form>
+            </div>
+
             <div sec:authorize="hasAuthority('trener')">
                 <p>
                     <h3>Lista Twoich zawodników</h3>
@@ -75,42 +124,10 @@
                 </p>
             </div>
 
-
-            <form th:action="@{/redirectToChangeYourRolePage}">
-                <input type="submit" value="Zmień swoją rolę"/>
-            </form>
-            <div sec:authorize="hasAuthority('trener')">
-                <form th:action="@{/redirectToRegClub}">
-                    <input type="submit" value="dodaj klub"/>
-                </form>
-            </div>
-            <div sec:authorize="hasAuthority('organizator')">
-                <form th:action="@{/registrationCompetitions}">
-                    <input type="submit" value="Dodaj zawody"/>
-                </form>
-            </div>
-            <div sec:authorize="hasAuthority('sedzia')">
-                <form th:action="@{/chooseCompetitionForReferee}">
-                    <input type="submit" value="Sędziuj na zawodach"/>
-                </form>
-            </div>
-            <form th:action="@{/redirectToSearchClubPage}">
-                <input type="submit" value="wyszukaj klub"/>
-            </form>
-            <div sec:authorize="hasAuthority('Moderator')">
-            <form th:action="@{/redirectToVerificationMedicalExaminations}">
-                <input type="submit" value="Weryfikuj dokumentacje"/>
-            </form>
-            </div>
-            <div sec:authorize="hasAuthority('zawodnik')">
-            <form th:action="@{/redirectToEditPlayer}">
-                <input type="submit" value="Edytuj swoje dane"/>
-            </form>
-            </div>
-
         </div>
     </div>
-    <h1 th:text = "${message}"></h1>
+
+
 
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
