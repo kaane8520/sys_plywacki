@@ -25,7 +25,7 @@ body {
 }
 
 .form-control {
-    margin-bottom: 4px;
+    margin-bottom: 6px;
 }
 
 .form-signin .form-control {
@@ -64,6 +64,10 @@ body {
     width: 60%;
     margin-left: auto;
     margin-right: auto;
+}
+
+#block {
+    display: block;
 }
 
 #navbar-toggle {
@@ -176,7 +180,8 @@ table th {
 .welcome-buttons {
     display: inline-block;
     float: left;
-    margin-right: 3px;
+    margin-right: auto;
+    margin-left: auto;
 }
 
 .has-error {

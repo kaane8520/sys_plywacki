@@ -112,7 +112,7 @@
                 </form>
             </div>
 
-            <div sec:authorize="hasAuthority('trener')">
+            <div id="block" sec:authorize="hasAuthority('trener')">
                 <p>
                     <h3>Lista Twoich zawodników</h3>
                     <tr th:each="player : ${playersListInCoachClub}">
