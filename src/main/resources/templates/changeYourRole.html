@@ -9,62 +9,80 @@
 
 <body>
 <div class="navbar">
-    <span>To jest navbar</span>
-    <form th:action="@{/redirectToWelcome}">
-        <input class="nav-items" type="submit" value="Strona główna"/>
-    </form>
+    <div class="navbar">
+        <input id="navbar-toggle" th:type="checkbox" />
+        <label class="navbar-btn" for="navbar-toggle">
+            <span></span>
+        </label>
 
-    <form th:action="@{/redirectToSearchClubPage}">
-        <input class="nav-items" type="submit" value="wyszukaj klub"/>
-    </form>
-    <form th:action="@{/redirectToSearchCompetitionsPage}">
-        <input class="nav-items" type="submit" value="wyszukaj zawody"/>
-    </form>
-    <form th:action="@{/redirectToSearchPlayersPage}">
-        <input class="nav-items" type="submit" value="wyszukaj zawodników"/>
-    </form>
-    <div sec:authorize="isAuthenticated()">
-        <form th:action="@{/redirectToEditPage}">
-            <input class="nav-items" type="submit" value="Edytuj swoje konto"/>
-        </form>
+        <ul class="navbar-box">
+            <li>
+                <form class="navbar-item" th:action="@{/redirectToWelcome}">
+                    <input class="nav-items" type="submit" value="Strona główna"/>
+                </form>
+            </li>
+            <li>
+                <form th:action="@{/redirectToSearchClubPage}">
+                    <input class="nav-items" type="submit" value="Wyszukaj klub"/>
+                </form>
+            </li>
+            <li>
+                <form th:action="@{/redirectToSearchCompetitionsPage}">
+                    <input class="nav-items" type="submit" value="Wyszukaj zawody"/>
+                </form>
+            </li>
+            <li>
+                <form th:action="@{/redirectToSearchPlayersPage}">
+                    <input class="nav-items" type="submit" value="Wyszukaj zawodników"/>
+                </form>
+            </li>
+            <li>
+                <div sec:authorize="isAuthenticated()">
+                    <form th:action="@{/redirectToEditPage}">
+                        <input class="nav-items" type="submit" value="Edytuj swoje konto"/>
+                    </form>
+                </div>
+            </li>
+            <li>
+                <div sec:authorize="isAuthenticated()">
+                    <form id="logoutForm" method="POST" th:action="@{/logout}">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    </form>
+                    <button onclick="document.forms['logoutForm'].submit()">Logout</button>
+                </div>
+            </li>
+        </ul>
     </div>
-    <div sec:authorize="isAuthenticated()">
-        <form id="logoutForm" method="POST" th:action="@{/logout}">
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
+    <div class="container">
+
+        <form method="POST" class="form-signin" th:object="${role}" th:action="@{/changeYourRole}">
+            <h2 class="form-signin-heading">Edytuj konto</h2>
+            <h5>Twoja obecna rola to: <span sec:authentication="authorities"></span></h5>
+
+            <h5>Zmień rolę na:</h5>
+            <div class="form-group">
+                <select th:field="*{name}" class="form-control">
+                    <option th:value="'zawodnik'" th:text="Zawodnik"></option>
+                    <option th:value="'trener'" th:text="Trener"></option>
+                    <option th:value="'sedzia'" th:text="Sedzia"></option>
+                    <option th:value="'organizator'" th:text="Organizator"></option>
+                </select>
+            </div>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Potwierdz</button>
         </form>
-        <a onclick="document.forms['logoutForm'].submit()">Logout</a>
+
+        <!--<p>Aktualizuj swoją dokumentację:</p>
+        <form method="post" class="form-signin" enctype="multipart/form-data"  action="doUpload">
+            <input type="file" id="documentation" class="form-control">
+            <button class="btn btn-lg btn-primary btn-block" type="submit" name="action" value="addDocumentationButton">Zaakceptuj dokumentacje</button>
+        </form>-->
+
     </div>
-</div>
 
-<div class="container">
-
-    <form method="POST" class="form-signin" th:object="${role}" th:action="@{/changeYourRole}">
-        <h2 class="form-signin-heading">Edytuj konto</h2>
-        <h5>Twoja obecna rola to: <span sec:authentication="authorities"></span></h5>
-
-        <h5>Zmień rolę na:</h5>
-        <div class="form-group">
-            <select th:field="*{name}" class="form-control">
-                <option th:value="'zawodnik'" th:text="Zawodnik"></option>
-                <option th:value="'trener'" th:text="Trener"></option>
-                <option th:value="'sedzia'" th:text="Sedzia"></option>
-                <option th:value="'organizator'" th:text="Organizator"></option>
-            </select>
-        </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Potwierdz</button>
-    </form>
-
-    <!--<p>Aktualizuj swoją dokumentację:</p>
-    <form method="post" class="form-signin" enctype="multipart/form-data"  action="doUpload">
-        <input type="file" id="documentation" class="form-control">
-        <button class="btn btn-lg btn-primary btn-block" type="submit" name="action" value="addDocumentationButton">Zaakceptuj dokumentacje</button>
-    </form>-->
-
-</div>
-
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-<script src="/js/main.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script src="/js/main.js"></script>
 </body>
 </html>

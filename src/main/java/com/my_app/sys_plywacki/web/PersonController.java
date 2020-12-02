@@ -132,6 +132,9 @@ public class PersonController {
     @Autowired
     private DisqualificationService disqualificationService;
 
+    @Autowired
+    private ResultRepository resultRepository;
+
     @GetMapping("/registration")
     public String registration(Model model) {
         if (securityService.isAuthenticated()) {
@@ -1148,6 +1151,12 @@ public class PersonController {
         return listOfDisqualifiacations;
     }
 
+    @ModelAttribute("listOfCategoriesOnCompanies")
+    public List<CategoriesOnCompetition>chooseCOM(){
+        List<CategoriesOnCompetition> listOfCategoriesOnCompanies = categoriesOnCompetitionRepository.findAll();
+        return listOfCategoriesOnCompanies;
+    }
+
 
     @GetMapping("/insertResults/{idCompetitions}")
     public String insertResults(@PathVariable(name = "idCompetitions") Long id, Model model) {
@@ -1158,7 +1167,8 @@ public class PersonController {
 
     @PostMapping("/insertResults/{idCompetitions}")
     public String insertResults(@ModelAttribute Result result, Model model){
-        return "/insertResults";
+        resultRepository.save(result);
+        return "redirect:/welcome";
     }
 
 
@@ -1182,6 +1192,15 @@ public class PersonController {
         return "/refereesOnCompetitionView";
     }
 
+    @ModelAttribute("listOfResults")
+    public List<Result> searchListOfResults(){
+        if(resultRepository.findAll().isEmpty()){
+            return null;
+        }else {
+            List<Result> listOfResults = resultRepository.findAll();
+            return listOfResults;
+        }
+    }
 
 
 }

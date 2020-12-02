@@ -76,4 +76,12 @@ public class CategoriesOnCompetition {
     public void setPlayers(List<Player> players) {
         this.players = players;
     }
+
+    public String getPlayerById(Long along){
+        return players.get(Math.toIntExact(along)).getUsername();
+    }
+
+    public String getCategoriesName(){
+        return categories.getNamecategory();
+    }
 }

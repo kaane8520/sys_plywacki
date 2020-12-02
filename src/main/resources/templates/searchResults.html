@@ -8,6 +8,7 @@
 </head>
 
 <body>
+
 <div class="navbar">
     <input id="navbar-toggle" type="checkbox" />
     <label class="navbar-btn" for="navbar-toggle">
@@ -54,44 +55,41 @@
 </div>
 
 <div class="container search-forms">
+
+    <form  th:action="@{/searchCompKey}" >
+        <h1 class="form-heading">Lista zawodów</h1>
+        Filter: <input type="text" name="keywordComp" class="form-control" size="50" th:value="${keywordComp}" required />
+
+        <button type="submit" class="btn btn-lg btn-primary btn-block">Wyszukaj</button>
+    </form>
+
     <div align="center">
-        <h1>Lista zawodów, które organizujesz</h1>
         <br/><br/>
         <!-- <div sec:authorize="isAuthenticated()"> -->
         <div sec:authorize="hasAuthority('organizator')">
             <form th:action="@{/registrationCompetitions}">
-                <input type="submit" class="btn btn-lg btn-primary btn-block" value="Dodaj zawody"/>
+                <input type="submit" value="Dodaj zawody"/>
             </form>
         </div>
-        <br/><br/>
-        <form  th:action="@{/searchCompKey}" >
-            Wyszukaj zawody: <input type="text" name="keywordComp" id="keywordComp" size="50" th:value="${keywordComp}" required />
-            <br/><br/>
-            <input type="submit" class="btn btn-lg btn-primary btn-block" value="Wyszukaj" />
-        </form>
         <br/><br/>
         <table border="1" cellpadding="10">
             <thead>
             <tr>
-                <th>ID zawodów</th>
-                <th>Data zawodów</th>
+                <th>ID Wyniku</th>
                 <th>Nazwa zawodów</th>
+                <th>Czas wyniku</th>
+                <th>Nazwa konkurencji</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:if="${organizerCompetitionList.empty}">
-                <td colspan="3"> Nie organizujesz zawodów zawodów </td>
+            <tr th:if="${competitionList.empty}">
+                <td colspan="3"> Nie ma zawodów </td>
             </tr>
-            <tr th:each="competition : ${organizerCompetitionList}">
+            <tr th:each="competition : ${competitionList}">
                 <td th:text="${competition.idCompetitions}"></td>
                 <td th:text="${competition.competitionDate}"></td>
                 <td th:text="${competition.competitionName}"></td>
-                <td>
-                    <a th:href="@{'/refereesOnCompetitionView/' + ${competition.idCompetitions}}">Zobacz zapisanych sędziów</a>
-                </td>
-                <td>
-                    <a th:href="@{'/insertResults/' + ${competition.idCompetitions}}">Wprowadź wyniki</a>
-                </td>
+
 
             </tr>
             </tbody>

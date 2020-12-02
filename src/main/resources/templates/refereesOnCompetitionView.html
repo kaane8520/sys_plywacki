@@ -9,34 +9,51 @@
 
 <body>
 <div class="navbar">
-    <span>To jest navbar</span>
-    <form th:action="@{/redirectToWelcome}">
-        <input class="nav-items" type="submit" value="Strona główna"/>
-    </form>
+    <input id="navbar-toggle" type="checkbox" />
+    <label class="navbar-btn" for="navbar-toggle">
+        <span></span>
+    </label>
 
-    <form th:action="@{/redirectToSearchClubPage}">
-        <input class="nav-items" type="submit" value="wyszukaj klub"/>
-    </form>
-    <form th:action="@{/redirectToSearchCompetitionsPage}">
-        <input class="nav-items" type="submit" value="wyszukaj zawody"/>
-    </form>
-    <form th:action="@{/redirectToSearchPlayersPage}">
-        <input class="nav-items" type="submit" value="wyszukaj zawodników"/>
-    </form>
-    <div sec:authorize="isAuthenticated()">
-        <form th:action="@{/redirectToEditPage}">
-            <input class="nav-items" type="submit" value="Edytuj swoje konto"/>
-        </form>
-    </div>
-    <div sec:authorize="isAuthenticated()">
-        <form id="logoutForm" method="POST" th:action="@{/logout}">
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-        </form>
-        <a onclick="document.forms['logoutForm'].submit()">Logout</a>
-    </div>
+    <ul class="navbar-box">
+        <li>
+            <form class="navbar-item" th:action="@{/redirectToWelcome}">
+                <input class="nav-items" type="submit" value="Strona główna"/>
+            </form>
+        </li>
+        <li>
+            <form th:action="@{/redirectToSearchClubPage}">
+                <input class="nav-items" type="submit" value="Wyszukaj klub"/>
+            </form>
+        </li>
+        <li>
+            <form th:action="@{/redirectToSearchCompetitionsPage}">
+                <input class="nav-items" type="submit" value="Wyszukaj zawody"/>
+            </form>
+        </li>
+        <li>
+            <form th:action="@{/redirectToSearchPlayersPage}">
+                <input class="nav-items" type="submit" value="Wyszukaj zawodników"/>
+            </form>
+        </li>
+        <li>
+            <div sec:authorize="isAuthenticated()">
+                <form th:action="@{/redirectToEditPage}">
+                    <input class="nav-items" type="submit" value="Edytuj swoje konto"/>
+                </form>
+            </div>
+        </li>
+        <li>
+            <div sec:authorize="isAuthenticated()">
+                <form id="logoutForm" method="POST" th:action="@{/logout}">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                </form>
+                <button onclick="document.forms['logoutForm'].submit()">Logout</button>
+            </div>
+        </li>
+    </ul>
 </div>
 
-<div class="container">
+<div class="container search-forms">
     <div align="center">
         <h1>Lista sędziów na zawodach</h1>
         <br/><br/>

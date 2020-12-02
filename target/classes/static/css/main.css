@@ -1,7 +1,46 @@
+/*.form-signin {*/
+/*    margin-top: 10%;*/
+/*    padding: 15px;*/
+/*    margin: 0 auto;*/
+/*}*/
+
+/*.form-signin .form-signin-heading,*/
+/*.form-signin .checkbox {*/
+/*    margin-top: 5%;*/
+/*    margin-bottom: 10px;*/
+/*}*/
+
+/*.form-signin .checkbox {*/
+/*    font-weight: normal;*/
+/*}*/
+
+/*.form-signin .form-control:focus {*/
+/*    z-index: 2;*/
+/*}*/
+
+/*.form-signin input {*/
+/*    margin-top: 10px;*/
+/*    border-bottom-right-radius: 0;*/
+/*    border-bottom-left-radius: 0;*/
+/*}*/
+
+/*.form-signin button {*/
+/*    margin-top: 10px;*/
+/*}*/
+
+/*.has-error {*/
+/*    color: red*/
+/*}*/
+
 .form-signin {
+    display: block;
     margin-top: 10%;
     padding: 15px;
     margin: 0 auto;
+}
+
+.form-heading {
+    text-align: center;
 }
 
 .form-signin .form-signin-heading,
@@ -12,6 +51,20 @@
 
 .form-signin .checkbox {
     font-weight: normal;
+}
+
+.form-control {
+    margin-bottom: 6px;
+}
+
+.form-signin .form-control {
+    position: relative;
+    height: auto;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 10px;
+    font-size: 16px;
 }
 
 .form-signin .form-control:focus {
@@ -26,6 +79,129 @@
 
 .form-signin button {
     margin-top: 10px;
+}
+
+.search-forms form {
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#block {
+    display: block;
+}
+
+#navbar-toggle {
+    opacity: 0;
+}
+
+#navbar-toggle:checked + .navbar-btn > span {
+    transform: rotate(45deg);
+}
+
+#navbar-toggle:checked + .navbar-btn > span::before {
+    top: 0;
+    transform: rotate(0deg);
+}
+
+#navbar-toggle:checked + .navbar-btn > span::after{
+    top: 0;
+    transform: rotate(90deg);
+}
+
+#navbar-toggle:checked ~ .navbar-box{
+    right: 0 !important;
+}
+
+.navbar-btn {
+    position: fixed;
+    top: 100px;
+    right: 18%;
+    width: 26px;
+    height: 26px;
+    cursor: pointer;
+    z-index: 1;
+}
+.navbar-btn > span,
+.navbar-btn > span::before,
+.navbar-btn > span::after {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background-color: #616161;
+    transition-duration: .25s;
+}
+.navbar-btn > span::before {
+    content: '';
+    top: -8px;
+}
+.navbar-btn > span::after {
+    content: '';
+    top: 8px;
+}
+.navbar-box {
+    display: block;
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 250px;
+    height: 100%;
+    margin: 0;
+    padding: 80px 0;
+    list-style: none;
+    background-color: #ECEFF1;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, .4);
+    transition-duration: .25s;
+}
+
+.nav-items, button {
+    display: block;
+    padding: 12px 24px;
+    width: 100%;
+    color: #333;
+    border: hidden;
+    font-family: 'Roboto', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    transition-duration: .25s;
+}
+.nav-items:hover, button:hover {
+    background-color: #CFD8DC;
+}
+
+table {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table td, table th {
+    border: 1px solid #aaa;
+    padding: 8px;
+}
+
+table tr:nth-child(even){
+    background-color: #ffffff;
+}
+
+table tr:hover {
+    background-color: #ccc;
+}
+
+table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #007bff;
+    color: white;
+}
+
+.welcome-buttons {
+    display: inline-block;
+    float: left;
+
 }
 
 .has-error {
@@ -51,24 +227,24 @@
         padding: 5%;
     }
 
-    .navbar{
-        color: white;
-        text-transform: uppercase;
-        font-size: 1em;
-        /*position: absolute;*/
-        width: 100%;
-        height: 10%;
-        background: #535353;
-        margin: 0;
-        padding: 2%;
-        box-shadow: 0 5px 5px 5px black;
-    }
+    /*.navbar{*/
+    /*    color: white;*/
+    /*    text-transform: uppercase;*/
+    /*    font-size: 1em;*/
+    /*    !*position: absolute;*!*/
+    /*    width: 100%;*/
+    /*    height: 10%;*/
+    /*    background: #535353;*/
+    /*    margin: 0;*/
+    /*    padding: 2%;*/
+    /*    box-shadow: 0 5px 5px 5px black;*/
+    /*}*/
 
     .nav-items{
         text-decoration: none;
         background: none;
         border: none;
-        color: white;
+        /*color: white;*/
         text-transform: uppercase;
         font-size: 1em;
     }
@@ -102,23 +278,23 @@
         box-shadow: 0 5px 5px 5px;
         padding: 5%;
     }
-    .navbar{
-        color: white;
-        text-transform: uppercase;
-        font-size: 1.5em;
-        /*position: absolute;*/
-        width: 100%;
-        height: 30%;
-        background: #535353;
-        margin: 0;
-        padding: 2%;
-        box-shadow: 0 5px 5px 5px black;
-    }
+    /*.navbar{*/
+    /*    color: white;*/
+    /*    text-transform: uppercase;*/
+    /*    font-size: 1.5em;*/
+    /*    !*position: absolute;*!*/
+    /*    width: 100%;*/
+    /*    height: 30%;*/
+    /*    background: #535353;*/
+    /*    margin: 0;*/
+    /*    padding: 2%;*/
+    /*    box-shadow: 0 5px 5px 5px black;*/
+    /*}*/
     .nav-items{
         text-decoration: none;
         background: none;
         border: none;
-        color: white;
+        /*color: white;*/
         text-transform: uppercase;
         font-size: 1em;
     }
@@ -153,23 +329,23 @@
         padding: 5%;
         margin: auto;
     }
-    .navbar{
-        color: white;
-        text-transform: uppercase;
-        font-size: 2em;
-        /*position: absolute;*/
-        width: 100%;
-        height: 40%;
-        background: #535353;
-        margin: 0;
-        padding: 2%;
-        box-shadow: 0 5px 5px 5px black;
-    }
+    /*.navbar{*/
+    /*    color: white;*/
+    /*    text-transform: uppercase;*/
+    /*    font-size: 2em;*/
+    /*    !*position: absolute;*!*/
+    /*    width: 100%;*/
+    /*    height: 40%;*/
+    /*    background: #535353;*/
+    /*    margin: 0;*/
+    /*    padding: 2%;*/
+    /*    box-shadow: 0 5px 5px 5px black;*/
+    /*}*/
     .nav-items{
         text-decoration: none;
         background: none;
         border: none;
-        color: white;
+        /*color: white;*/
         text-transform: uppercase;
         font-size: 1em;
     }
