@@ -40,10 +40,8 @@
 
         <form method="POST" class="form-signin" th:object="${player}" th:action="@{/editPlayer}">
 
-            <h2 class="form-signin-heading">Edytuj swój profil (zawodnik)</h2>
+            <h2 class="form-signin-heading">Edytuj swój profil</h2>
             <div class="form-group">
-                <input type="date" th:field=*{medExDate} class="form-control" placeholder="Data waznosci Twojej dokumentacji" autofocus="true" required="required">
-				<span class="has-error" th:if="${#fields.hasErrors('medExDate')}" th:errors="*{medExDate}"></span>
             	<h3>Wybierz klub:</h3>
 		         <!-- <div th:if="${listOfAvailableClubs != null and not #lists.isEmpty(listOfAvailableClubs)}">-->
 		         <select th:field="*{club}" class="form-control">

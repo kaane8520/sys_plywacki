@@ -37,7 +37,7 @@
     </div>
 
         <div class="container">
-            <h2 class="form-signin-heading">Żądania zmiany uprawnień</h2>
+            <h2 class="form-signin-heading">Prośby o zmianę uprawnień</h2>
             <form method="POST" class="form-signin" th:object="${verificationForm}" th:action="@{/verificationMedicalExaminations}">
                 <table border="1" cellpadding="10">
                     <thead>
@@ -63,7 +63,7 @@
 
                         <!--<td th:text="${verification.printYourRole()}"></td>-->
                         <!--<td th:text="${verification.new_role}}"></td>-->
-                        <td >tu też nie wiem</td>
+                        <td><a th:href=" @{'/downloadFile/'+ ${verification.fileName}}">Badania</a></td>
                         <!-- <div sec:authorize="hasAuthority('')"> -->
                         <td>
                             <!--<form method="POST" class="form-signin" th:object="${verifyForm}" th:action="@{/acceptVerifyForm}">

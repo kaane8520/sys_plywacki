@@ -28,6 +28,7 @@
                 <input class="nav-items" type="submit" value="Edytuj swoje konto"/>
             </form>
         </div>
+
         <div sec:authorize="isAuthenticated()">
             <form id="logoutForm" method="POST" th:action="@{/logout}">
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -117,6 +118,7 @@
                 <input type="submit" value="Edytuj swoje dane"/>
             </form>
             </div>
+            <!--
             <div sec:authorize="hasAuthority('trener')">
                 <form th:action="@{/redirectToEditCoach}">
                     <input type="submit" value="Edytuj swoje dane"/>
@@ -127,6 +129,7 @@
                     <input type="submit" value="Edytuj swoje dane"/>
                 </form>
             </div>
+            -->
         </div>
     </div>
     <h1 th:text = "${message}"></h1>

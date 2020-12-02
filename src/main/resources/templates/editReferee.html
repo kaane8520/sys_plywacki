@@ -37,9 +37,9 @@
 </div>
 
 <div class="container">
-
+    <h1 class="form-signin-heading">Edytuj sędziego</h1>
     <form method="POST" class="form-signin" th:object="${referee}" th:action="@{/editReferee}">
-        <h2 class="form-signin-heading">Edytuj swój profil (sędzia)</h2>
+        <h2 class="form-signin-heading">Wprowadź datę wygaśnięcia dokumentacji</h2>
         <div class="form-group">
             <input type="date" th:field=*{refereelegidate} class="form-control" placeholder="Data ważności Twojej dokumentacji" autofocus="true" required="required">
             <span class="has-error" th:if="${#fields.hasErrors('refereelegidate')}" th:errors="*{refereelegidate}"></span>
