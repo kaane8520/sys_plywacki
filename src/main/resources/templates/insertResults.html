@@ -70,13 +70,13 @@
                 <form method="post" th:object="${resultForm}" th:action="@{/insertResults}">
                     <div class="form-group">
 
-<!--                        Wprowadź czas wyniku: <input type="time" th:field="*{timeofresult}" required="required">-->
+                        Wprowadź czas wyniku: <input type="text" id="basic_example_3" th:field="*{timeofresult}" placeholder="hh:mm:SS:ss" pattern="[0-9]{2}:[0-9]{2}:[0-9]{2}:[0-9]{2}" title="Podany czas musi być w formacie hh:mm:SS:ss" required="required">
                         <br/>
                         Dyskwalifikacja:
                         <select th:field="*{disqualification}" class="form-control">
                             <option th:each="dis : ${listOfDisqualifiacations}"
                                     th:value="${dis.id}"
-                                    th:text="${dis.disqualificationname}"/>
+                                    th:text="${dis.Disqualificationname}"/>
                         </select>
                     </div>
                     <button class="btn btn-lg btn-primary btn-block" type="submit">Zapisz wynik</button>

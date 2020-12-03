@@ -1157,30 +1157,29 @@ public class PersonController {
         return listOfCategoriesOnCompanies;
     }
 
-    Long resultId;
+    Long compId;
     @RequestMapping(value="/redirectToInsertResults", method=RequestMethod.GET)
     public String redirectToInsertResults(@Param("keyword") Long keyword, Model model){
-        Result result = new Result();
-        result.setCompetition(competitionRepository.findByIdCompetitions(keyword));
-        resultRepository.save(result);
 
-        resultId = result.getIdresult();
+        compId = keyword;
+
         return "redirect:/insertResults";
     }
 
     @GetMapping("/insertResults")
     public String insertResults(Model model) {
         System.out.println("jestem w getmapping");
-        Result resultForm = resultRepository.findResultByIdresult(resultId);
+        Result resultForm = new Result();
         model.addAttribute("resultForm", resultForm);
         return "/insertResults";
     }
 
     @PostMapping("/insertResults")
     public String insertResults(@ModelAttribute("resultForm") Result resultForm){
-        resultForm = resultRepository.findResultByIdresult(resultId);
+//        resultForm = resultRepository.findResultByIdresult(resultId);
+        resultForm.setCompetition(competitionRepository.findByIdCompetitions(compId));
         resultRepository.save(resultForm);
-        System.out.println("TO JEST ID RESULT: " + resultId);
+        System.out.println("TO JEST ID RESULT: " + compId);
         System.out.println("JESTEM W POSTMAPPING");
         return "redirect:/organizerCompetitionView";
     }
