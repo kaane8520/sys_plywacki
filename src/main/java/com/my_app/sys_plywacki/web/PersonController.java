@@ -388,9 +388,6 @@ public class PersonController {
         playerRepository.save(saved_player.get(0));
         //System.out.println("to jest club get" + club.get().getId_club());
 
-
-
-
         return "redirect:welcome";
     }
 
@@ -713,7 +710,7 @@ public class PersonController {
         Role role = roleRepository.findByPerson(p);
         if(roleRepository.existsByPerson(p)) {
             if (role.getName().contains("trener")) {
-                System.out.println("Nie weszłeś");
+                System.out.println("Nie wszedłeś");
                 Coach coach = coachRepository.findCoachByPerson(p);
                 if (clubRepository.existsClubByCoach(coach)) {
                     return coach.getClub().getClubname();
@@ -731,7 +728,7 @@ public class PersonController {
         Role role = roleRepository.findByPerson(p);
         if(roleRepository.existsByPerson(p)) {
             if (role.getName().contains("trener")) {
-                System.out.println("Nie weszłeś");
+                System.out.println("Nie wszedłeś");
                 Coach coach = coachRepository.findCoachByPerson(p);
                 if (coach.getCoachlegidate()!=null) {
                     return coach.getCoachlegidate().toString();
@@ -749,7 +746,7 @@ public class PersonController {
         Role role = roleRepository.findByPerson(p);
         if(roleRepository.existsByPerson(p)) {
             if (role.getName().contains("sedzia")) {
-                System.out.println("Nie weszłeś");
+                System.out.println("Nie wszedłeś");
                 Referee referee = refereeRepository.findRefereeByPerson(p);
                 if (referee.getRefereelegidate()!=null) {
                     return referee.getRefereelegidate().toString();
@@ -768,7 +765,7 @@ public class PersonController {
         Role role = roleRepository.findByPerson(p);
         if(roleRepository.existsByPerson(p)) {
             if (role.getName().contains("trener")) {
-                System.out.println("Nie weszłeś");
+                System.out.println("Nie wszedłeś");
                 Coach coach = coachRepository.findCoachByPerson(p);
                 if (clubRepository.existsClubByCoach(coach)) {
                     List<Player> playersListInCoachClub = playerRepository.findPlayersByClubCoach(coach);
@@ -1004,8 +1001,10 @@ public class PersonController {
         if(role.getName().equals("sedzia")){
             //return "redirect:/redirectToEditReferee/"+verification.get().getIdPerson();
             return "redirect:/redirectToEditReferee";
+        } else {
+            usun_zadanie(id);
+            return "redirect:/welcome";
         }
-        return "redirect:welcome";
     }
     @PostMapping("/deleteVerification")
     public String acceptVerifyForm(@ModelAttribute Verification verification, Model model, BindingResult bindingResult){
