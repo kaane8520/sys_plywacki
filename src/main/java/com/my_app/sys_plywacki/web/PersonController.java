@@ -147,7 +147,6 @@ public class PersonController {
             return "redirect:/";
         }
 
-
         model.addAttribute("personForm", new Person());
 
         return "registration";
@@ -170,6 +169,7 @@ public class PersonController {
 
     @GetMapping("/login")
     public String login(Model model, String error, String logout) {
+        listOfPlayers.clear();
         if(personRepository.findAll().isEmpty()){
             personService.addModerator();
         }
@@ -1242,8 +1242,12 @@ public class PersonController {
     @PostMapping("regClubForCompetition")
     public String regClubForCompetition(RedirectAttributes redirAttrs, @ModelAttribute("registrationForCompetitionForm") RegistrationForCompetition registrationForCompetition){
         // RegistrationForCompetition registrationForCompetition = new RegistrationForCompetition();
-        Set<Player> targetSet = new HashSet<>(listOfPlayers);
-        registrationForCompetition.setPlayers(targetSet);
+
+        System.out.println("registrationForCompetition id = "+registrationForCompetition.getIdRegistrationForCompetition());
+        System.out.println("registrationForCompetition list of players = "+registrationForCompetition.getPlayers());
+        System.out.println("Doaje zawodnikow ...");
+        registrationForCompetition.setPlayers(listOfPlayers);
+        System.out.println("registrationForCompetition list of players = "+registrationForCompetition.getPlayers());
         System.out.println("Id zawodow: "+registrationForCompetition.getIdCompetition());
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Person p = personService.findByUsername(auth.getName());
