@@ -37,6 +37,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.http.ResponseEntity;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.swing.text.html.Option;
 
 
 @Controller
@@ -133,7 +134,12 @@ public class PersonController {
     private DisqualificationService disqualificationService;
 
     @Autowired
+    private RegistrationForCompetitionRepository registrationForCompetitionRepository;
+
+    @Autowired
     private ResultRepository resultRepository;
+
+    List<Player> listOfPlayers = new ArrayList<>();
 
     @GetMapping("/registration")
     public String registration(Model model) {
@@ -738,6 +744,7 @@ public class PersonController {
     }
 
 
+
     @ModelAttribute("playersListInCoachClub")
     public List<Player> getPlayersInCoachClub(){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -1215,6 +1222,73 @@ public class PersonController {
             return listOfResults;
         }
     }
+    @ModelAttribute("listOfAllCompetitions")
+    public List<Competition> searchListOfAllCompetitions(){
+        if(competitionRepository.findAll().isEmpty()){
+            return null;
+        }else {
+            List<Competition> listOfAllCompetitions = competitionRepository.findAll();
+            return listOfAllCompetitions;
+        }
+    }
+    @RequestMapping(value = "/redirectRegClubForCompetition", method = RequestMethod.GET)
+    public String redirectRegClubForCompetition() {
+        return "redirect:/regClubForCompetition";
+    }
+    @GetMapping("regClubForCompetition")
+    public String regClubForCompetition(Model model){
+        model.addAttribute("registrationForCompetitionForm", new RegistrationForCompetition());
+        return "regClubForCompetition";
+    }
+    @PostMapping("regClubForCompetition")
+    public String regClubForCompetition(RedirectAttributes redirAttrs, @ModelAttribute("registrationForCompetitionForm") RegistrationForCompetition registrationForCompetition){
+        // RegistrationForCompetition registrationForCompetition = new RegistrationForCompetition();
+        Set<Player> targetSet = new HashSet<>(listOfPlayers);
+        registrationForCompetition.setPlayers(targetSet);
+        System.out.println("Id zawodow: "+registrationForCompetition.getIdCompetition());
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Person p = personService.findByUsername(auth.getName());
+        Coach coach = coachRepository.findCoachByPerson(p);
+        registrationForCompetition.setIdCoach(coach.getIdCoach());
+        registrationForCompetition.setIdClub(coach.getClub().getId_club());
 
 
+        System.out.println("Rejestracja na zawody");
+        System.out.println("Id trenera:"+registrationForCompetition.getIdCoach());
+        System.out.println("Id klubu:"+registrationForCompetition.getIdClub());
+
+        registrationForCompetitionRepository.save(registrationForCompetition);
+
+        listOfPlayers.clear();
+
+        if(listOfPlayers.isEmpty()) System.out.println("Wyczyszczono liste zawodnikow");
+        else System.out.println("Nie udalo sie wyczyscic listy zawodnikow");
+        Competition competition = competitionRepository.findByIdCompetitions(registrationForCompetition.getIdCompetition());
+        redirAttrs.addFlashAttribute("success", "Dodano Twoj klub na zawody: "+competition.getCompetitionName());
+        return "redirect:/welcome";
+    }
+    /*
+    @PostMapping("regClubForCompetition")
+    public String regClubForCompetition(Model model){
+        return "regClubForCompetition";
+    }*/
+    @GetMapping("/acceptPlayer/{id_person}")
+    public String acceptPlayer(@PathVariable(name = "id_person") Long id, Model model,  RedirectAttributes redirAttrs) {
+
+        System.out.println("Jestem w /acceptPlayer/{id_person}\n\n\n");
+        Optional <Player> player = playerRepository.findById(id);
+        System.out.println("Ten zawodnik ma id = "+player.get().getIdPlayer());
+        System.out.println("I nazywa się: "+player.get().getUsername());
+        redirAttrs.addFlashAttribute("success", "Dodano zawodnika: "+player.get().getUsername());
+        addToListOfPlayers(player.get());
+        return "redirect:/regClubForCompetition";
+    }
+
+    public void addToListOfPlayers(Player player){
+        listOfPlayers.add(player);
+    }
+    @ModelAttribute("listOfPlayersForCompetitions")
+    public List<Player> getListOfPlayers(){
+        return listOfPlayers;
+    }
 }
