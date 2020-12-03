@@ -54,7 +54,7 @@
 <div class="container">
     <form method="POST" class="form-signin" th:object="${competitionForm}" th:action="@{/registrationCompetitions}">
         <div class="form-group">
-            <input type="time" th:field="*{competitionDate}" class="form-control" placeholder="Wybierz datę zawodów"
+            <input type="date" th:field="*{competitionDate}" class="form-control" placeholder="Wybierz datę zawodów"
                    autofocus="true" required="required">
             <span class="has-error" th:if="${#fields.hasErrors('competitionDate')}" th:errors="*{competitionDate}"></span>
         </div>

@@ -583,7 +583,7 @@ public class PersonController {
 
 
 
-    private Long idCompetitionForPlayers;
+
     @RequestMapping(value = "/redirectRegCompetitorsPlayer", method = RequestMethod.GET)
     public String redirectRegCompetitorsPlayer(@Param("keyword") Long keyword) {
         System.out.println("Redirecting Result To Reg Competitors Player:" + keyword);
@@ -1157,18 +1157,32 @@ public class PersonController {
         return listOfCategoriesOnCompanies;
     }
 
+    Long resultId;
+    @RequestMapping(value="/redirectToInsertResults", method=RequestMethod.GET)
+    public String redirectToInsertResults(@Param("keyword") Long keyword, Model model){
+        Result result = new Result();
+        result.setCompetition(competitionRepository.findByIdCompetitions(keyword));
+        resultRepository.save(result);
 
-    @GetMapping("/insertResults/{idCompetitions}")
-    public String insertResults(@PathVariable(name = "idCompetitions") Long id, Model model) {
-        model.addAttribute("result", new Result());
+        resultId = result.getIdresult();
+        return "redirect:/insertResults";
+    }
 
+    @GetMapping("/insertResults")
+    public String insertResults(Model model) {
+        System.out.println("jestem w getmapping");
+        Result resultForm = resultRepository.findResultByIdresult(resultId);
+        model.addAttribute("resultForm", resultForm);
         return "/insertResults";
     }
 
-    @PostMapping("/insertResults/{idCompetitions}")
-    public String insertResults(@ModelAttribute Result result, Model model){
-        resultRepository.save(result);
-        return "redirect:/welcome";
+    @PostMapping("/insertResults")
+    public String insertResults(@ModelAttribute("resultForm") Result resultForm){
+        resultForm = resultRepository.findResultByIdresult(resultId);
+        resultRepository.save(resultForm);
+        System.out.println("TO JEST ID RESULT: " + resultId);
+        System.out.println("JESTEM W POSTMAPPING");
+        return "redirect:/organizerCompetitionView";
     }
 
 

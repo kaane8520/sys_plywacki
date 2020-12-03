@@ -81,9 +81,9 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:if="${competitionList.empty}">
-                <td colspan="3"> Nie ma zawodów </td>
-            </tr>
+<!--            <tr th:if="${competitionList.empty}">-->
+<!--                <td colspan="3"> Nie ma zawodów </td>-->
+<!--            </tr>-->
             <tr th:each="competition : ${competitionList}">
                 <td th:text="${competition.idCompetitions}"></td>
                 <td th:text="${competition.competitionDate}"></td>

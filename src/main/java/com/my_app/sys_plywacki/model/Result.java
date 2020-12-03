@@ -7,7 +7,7 @@ import java.util.List;
 public class Result {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_result;
+    private Long idresult;
 
     @OneToMany
     private List<CategoriesOnCompetition> categoriesOnCompetition;
@@ -16,14 +16,14 @@ public class Result {
     @OneToOne
     private Disqualification disqualification;
 
-    private Time timeOfresult;
+    private Time timeofresult;
 
-    public Long getId_result() {
-        return id_result;
+    public Long getIdresult() {
+        return idresult;
     }
 
     public void setId_result(Long id_result) {
-        this.id_result = id_result;
+        this.idresult = idresult;
     }
 
     public List<CategoriesOnCompetition> getCategoriesOnCompetition() {
@@ -50,11 +50,11 @@ public class Result {
         this.disqualification = disqualification;
     }
 
-    public Time getTimeOfresult() {
-        return timeOfresult;
+    public Time getTimeofresult() {
+        return timeofresult;
     }
 
-    public void setTimeOfresult(Time timeOfresult) {
-        this.timeOfresult = timeOfresult;
+    public void setTimeofresult(Time timeOfresult) {
+        this.timeofresult = timeOfresult;
     }
 }

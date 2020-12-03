@@ -90,7 +90,14 @@
                     <a th:href="@{'/refereesOnCompetitionView/' + ${competition.idCompetitions}}">Zobacz zapisanych sędziów</a>
                 </td>
                 <td>
-                    <a th:href="@{'/insertResults/' + ${competition.idCompetitions}}">Wprowadź wyniki</a>
+                    <form  class="form-signin" th:object="${result}" th:action="@{/redirectToInsertResults}">
+                        <div class="form-group">
+                            <input type="hidden" name="keyword" id="keyword" th:value="${competition.idCompetitions}">
+                        </div>
+                        <button class="btn btn-lg btn-primary btn-block" type="submit">Wprowadź wyniki</button>
+                    </form>
+<!--                    <input type="button" name="keyword" id="keyword" th:value="${competition.idCompetitions}">-->
+<!--                    <a th:href="@{/insertResults}">Wprowadź wyniki</a>-->
                 </td>
 
             </tr>
