@@ -16,7 +16,7 @@ public class Result {
     @OneToOne
     private Disqualification disqualification;
 
-    private Time timeofresult;
+    private String timeofresult;
 
     public Long getIdresult() {
         return idresult;
@@ -50,11 +50,11 @@ public class Result {
         this.disqualification = disqualification;
     }
 
-    public Time getTimeofresult() {
+    public String getTimeofresult() {
         return timeofresult;
     }
 
-    public void setTimeofresult(Time timeOfresult) {
+    public void setTimeofresult(String timeOfresult) {
         this.timeofresult = timeOfresult;
     }
 }
