@@ -5,41 +5,68 @@
     <title>Wyszukaj zawodnika</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link href="/css/main.css" rel="stylesheet">
+
 </head>
 
 <body>
-<div class="navbar">
-    <span>To jest navbar</span>
-    <form th:action="@{/redirectToWelcome}">
-        <input class="nav-items" type="submit" value="Strona główna"/>
-    </form>
 
-    <form th:action="@{/redirectToSearchClubPage}">
-        <input class="nav-items" type="submit" value="wyszukaj klub"/>
-    </form>
-    <form th:action="@{/redirectToSearchCompetitionsPage}">
-        <input class="nav-items" type="submit" value="wyszukaj zawody"/>
-    </form>
-    <form th:action="@{/redirectToSearchPlayersPage}">
-        <input class="nav-items" type="submit" value="wyszukaj zawodników"/>
-    </form>
-    <div sec:authorize="isAuthenticated()">
-        <form th:action="@{/redirectToEditPage}">
-            <input class="nav-items" type="submit" value="Edytuj swoje konto"/>
-        </form>
-    </div>
-    <div sec:authorize="isAuthenticated()">
-        <form id="logoutForm" method="POST" th:action="@{/logout}">
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-        </form>
-        <a onclick="document.forms['logoutForm'].submit()">Logout</a>
-    </div>
+<div class="navbar">
+    <input id="navbar-toggle" type="checkbox" />
+    <label class="navbar-btn" for="navbar-toggle">
+        <span></span>
+    </label>
+
+    <ul class="navbar-box">
+        <li>
+            <form class="navbar-item" th:action="@{/redirectToWelcome}">
+                <input class="nav-items" type="submit" value="Strona główna"/>
+            </form>
+        </li>
+        <li>
+            <form th:action="@{/redirectToSearchClubPage}">
+                <input class="nav-items" type="submit" value="Wyszukaj klub"/>
+            </form>
+        </li>
+        <li>
+            <form th:action="@{/redirectToSearchCompetitionsPage}">
+                <input class="nav-items" type="submit" value="Wyszukaj zawody"/>
+            </form>
+        </li>
+        <li>
+            <form th:action="@{/redirectToSearchPlayersPage}">
+                <input class="nav-items" type="submit" value="Wyszukaj zawodników"/>
+            </form>
+        </li>
+        <li>
+            <div sec:authorize="isAuthenticated()">
+                <form th:action="@{/redirectToEditPage}">
+                    <input class="nav-items" type="submit" value="Edytuj swoje konto"/>
+                </form>
+            </div>
+        </li>
+        <li>
+            <div sec:authorize="isAuthenticated()">
+                <form id="logoutForm" method="POST" th:action="@{/logout}">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                </form>
+                <button onclick="document.forms['logoutForm'].submit()">Logout</button>
+            </div>
+        </li>
+    </ul>
 </div>
 
-<div class="container">
-    <div align="center">
-        <h1>Lista zawodników</h1>
 
+
+<div class="container search-forms">
+
+    <form  th:action="@{/searchPlayerKey}">
+        <h1 class="form-heading">Lista zawodników</h1>
+        Filter: <input type="text" name="keywordPlayer" class="form-control" size="50" th:value="${keywordPlayer}" required />
+
+        <button type="submit" class="btn btn-lg btn-primary btn-block">Wyszukaj</button>
+    </form>
+
+    <div align="center">
         <br/><br/>
         <table border="1" cellpadding="10">
             <thead>
@@ -64,12 +91,7 @@
         </table>
     </div>
     <br/>
-    <form  th:action="@{/searchPlayerKey}" >
-        Filter: <input type="text" name="keywordPlayer" id="keywordPlayer" size="50" th:value="${keywordPlayer}" required />
 
-        <input type="submit" value="Wyszukaj" />
-
-    </form>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

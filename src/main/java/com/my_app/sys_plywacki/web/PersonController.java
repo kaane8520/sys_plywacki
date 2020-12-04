@@ -14,8 +14,12 @@ import com.my_app.sys_plywacki.service.*;
 import com.my_app.sys_plywacki.repository.*;
 import org.springframework.security.core.Authentication;
 
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.sql.Ref;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -23,6 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,16 +35,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import org.springframework.security.core.userdetails.User;
 import org.springframework.http.ResponseEntity;
 
+import javax.jws.WebParam;
 import javax.servlet.http.HttpServletRequest;
+import javax.swing.text.html.Option;
 
 
 @Controller
+@SessionAttributes("verification")
 @RequestMapping("/")
 public class PersonController {
     @Autowired
@@ -79,15 +88,17 @@ public class PersonController {
     private VerificationRepository verificationRepository;
 
     @Autowired
-    private FileDBService storageService;
+    private FileRepository fileRepository;
+
+    @Autowired
+    FileService fileService;
 
     @Autowired
     private MessageService messageService;
 
     private List <Club> clubs;
 
-    @Autowired
-    private OrganizerCompetitionConnectionRepository organizerCompetitionConnectionRepository;
+
     @Autowired
     private OrganizerRepository organizerRepository;
 
@@ -106,8 +117,6 @@ public class PersonController {
     @Autowired
     private MessageRepository messageRepository;
 
-
-    //private RefereeRoleOnCompetitionRepository refereeRoleOnCompetitionRepository;*/
     @Autowired
     private CategoriesService categoriesService;
 
@@ -128,14 +137,24 @@ public class PersonController {
     private UserDetailsService personDetailsService;
 
     @Autowired
-    private FileUploadDAO fileUploadDao;
+    private DisqualificationRepository disqualificationRepository;
+
+    @Autowired
+    private DisqualificationService disqualificationService;
+
+    @Autowired
+    private RegistrationForCompetitionRepository registrationForCompetitionRepository;
+
+    @Autowired
+    private ResultRepository resultRepository;
+
+    List<Player> listOfPlayers = new ArrayList<>();
 
     @GetMapping("/registration")
     public String registration(Model model) {
         if (securityService.isAuthenticated()) {
             return "redirect:/";
         }
-
 
         model.addAttribute("personForm", new Person());
 
@@ -159,6 +178,7 @@ public class PersonController {
 
     @GetMapping("/login")
     public String login(Model model, String error, String logout) {
+        listOfPlayers.clear();
         if(personRepository.findAll().isEmpty()){
             personService.addModerator();
         }
@@ -189,6 +209,9 @@ public class PersonController {
         if(categoriesRepository.findAll().isEmpty()){
             categoriesService.addCategories();
         }
+        if(disqualificationRepository.findAll().isEmpty()){
+            disqualificationService.addDisqualifications();
+        }
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Person p = personService.findByUsername(auth.getName());
@@ -212,19 +235,8 @@ public class PersonController {
     public String changeYourRole(Model model) {
         System.out.println("\n\nJestem w editMapping changeYourRole");
         model.addAttribute("role", new Role());
-        //personService.update_user_role_if_exists();
-        //Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        //System.out.println("Twoj login to: "+auth.getPrincipal().toString());
         return "/changeYourRole";
     }
-    /*
-    @RequestMapping(value="/changeYourRole",params="changeYourRoleButton",method=RequestMethod.POST)
-    public void acction_changeYourRole(){
-    }
-    @RequestMapping(value="/changeYourRole",params="addDocumentationButton",method=RequestMethod.POST)
-    public void acction_uploadFile(){
-    }*/
-
     @PostMapping("/changeYourRole")
     public String changeYourRole(@ModelAttribute Role role, Model model, BindingResult bindingResult) {
         System.out.println("Jestem w PostMapping /changeYourRole");
@@ -251,6 +263,9 @@ public class PersonController {
         message.setIdPerson(p.getIdPerson());
         messageRepository.save(message);
 
+        if(role.getName().equals("zawodnik") || role.getName().equals("sedzia") || role.getName().equals("trener")){
+            return "redirect:addDocumentation";
+        }
         return "redirect:welcome";
 
     }
@@ -281,54 +296,7 @@ public class PersonController {
         //System.out.println("Twoj login to: "+auth.getPrincipal().toString());
         return "edit";
     }
-    //stara - dzialajaca metoda edit
-    /**/
-    /*
-    @PostMapping("/edit")
-    public String edit(@ModelAttribute Role role, Model model, BindingResult bindingResult) {
-        System.out.println("Jestem w PostMapping /edit");
-        if (bindingResult.hasErrors()) {
-            return "edit";
-        }
 
-        Collection<SimpleGrantedAuthority> oldAuthorities = (Collection<SimpleGrantedAuthority>)SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.getName());
-        List<SimpleGrantedAuthority> updatedAuthorities = new ArrayList<SimpleGrantedAuthority>();
-        updatedAuthorities.add(authority);
-        updatedAuthorities.addAll(oldAuthorities);
-        SecurityContextHolder.getContext().setAuthentication(
-                   new UsernamePasswordAuthenticationToken(
-                           SecurityContextHolder.getContext().getAuthentication().getPrincipal(),
-                           SecurityContextHolder.getContext().getAuthentication().getCredentials(),
-                           updatedAuthorities)
-        );
-        System.out.println("Authorities updates");
-        System.out.println(updatedAuthorities);
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Person p = personService.findByUsername(auth.getName());
-        personService.add_role(p, role);
-        if(role.getName().equals("zawodnik")) {
-        	System.out.println("Twoja rola = "+role.getName());
-        	return "redirect:editPlayer";
-        }
-        else if (role.getName().equals("organizator")) {
-            Organizer organizer = new Organizer();
-            model.addAttribute("organizer", organizer);
-            organizer.setPerson(p);
-            organizerRepository.save(organizer);
-//            organizerPersonConnectionRepository.save(new OrganizerPersonConnection(organizer, p));
-            return "redirect:welcome";
-        }
-        else if (role.getName().equals("trener")) {
-            return "redirect:editCoach";
-        }
-        else if(role.getName().equals("sedzia")) {
-            System.out.println("Twoja rola = "+role.getName());
-            return "redirect:editReferee";
-        }
-        else return "redirect:welcome";
-    }
-*/
     //nowa metoda edit
     @PostMapping("/edit")
     public String edit(@ModelAttribute Role role, Model model, BindingResult bindingResult) {
@@ -361,6 +329,33 @@ public class PersonController {
          Person p = personService.findByUsername(auth.getName());
          return "redirect:/welcome";
      }*/
+
+    //edycja zawodnika przez moderatora: zmiana daty wygaśnięcia dokumentacji:
+    @RequestMapping(value = "/redirectToEditPlayerByModerator", method = RequestMethod.GET)
+    public String redirectToEditPlayerByModerator() {
+        System.out.println("Redirecting Result To Edit Player Page");
+        return "redirect:editPlayerByModerator";
+    }
+    @GetMapping("/editPlayerByModerator")
+    public String editPlayerByModerator(Model model) {
+        model.addAttribute("player",new Player());
+        System.out.println("Jestem w funkcji editPlayer");
+        return "/editPlayerByModerator";
+    }
+    @PostMapping("/editPlayerByModerator")
+    public String editPlayerByModerator(@SessionAttribute("verification") Verification verification,@ModelAttribute Player player, Model model, BindingResult bindingResult) {
+
+        System.out.println("verification.getIdPerson = "+verification.getIdPerson());
+        List<Player> saved_player = playerRepository.findByIdPerson(verification.getIdPerson());
+        saved_player.get(0).setMedExDate(player.getMedExDate());
+        System.out.println("Id person: "+player.getIdPerson());
+        System.out.println("Data wygasniecia dokumentacji: "+player.getMedExDate());
+        playerRepository.save(saved_player.get(0));
+
+        usun_zadanie(verification.getId_verification());
+
+        return "redirect:welcome";
+    }
     //------------edycja zawodnika, utworzenie nowego obiektu Zawodnik:
     @RequestMapping(value = "/redirectToEditPlayer", method = RequestMethod.GET)
     public String redirectToEditPlayer() {
@@ -418,24 +413,50 @@ public class PersonController {
     }
 
     @GetMapping("/editCoach")
-    public String editCoach(@ModelAttribute Club club, Model model) {
+    public String editCoach(@ModelAttribute Coach coach, Model model) {
         model.addAttribute("coach",new Coach());
 
-        model.addAttribute("club", new Club());
+        //model.addAttribute("club", new Club());
         System.out.println("Jestem w funkcji editCoach");
         return "/editCoach";
     }
     @PostMapping("/editCoach")
-    public String editCoach(@ModelAttribute Coach coach, Model model, BindingResult bindingResult) {
+    public String editCoach(@SessionAttribute("verification") Verification verification,@ModelAttribute Coach coach, Model model, BindingResult bindingResult) {
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Person p = personService.findByUsername(auth.getName());
+        System.out.println("verification.getIdPerson = "+verification.getIdPerson());
+        List<Coach> saved_coach = coachRepository.findByIdPerson(verification.getIdPerson());
+        saved_coach.get(0).setCoachlegidate(coach.getCoachlegidate());
+        System.out.println("Id person: "+coach.getIdPerson());
+        System.out.println("Data wygasniecia dokumentacji: "+coach.getCoachlegidate());
+        coachRepository.save(saved_coach.get(0));
 
+        usun_zadanie(verification.getId_verification());
 
-        return "redirect:registrationClub";
+        return "redirect:welcome";
     }
 
+    @GetMapping(value="/redirectToEditReferee")
+    public String redirectToEditReferee(){
+        return "redirect:/editReferee";
+    }
 
+    @GetMapping("/editReferee")
+    public String editReferee(Model model, Referee referee){
+        return "/editReferee";
+    }
+    @PostMapping("/editReferee")
+    public String editReferee(@SessionAttribute("verification") Verification verification, @ModelAttribute Referee referee, Model model, BindingResult bindingResult) {
+        System.out.println("verification.getIdPerson = "+verification.getIdPerson());
+        List<Referee> saved_referee = refereeRepository.findByIdPerson(verification.getIdPerson());
+        saved_referee.get(0).setRefereelegidate(referee.getRefereelegidate());
+        System.out.println("Id person: "+referee.getIdPerson());
+        System.out.println("Data wygasniecia dokumentacji: "+referee.getRefereelegidate());
+        refereeRepository.save(saved_referee.get(0));
+
+        usun_zadanie(verification.getId_verification());
+
+        return "redirect:welcome";
+    }
 
     @GetMapping("/registrationClub")
     public String clubReg(Model model){
@@ -565,18 +586,17 @@ public class PersonController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         //username
         Person p = personService.findByUsername(auth.getName());
-        //id osoby
-        Long x = p.getId();
-        Long id_organizer = organizerRepository.findOrganizerByPerson(p).getId_organizer();
-        Optional<Organizer> organizer = organizerRepository.findById(id_organizer);
 
-        organizerCompetitionConnectionRepository.save(new OrganizerCompetitionConnection(competitionForm, organizer.get()));
+        Organizer organizer = organizerRepository.findOrganizerByPerson(p);
+        competitionForm.setOrganizer(organizer);
+
+        competitionRepository.save(competitionForm);
         return "redirect:searchCompetitions";
     }
 
 
 
-    private Long idCompetitionForPlayers;
+
     @RequestMapping(value = "/redirectRegCompetitorsPlayer", method = RequestMethod.GET)
     public String redirectRegCompetitorsPlayer(@Param("keyword") Long keyword) {
         System.out.println("Redirecting Result To Reg Competitors Player:" + keyword);
@@ -655,22 +675,6 @@ public class PersonController {
         return "redirect:editReferee";
     }
 
-    @GetMapping("/editReferee")
-    public String editReferee(Model model) {
-        model.addAttribute("referee", new Referee());
-        System.out.println("Jestem w funkcji editReferee");
-        return "/editReferee";
-    }
-    @PostMapping("/editReferee")
-    public String editReferee(@ModelAttribute Referee referee, Model model, BindingResult bindingResult) {
-//        System.out.println("Data wygasniecia dokumentacji sędziego: " + referee.getRefereeLegDate());
-
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Person p = personService.findByUsername(auth.getName());
-
-        return "redirect:welcome";
-    }
-
     @RequestMapping(value = "/redirectChooseCompetitionForReferee", method = RequestMethod.GET)
     public String redirectToChooseCompetitions() {
         System.out.println("Redirecting Result To Judging Competitions Page");
@@ -729,7 +733,42 @@ public class PersonController {
 
         return "Musisz wysłać dokumentacje aby dostać uprawnienia";
     }
+    @ModelAttribute("coachWelcomeMedExDate")
+    public String getCoachMedExDate(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Person p = personService.findByUsername(auth.getName());
+        Role role = roleRepository.findByPerson(p);
+        if(roleRepository.existsByPerson(p)) {
+            if (role.getName().contains("trener")) {
+                System.out.println("Nie wszedłeś");
+                Coach coach = coachRepository.findCoachByPerson(p);
+                if (coach.getCoachlegidate()!=null) {
+                    return coach.getCoachlegidate().toString();
+                }
+                return "Edytuj date wygaśnięcia dokumentacji";
+            }
+        }
 
+        return "Musisz wysłać dokumentacje aby dostać uprawnienia";
+    }
+    @ModelAttribute("refereeWelcomeMedExDate")
+    public String getRefereeMedExDate(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Person p = personService.findByUsername(auth.getName());
+        Role role = roleRepository.findByPerson(p);
+        if(roleRepository.existsByPerson(p)) {
+            if (role.getName().contains("sedzia")) {
+                System.out.println("Nie wszedłeś");
+                Referee referee = refereeRepository.findRefereeByPerson(p);
+                if (referee.getRefereelegidate()!=null) {
+                    return referee.getRefereelegidate().toString();
+                }
+                return "Edytuj date wygaśnięcia dokumentacji";
+            }
+        }
+
+        return "Musisz wysłać dokumentacje aby dostać uprawnienia";
+    }
 
     @ModelAttribute("playersListInCoachClub")
     public List<Player> getPlayersInCoachClub(){
@@ -833,14 +872,6 @@ public class PersonController {
         return "redirect:/welcome";
     }
 
-/*
-    @RequestMapping("/searchCompetition")
-      public String searchCompetition(Model model, @Param("keyword") String keyword){
-        List<Competition> competitionList = competitionService.listAll(keyword);
-        model.addAttribute("competitionList", competitionList);
-        model.addAttribute("keyword", keyword);
-        return "competitionSearchService";
-    }*/
 
     @GetMapping("/test")
     public String test(Model model) {
@@ -949,6 +980,7 @@ public class PersonController {
 
             Coach coach = new Coach();
             coach.setPerson(p.get());
+            coach.setIdPerson(id_person);
             coachRepository.save(coach);
 
         }
@@ -956,6 +988,7 @@ public class PersonController {
 
             Referee referee = new Referee();
             referee.setPerson(p.get());
+            referee.setIdPerson(id_person);
             refereeRepository.save(referee);
         }
 
@@ -966,11 +999,24 @@ public class PersonController {
         messageRepository.save(message);
         System.out.println("Zapiano wiadomosc do uzytkownika");
 
-        usun_zadanie(id);
+
         //System.out.println("Usuwam to zadanie");
         //verificationRepository.deleteById(verification.get().getId_verification());
 
-        return "redirect:/welcome";
+
+        if(role.getName().equals("zawodnik")){
+            return "redirect:/redirectToEditPlayerByModerator";
+        }
+        if(role.getName().equals("trener")){
+            return "redirect:/redirectToEditCoach";
+        }
+        if(role.getName().equals("sedzia")){
+            //return "redirect:/redirectToEditReferee/"+verification.get().getIdPerson();
+            return "redirect:/redirectToEditReferee";
+        } else {
+            usun_zadanie(id);
+            return "redirect:/verificationMedicalExaminations";
+        }
     }
     @PostMapping("/deleteVerification")
     public String acceptVerifyForm(@ModelAttribute Verification verification, Model model, BindingResult bindingResult){
@@ -1006,104 +1052,246 @@ public class PersonController {
         }
         return "redirect:/welcome";
     }
-/*
-    @GetMapping("/acceptVerifyForm")
-    public String acceptVerifyForm(Model model) {
-        System.out.println("Jestem w funkcji acceptVerifyForm /GetMapping");
-        model.addAttribute("verification", new Verification());
-        System.out.println("Tu jeszcze jest ok");
-        return "/acceptVerifyForm";
-    }
-    @PostMapping("/acceptVerifyForm")
-    public String acceptVerifyForm(@ModelAttribute Verification verification, Model model, BindingResult bindingResult) {
-        System.out.println("Jestem w funkcji acceptVerifyForm /PostMapping");
-        Long id_person = verification.getIdPerson();
-        System.out.println("Id person, verification.getIdPerson() = "+id_person);
-        Optional <Person> p = personRepository.findById(id_person);
-        String r = verification.getNew_role();
-        Set<Role> roles = null;
-        Role role = new Role();
-        role.setName(r);
-        roles.add(role);
-        p.get().setRoles(roles);
-        return "redirect:/welcome";
-    }
-*/
+    public String generateRandomString() {
+        int leftLimit = 48; // numeral '0'
+        int rightLimit = 122; // letter 'z'
+        int targetStringLength = 10;
+        Random random = new Random();
 
+        String generatedString = random.ints(leftLimit, rightLimit + 1)
+                .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
+                .limit(targetStringLength)
+                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                .toString();
 
-
-    @GetMapping("/denyVerifyForm")
-    public String denyVerification(Model model) {
-        return "/denyVerifyForm";
-    }
-    @PostMapping("/denyVerifyForm")
-    public String denyVerification() {
-        return "redirect:/welcome";
+        return generatedString;
     }
 
-    @PostMapping("/upload")
-    public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file) {
-        String message = "";
-        try {
-            storageService.store(file);
+    @PostMapping("/uploadFile")
+    public String uploadFile(@SessionAttribute("verification") Verification verification, @RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) throws IOException {
 
-            message = "Uploaded the file successfully: " + file.getOriginalFilename();
-            return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
-        } catch (Exception e) {
-            message = "Could not upload the file: " + file.getOriginalFilename() + "!";
-            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
-        }
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Person p = personService.findByUsername(auth.getName());
+
+        File f = new File();
+
+        String fileName =  p.getIdPerson().toString()+"_"+generateRandomString()+"_"+file.getOriginalFilename();
+        f.setIdPerson(p.getIdPerson());
+        f.setName(fileName);
+        f.setContent(file.getBytes());
+
+        fileService.uploadFile(file,fileName);
+        fileRepository.save(f);
+        Message message = new Message();
+        String content = "Plik: " + f.getName() + " zostal poprawnie przeslany!";
+        message.setContent(content);
+        message.setIdPerson(p.getIdPerson());
+        messageRepository.save(message);
+
+        List <Verification> saved_verification = verificationService.findByIdPerson(p.getIdPerson());
+        System.out.println("Znaleziono "+saved_verification.size()+" weryfikacji");
+        saved_verification.get(0).setIdFile(f.getIdFile());
+        saved_verification.get(0).setFileName(f.getName());
+        verificationRepository.save(saved_verification.get(0));
+
+        return "redirect:/";
     }
-    @GetMapping("/files")
-    public ResponseEntity<List<ResponseFile>> getListFiles() {
-        List<ResponseFile> files = storageService.getAllFiles().map(dbFile -> {
-            String fileDownloadUri = ServletUriComponentsBuilder
-                    .fromCurrentContextPath()
-                    .path("/files/")
-                    .path(dbFile.getId())
-                    .toUriString();
-
-            return new ResponseFile(
-                    dbFile.getName(),
-                    fileDownloadUri,
-                    dbFile.getType(),
-                    dbFile.getData().length);
-        }).collect(Collectors.toList());
-
-        return ResponseEntity.status(HttpStatus.OK).body(files);
+    @GetMapping("/downloadFile/{filename}")
+    public ResponseEntity<byte[]> downloadFile(@PathVariable String filename) {
+        File file = fileRepository.findByName(filename);
+        System.out.println("Filename = "+filename);
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getName() + "\"").body(file.getContent());
     }
-
-    @GetMapping("/files/{id}")
-    public ResponseEntity<byte[]> getFile(@PathVariable String id) {
-        FileDB fileDB = storageService.getFile(id);
-
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileDB.getName() + "\"")
-                .body(fileDB.getData());
-    }
-    /*@GetMapping("/doUpload")
-    public String handleFileUpload(Model model){
-        System.out.println("Jestem w doUpload GetMapping");
-        return "/doUpload";
-    }*/
-    @RequestMapping(value = "/doUpload", method = RequestMethod.POST)
-    public String handleFileUpload(HttpServletRequest request,
-                                   @RequestParam CommonsMultipartFile[] fileUpload, Model model) throws Exception {
-        System.out.println("\n\nJestem w /doUpload");
-        if (fileUpload != null && fileUpload.length > 0) {
-            for (CommonsMultipartFile aFile : fileUpload){
-
-                System.out.println("Saving file: " + aFile.getOriginalFilename());
-
-                UploadFile uploadFile = new UploadFile();
-                uploadFile.setFileName(aFile.getOriginalFilename());
-                uploadFile.setData(aFile.getBytes());
-                fileUploadDao.save(uploadFile);
+    @ModelAttribute("verification")
+    public Verification getVerification() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if(personService.findByUsername(auth.getName()) == null){
+            Verification verification = new Verification();
+            return verification;
+        } else {
+            Person p = personService.findByUsername(auth.getName());
+            System.out.println("Person "+p.getUsername());
+            if (verificationRepository.findByIdPerson(p.getIdPerson()).isEmpty()){
+                Verification verification = new Verification();
+                return verification;
+            } else {
+                List<Verification> verification = verificationRepository.findByIdPerson(p.getIdPerson());
+                return verification.get(0);
             }
         }
-        String message = "Pomyslnie przeslano dokumentacje";
-        model.addAttribute("message",message);
-        return "redirect:/welcome";
     }
 
+    @RequestMapping(value = "/redirectToOrganizerCompetitionView", method = RequestMethod.GET)
+    public String redirectToOrganizerCompetitionView() {
+
+        return "redirect:/organizerCompetitionView";
+    }
+
+    @GetMapping("/organizerCompetitionView")
+    public String organizerCompetitionView(Model model) {
+        return "/organizerCompetitionView";
+    }
+
+
+    @ModelAttribute("organizerCompetitionList")
+    public List<Competition> getOrganizerCompetitions(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Person p = personService.findByUsername(auth.getName());
+        Role role = roleRepository.findByPerson(p);
+        if(roleRepository.existsByPerson(p)) {
+            if (role.getName().contains("organizator")) {
+                System.out.println("Nie weszłeś");
+                Organizer organizer = organizerRepository.findOrganizerByPerson(p);
+                if (competitionRepository.existsCompetitionByOrganizer(organizer)) {
+                    List<Competition> organizerCompetitionList = competitionRepository.findCompetitionsByOrganizer(organizer);
+                    return organizerCompetitionList;
+                }
+            }
+        }
+        return null;
+    }
+
+    @ModelAttribute("listOfDisqualifiacations")
+    public List<Disqualification>chooseDis(){
+        List<Disqualification> listOfDisqualifiacations = disqualificationRepository.findAll();
+        return listOfDisqualifiacations;
+    }
+
+    @ModelAttribute("listOfCategoriesOnCompanies")
+    public List<CategoriesOnCompetition>chooseCOM(){
+        List<CategoriesOnCompetition> listOfCategoriesOnCompanies = categoriesOnCompetitionRepository.findAll();
+        return listOfCategoriesOnCompanies;
+    }
+
+    Long compId;
+    @RequestMapping(value="/redirectToInsertResults", method=RequestMethod.GET)
+    public String redirectToInsertResults(@Param("keyword") Long keyword, Model model){
+
+        compId = keyword;
+
+        return "redirect:/insertResults";
+    }
+
+    @GetMapping("/insertResults")
+    public String insertResults(Model model) {
+        System.out.println("jestem w getmapping");
+        Result resultForm = new Result();
+        model.addAttribute("resultForm", resultForm);
+        return "/insertResults";
+    }
+
+    @PostMapping("/insertResults")
+    public String insertResults(@ModelAttribute("resultForm") Result resultForm){
+//        resultForm = resultRepository.findResultByIdresult(resultId);
+        resultForm.setCompetition(competitionRepository.findByIdCompetitions(compId));
+        resultRepository.save(resultForm);
+        System.out.println("TO JEST ID RESULT: " + compId);
+        System.out.println("JESTEM W POSTMAPPING");
+        return "redirect:/organizerCompetitionView";
+    }
+
+
+    @GetMapping("/refereesOnCompetitionView/{idCompetitions}")
+    public String refereesOnCompetitionView(@PathVariable(name = "idCompetitions") Long id, Model model) {
+        System.out.println("Jestem w @GetMapping( refereesOnCompetitionView/{idCompetitions} ");
+        Competition competition = competitionRepository.findByIdCompetitions(id);
+        List<RefereeRoleOnCompetition> refereeList = refereeRoleOnCompetitionRepository.findRefereeRoleOnCompetitionByCompetition(competition);
+        System.out.println("Lista sedziow: " +refereeList ) ;
+        model.addAttribute("refereeList", refereeList);
+        for (RefereeRoleOnCompetition x : refereeList) {
+            System.out.println("Id klubu: "+x.getRefereeName());
+            System.out.println("Nazwa klubu: "+x.getRefereeRoleName());
+        }
+
+        return "/refereesOnCompetitionView";
+    }
+
+    @PostMapping("/refereesOnCompetitionView")
+    public String refereesOnCompetitionView() {
+        return "/refereesOnCompetitionView";
+    }
+
+    @ModelAttribute("listOfResults")
+    public List<Result> searchListOfResults(){
+        if(resultRepository.findAll().isEmpty()){
+            return null;
+        }else {
+            List<Result> listOfResults = resultRepository.findAll();
+            return listOfResults;
+        }
+    }
+    @ModelAttribute("listOfAllCompetitions")
+    public List<Competition> searchListOfAllCompetitions(){
+        if(competitionRepository.findAll().isEmpty()){
+            return null;
+        }else {
+            List<Competition> listOfAllCompetitions = competitionRepository.findAll();
+            return listOfAllCompetitions;
+        }
+    }
+    @RequestMapping(value = "/redirectRegClubForCompetition", method = RequestMethod.GET)
+    public String redirectRegClubForCompetition() {
+        return "redirect:/regClubForCompetition";
+    }
+    @GetMapping("regClubForCompetition")
+    public String regClubForCompetition(Model model){
+        model.addAttribute("registrationForCompetitionForm", new RegistrationForCompetition());
+        return "regClubForCompetition";
+    }
+    @PostMapping("regClubForCompetition")
+    public String regClubForCompetition(RedirectAttributes redirAttrs, @ModelAttribute("registrationForCompetitionForm") RegistrationForCompetition registrationForCompetition){
+        // RegistrationForCompetition registrationForCompetition = new RegistrationForCompetition();
+
+        System.out.println("registrationForCompetition id = "+registrationForCompetition.getIdRegistrationForCompetition());
+        System.out.println("registrationForCompetition list of players = "+registrationForCompetition.getPlayers());
+        System.out.println("Doaje zawodnikow ...");
+        registrationForCompetition.setPlayers(listOfPlayers);
+        System.out.println("registrationForCompetition list of players = "+registrationForCompetition.getPlayers());
+        System.out.println("Id zawodow: "+registrationForCompetition.getIdCompetition());
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Person p = personService.findByUsername(auth.getName());
+        Coach coach = coachRepository.findCoachByPerson(p);
+        registrationForCompetition.setIdCoach(coach.getIdCoach());
+        registrationForCompetition.setIdClub(coach.getClub().getId_club());
+
+
+        System.out.println("Rejestracja na zawody");
+        System.out.println("Id trenera:"+registrationForCompetition.getIdCoach());
+        System.out.println("Id klubu:"+registrationForCompetition.getIdClub());
+
+        registrationForCompetitionRepository.save(registrationForCompetition);
+
+        listOfPlayers.clear();
+
+        if(listOfPlayers.isEmpty()) System.out.println("Wyczyszczono liste zawodnikow");
+        else System.out.println("Nie udalo sie wyczyscic listy zawodnikow");
+        Competition competition = competitionRepository.findByIdCompetitions(registrationForCompetition.getIdCompetition());
+        redirAttrs.addFlashAttribute("success", "Dodano Twoj klub na zawody: "+competition.getCompetitionName());
+        return "redirect:/welcome";
+    }
+    /*
+    @PostMapping("regClubForCompetition")
+    public String regClubForCompetition(Model model){
+        return "regClubForCompetition";
+    }*/
+    @GetMapping("/acceptPlayer/{id_person}")
+    public String acceptPlayer(@PathVariable(name = "id_person") Long id, Model model,  RedirectAttributes redirAttrs) {
+
+        System.out.println("Jestem w /acceptPlayer/{id_person}\n\n\n");
+        Optional <Player> player = playerRepository.findById(id);
+        System.out.println("Ten zawodnik ma id = "+player.get().getIdPlayer());
+        System.out.println("I nazywa się: "+player.get().getUsername());
+        redirAttrs.addFlashAttribute("success", "Dodano zawodnika: "+player.get().getUsername());
+        addToListOfPlayers(player.get());
+        return "redirect:/regClubForCompetition";
+    }
+
+    public void addToListOfPlayers(Player player){
+        listOfPlayers.add(player);
+    }
+    @ModelAttribute("listOfPlayersForCompetitions")
+    public List<Player> getListOfPlayers(){
+        return listOfPlayers;
+    }
 }
+

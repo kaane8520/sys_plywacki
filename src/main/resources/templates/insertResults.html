@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pl-PL" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="utf-8">
+    <title>Wyszukaj zawody</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link href="/css/main.css" rel="stylesheet">
+
+</head>
+
+<body>
+<div class="navbar">
+    <input id="navbar-toggle" th:type="checkbox" />
+    <label class="navbar-btn" for="navbar-toggle">
+        <span></span>
+    </label>
+
+    <ul class="navbar-box">
+        <li>
+            <form class="navbar-item" th:action="@{/redirectToWelcome}">
+                <input class="nav-items" type="submit" value="Strona główna"/>
+            </form>
+        </li>
+        <li>
+            <form th:action="@{/redirectToSearchClubPage}">
+                <input class="nav-items" type="submit" value="Wyszukaj klub"/>
+            </form>
+        </li>
+        <li>
+            <form th:action="@{/redirectToSearchCompetitionsPage}">
+                <input class="nav-items" type="submit" value="Wyszukaj zawody"/>
+            </form>
+        </li>
+        <li>
+            <form th:action="@{/redirectToSearchPlayersPage}">
+                <input class="nav-items" type="submit" value="Wyszukaj zawodników"/>
+            </form>
+        </li>
+        <li>
+            <div sec:authorize="isAuthenticated()">
+                <form th:action="@{/redirectToEditPage}">
+                    <input class="nav-items" type="submit" value="Edytuj swoje konto"/>
+                </form>
+            </div>
+        </li>
+        <li>
+            <div sec:authorize="isAuthenticated()">
+                <form id="logoutForm" method="POST" th:action="@{/logout}">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                </form>
+                <button onclick="document.forms['logoutForm'].submit()">Logout</button>
+            </div>
+        </li>
+    </ul>
+</div>
+
+<div class="container">
+    <div align="center">
+
+
+<!--        <button id="myBtn">Open Modal</button>-->
+
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+
+            <!-- Modal content -->
+            <div class="modal-content">
+                <span class="close">&times;</span>
+
+                <form method="post" th:object="${resultForm}" th:action="@{/insertResults}">
+                    <div class="form-group">
+
+                        Wprowadź czas wyniku: <input type="text" id="basic_example_3" th:field="*{timeofresult}" placeholder="hh:mm:SS:ss" pattern="[0-9]{2}:[0-9]{2}:[0-9]{2}:[0-9]{2}" title="Podany czas musi być w formacie hh:mm:SS:ss" required="required">
+                        <br/>
+                        Dyskwalifikacja:
+                        <select th:field="*{disqualification}" class="form-control">
+                            <option th:each="dis : ${listOfDisqualifiacations}"
+                                    th:value="${dis.id}"
+                                    th:text="${dis.Disqualificationname}"/>
+                        </select>
+                    </div>
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">Zapisz wynik</button>
+                </form>
+            </div>
+
+        </div>
+
+        <table border="1" cellpadding="10">
+            <h1>Lista wyników</h1>
+            <thead>
+            <tr>
+                <th>ID wyniku</th>
+                <th>Data zawodów</th>
+                <th>Nazwa zawodów</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr th:if="${listOfCategoriesOnCompanies.empty}">
+                    <td colspan="3"> Nie ma zawodów </td>
+                </tr>
+
+                <tr id="myBtn" th:each="com: ${listOfCategoriesOnCompanies}">
+                    <td th:text="${com.id}"></td>
+
+
+                </tr>
+            </tbody>
+        </table>
+            <h1>Lista wyników</h1>
+
+
+    </div>
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<script src="/js/main.js"></script>
+</body>
+</html>

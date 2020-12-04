@@ -14,6 +14,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.boot.CommandLineRunner;
 import java.util.List;
 import java.util.Arrays;
+import java.io.File;
+
 
 import javax.sql.DataSource;
 import java.io.IOException;
@@ -26,6 +28,16 @@ import java.util.Scanner;
 public class DemoApplication {
 
 	public static void main(String[] args) throws IOException, ServerAcl.AclFormatException {
+		String dir = "./dokumentacja";
+
+		File file = new File(dir);
+
+		// true if the directory was created, false otherwise
+		if (file.mkdirs()) {
+			System.out.println("Directory is created!");
+		} else {
+			System.out.println("Failed to create directory!");
+		}
 		SpringApplication.run(DemoApplication.class, args);
 
 	}

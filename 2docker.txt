@@ -1,0 +1,1 @@
+﻿docker run --name limiter --memory=512m --cpuset-cpus="0" alpine:latest 

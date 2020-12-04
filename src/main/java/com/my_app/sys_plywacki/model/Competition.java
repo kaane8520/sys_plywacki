@@ -16,9 +16,8 @@ public class Competition {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate competitionDate;
 
-    @OneToMany
-    @Column
-    private List<OrganizerCompetitionConnection> organizers;
+    @ManyToOne
+    private Organizer organizer;
 
     @OneToMany
     private List<RefereeRoleOnCompetition> refereeRoleOnCompetitionList;
@@ -52,4 +51,27 @@ public class Competition {
 
     public void search(String keyword){}
 
+    public Organizer getOrganizer() {
+        return organizer;
+    }
+
+    public void setOrganizer(Organizer organizer) {
+        this.organizer = organizer;
+    }
+
+    public List<RefereeRoleOnCompetition> getRefereeRoleOnCompetitionList() {
+        return refereeRoleOnCompetitionList;
+    }
+
+    public void setRefereeRoleOnCompetitionList(List<RefereeRoleOnCompetition> refereeRoleOnCompetitionList) {
+        this.refereeRoleOnCompetitionList = refereeRoleOnCompetitionList;
+    }
+
+    public List<Result> getResults() {
+        return results;
+    }
+
+    public void setResults(List<Result> results) {
+        this.results = results;
+    }
 }

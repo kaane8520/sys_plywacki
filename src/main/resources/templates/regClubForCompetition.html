@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pl-PL" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="utf-8">
+    <title>Edytuj konto</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link href="/css/main.css" rel="stylesheet">
+</head>
+
+<body>
+<div class="navbar">
+    <div class="navbar">
+        <input id="navbar-toggle" th:type="checkbox" />
+        <label class="navbar-btn" for="navbar-toggle">
+            <span></span>
+        </label>
+
+        <ul class="navbar-box">
+            <li>
+                <form class="navbar-item" th:action="@{/redirectToWelcome}">
+                    <input class="nav-items" type="submit" value="Strona główna"/>
+                </form>
+            </li>
+            <li>
+                <form th:action="@{/redirectToSearchClubPage}">
+                    <input class="nav-items" type="submit" value="Wyszukaj klub"/>
+                </form>
+            </li>
+            <li>
+                <form th:action="@{/redirectToSearchCompetitionsPage}">
+                    <input class="nav-items" type="submit" value="Wyszukaj zawody"/>
+                </form>
+            </li>
+            <li>
+                <form th:action="@{/redirectToSearchPlayersPage}">
+                    <input class="nav-items" type="submit" value="Wyszukaj zawodników"/>
+                </form>
+            </li>
+            <li>
+                <div sec:authorize="isAuthenticated()">
+                    <form th:action="@{/redirectToEditPage}">
+                        <input class="nav-items" type="submit" value="Edytuj swoje konto"/>
+                    </form>
+                </div>
+            </li>
+            <li>
+                <div sec:authorize="isAuthenticated()">
+                    <form id="logoutForm" method="POST" th:action="@{/logout}">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    </form>
+                    <button onclick="document.forms['logoutForm'].submit()">Logout</button>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="container">
+
+        <form method="POST" class="form-signin" th:object="${registrationForCompetitionForm}" th:action="@{/regClubForCompetition}">
+
+            <div class="form-group">
+                <h3>Wybierz zawodników</h3>
+                <div class="alert alert-primary" role="alert" th:text="${success}" th:if="${success}"></div>
+                <table border="1" cellpadding="10">
+                    <thead>
+                    <tr>
+                        <th>Nazwa zawodnika</th>
+                        <th>Dodaj</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="player : ${playersListInCoachClub}">
+                            <td th:text="${player.getUsername()}"></td>
+                            <td><a th:href="@{'/acceptPlayer/' + ${player.idPlayer}}">Dodaj na zawody</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Wybierz zawody:</h3>
+            <div th:if="${listOfAvailableClubs != null and not #lists.isEmpty(listOfAvailableClubs)}">
+                <select th:field="*{idCompetition}" class="form-control">
+                    <option th:each="competition : ${listOfAllCompetitions}"
+                            th:value="${competition.idCompetitions}"
+                            th:text="${competition.competitionName}"
+                    />
+                </select>
+            </div>
+
+
+
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Potwierdz</button>
+
+
+
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script src="/js/main.js"></script>
+</body>
+</html>

@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface OrganizerRepository extends JpaRepository<Organizer, Long> {
     Organizer findOrganizerByPerson(Person person);
+
+
 }

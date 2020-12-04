@@ -34,6 +34,9 @@ public class Verification {
 
     private String oldRole;
 
+    private Long idFile;
+
+    private String fileName;
 
    /* @ManyToMany
     @Column(nullable = false)
@@ -45,6 +48,14 @@ public class Verification {
 
     public void setId_verification(Long id_verification) {
         this.id_verification = id_verification;
+    }
+
+    public Long getIdFile() {
+        return idFile;
+    }
+
+    public void setIdFile(Long idFile) {
+        this.idFile = idFile;
     }
 
    /* public Person getPerson() {
@@ -76,6 +87,9 @@ public class Verification {
 
     public String getUserName(){return this.userName;}
 
+    public void setFileName(String fileName){this.fileName = fileName;}
+
+    public String getFileName(){return this.fileName;}
 
     public String getYourRole(){
         PersonRepository personRepository = null;

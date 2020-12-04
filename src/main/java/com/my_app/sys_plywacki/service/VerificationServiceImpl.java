@@ -1,5 +1,6 @@
 package com.my_app.sys_plywacki.service;
 
+import com.my_app.sys_plywacki.model.Coach;
 import com.my_app.sys_plywacki.model.Player;
 import com.my_app.sys_plywacki.model.Verification;
 import com.my_app.sys_plywacki.repository.PlayerRepository;
@@ -20,6 +21,7 @@ public class VerificationServiceImpl implements VerificationService{
 
     @Override
     public void save(Verification verification) {
+        System.out.println("Zapisuje weryfikacje...");
         repository.save(verification);
     }
 
@@ -31,5 +33,8 @@ public class VerificationServiceImpl implements VerificationService{
         } else {
             return new ArrayList<Verification>();
         }
+    }
+    public List<Verification> findByIdPerson(Long idPerson){
+        return repository.findByIdPerson(idPerson);
     }
 }

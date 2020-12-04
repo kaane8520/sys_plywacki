@@ -1,43 +1,61 @@
 <!DOCTYPE html>
 <html lang="pl-PL" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
-    <head>
-        <meta charset="UTF-8">
-        <title>Weryfikacja badań lekarskich</title>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-        <link href="/css/main.css" rel="stylesheet">
-    </head>
-    <body>
-    <div class="navbar">
-        <span>To jest navbar</span>
-        <form th:action="@{/redirectToWelcome}">
-            <input class="nav-items" type="submit" value="Strona główna"/>
-        </form>
+<head>
+    <meta charset="UTF-8">
+    <title>Weryfikacja badań lekarskich</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link href="/css/main.css" rel="stylesheet">
+</head>
+<body>
 
-        <form th:action="@{/redirectToSearchClubPage}">
-            <input class="nav-items" type="submit" value="wyszukaj klub"/>
-        </form>
-        <form th:action="@{/redirectToSearchCompetitionsPage}">
-            <input class="nav-items" type="submit" value="wyszukaj zawody"/>
-        </form>
-        <form th:action="@{/redirectToSearchPlayersPage}">
-            <input class="nav-items" type="submit" value="wyszukaj zawodników"/>
-        </form>
-        <div sec:authorize="isAuthenticated()">
-            <form th:action="@{/redirectToEditPage}">
-                <input class="nav-items" type="submit" value="Edytuj swoje konto"/>
-            </form>
-        </div>
-        <div sec:authorize="isAuthenticated()">
-            <form id="logoutForm" method="POST" th:action="@{/logout}">
-                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-            </form>
-            <a onclick="document.forms['logoutForm'].submit()">Logout</a>
-        </div>
+    <div class="navbar">
+        <input id="navbar-toggle" th:type="checkbox" />
+        <label class="navbar-btn" for="navbar-toggle">
+            <span></span>
+        </label>
+
+        <ul class="navbar-box">
+            <li>
+                <form class="navbar-item" th:action="@{/redirectToWelcome}">
+                    <input class="nav-items" type="submit" value="Strona główna"/>
+                </form>
+            </li>
+            <li>
+                <form th:action="@{/redirectToSearchClubPage}">
+                    <input class="nav-items" type="submit" value="Wyszukaj klub"/>
+                </form>
+            </li>
+            <li>
+                <form th:action="@{/redirectToSearchCompetitionsPage}">
+                    <input class="nav-items" type="submit" value="Wyszukaj zawody"/>
+                </form>
+            </li>
+            <li>
+                <form th:action="@{/redirectToSearchPlayersPage}">
+                    <input class="nav-items" type="submit" value="Wyszukaj zawodników"/>
+                </form>
+            </li>
+            <li>
+                <div sec:authorize="isAuthenticated()">
+                    <form th:action="@{/redirectToEditPage}">
+                        <input class="nav-items" type="submit" value="Edytuj swoje konto"/>
+                    </form>
+                </div>
+            </li>
+            <li>
+                <div sec:authorize="isAuthenticated()">
+                    <form id="logoutForm" method="POST" th:action="@{/logout}">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    </form>
+                    <button onclick="document.forms['logoutForm'].submit()">Logout</button>
+                </div>
+            </li>
+        </ul>
     </div>
 
         <div class="container">
-            <h2 class="form-signin-heading">Żądania zmiany uprawnień</h2>
+            <h2 class="form-signin-heading">Prośby o zmianę uprawnień</h2>
             <form method="POST" class="form-signin" th:object="${verificationForm}" th:action="@{/verificationMedicalExaminations}">
                 <table border="1" cellpadding="10">
                     <thead>
@@ -60,32 +78,25 @@
                         <td th:block th:text="${verification.getOldRole()}"></td>
                         <td th:block th:text="${verification.new_role}"></td>
 
-
-                        <!--<td th:text="${verification.printYourRole()}"></td>-->
-                        <!--<td th:text="${verification.new_role}}"></td>-->
-                        <td >tu też nie wiem</td>
-                        <!-- <div sec:authorize="hasAuthority('')"> -->
                         <td>
-                            <!--<form method="POST" class="form-signin" th:object="${verifyForm}" th:action="@{/acceptVerifyForm}">
-                                <input type="submit" value="Zaakceptuj"/>
-                            </form>
-                            <form class="form-signin" th:object="${verifyForm}" th:action="@{/denyVerifyForm}">
-                                <input type="submit" value="Odrzuć"/>
-                            </form>-->
+                            <span th:if="${verification.new_role == 'organizator'}">Akceptacja bez badań</span>
+                            <a th:unless="${verification.new_role == 'organizator'}" th:href=" @{'/downloadFile/'+ ${verification.fileName}}">Badania</a>
+                        </td>
+                        <td>
                            <a th:href="@{'/acceptVerifyForm/' + ${verification.id_verification}}">Akceptuj</a>
                             &nbsp;&nbsp;&nbsp;
                             <a th:href="@{'/rejectVerifyForm/' + ${verification.id_verification}}">Odrzuc</a>
                         </td>
-                        <!-- </div> -->
                     </tr>
                     </tbody>
                 </table>
             </form>
         </div>
 
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-        <script src="/js/main.js"></script>
-    </body>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script src="/js/main.js"></script>
+</body>
 </html>
