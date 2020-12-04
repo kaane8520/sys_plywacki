@@ -137,9 +137,6 @@ public class PersonController {
     private UserDetailsService personDetailsService;
 
     @Autowired
-    private FileUploadDAO fileUploadDao;
-
-    @Autowired
     private DisqualificationRepository disqualificationRepository;
 
     @Autowired
@@ -423,13 +420,15 @@ public class PersonController {
         System.out.println("Jestem w funkcji editCoach");
         return "/editCoach";
     }
-
-
     @PostMapping("/editCoach")
-    public String editCoach(@ModelAttribute Coach coach, Model model, BindingResult bindingResult) {
+    public String editCoach(@SessionAttribute("verification") Verification verification,@ModelAttribute Coach coach, Model model, BindingResult bindingResult) {
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Person p = personService.findByUsername(auth.getName());
+        System.out.println("verification.getIdPerson = "+verification.getIdPerson());
+        List<Coach> saved_coach = coachRepository.findByIdPerson(verification.getIdPerson());
+        saved_coach.get(0).setCoachlegidate(coach.getCoachlegidate());
+        System.out.println("Id person: "+coach.getIdPerson());
+        System.out.println("Data wygasniecia dokumentacji: "+coach.getCoachlegidate());
+        coachRepository.save(saved_coach.get(0));
 
         usun_zadanie(verification.getId_verification());
 
@@ -1016,7 +1015,7 @@ public class PersonController {
             return "redirect:/redirectToEditReferee";
         } else {
             usun_zadanie(id);
-            return "redirect:/welcome";
+            return "redirect:/verificationMedicalExaminations";
         }
     }
     @PostMapping("/deleteVerification")
@@ -1120,9 +1119,6 @@ public class PersonController {
                 return verification.get(0);
             }
         }
-        String message = "Pomyslnie przeslano dokumentacje";
-        model.addAttribute("message",message);
-        return "redirect:/welcome";
     }
 
     @RequestMapping(value = "/redirectToOrganizerCompetitionView", method = RequestMethod.GET)
@@ -1299,4 +1295,3 @@ public class PersonController {
     }
 }
 
-}

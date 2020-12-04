@@ -22,11 +22,24 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="97c93293-327e-4ddb-a53a-0c46104e3c4c" name="Default Changelist" comment="zglaszanie klubu na zawody przez trenera">
+    <list default="true" id="97c93293-327e-4ddb-a53a-0c46104e3c4c" name="Default Changelist" comment="poprawnione zglaszanie klubu na zawody przez">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__javax_javaee_endorsed_api_6_0.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sys_plywacki.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sys_plywacki.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/my_app/sys_plywacki/model/RegistrationForCompetition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/my_app/sys_plywacki/model/RegistrationForCompetition.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dokumentacja/2_vxlqGGoJ41_cl.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dokumentacja/3_a4dqXVzJpE_inzynierka notatki.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dokumentacja/4_zYlkUIXyey_cl.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/my_app/sys_plywacki/web/PersonController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/my_app/sys_plywacki/web/PersonController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/addDocumentation.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/addDocumentation.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/editCoach.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/editCoach.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/editPlayerByModerator.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/editPlayerByModerator.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/registrationCompetitions.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/registrationCompetitions.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/welcome.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/welcome.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/my_app/sys_plywacki/DemoApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/my_app/sys_plywacki/DemoApplication.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/my_app/sys_plywacki/model/Person.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/my_app/sys_plywacki/model/Person.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/my_app/sys_plywacki/web/PersonController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/my_app/sys_plywacki/web/PersonController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/welcome.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/welcome.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,7 +56,7 @@
     </option>
   </component>
   <component name="Git.Pull.Settings">
-    <option name="BRANCH" value="organizator" />
+    <option name="BRANCH" value="aneta" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -63,6 +76,7 @@
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RunManager">
@@ -101,7 +115,14 @@
       <option name="project" value="LOCAL" />
       <updated>1607032275503</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="poprawnione zglaszanie klubu na zawody przez">
+      <created>1607036276860</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1607036276860</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -114,10 +135,12 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="zglaszanie klubu na zawody przez trenera" />
-    <option name="LAST_COMMIT_MESSAGE" value="zglaszanie klubu na zawody przez trenera" />
+    <MESSAGE value="poprawnione zglaszanie klubu na zawody przez" />
+    <option name="LAST_COMMIT_MESSAGE" value="poprawnione zglaszanie klubu na zawody przez" />
   </component>
   <component name="WindowStateProjectService">
     <state x="137" y="18" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1607023555621">
@@ -128,37 +151,41 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="413" y="110" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1366.728@0.0.1366.728" timestamp="1607026824750" />
-    <state width="1323" height="232" key="GridCell.Tab.0.bottom" timestamp="1607035853325">
+    <state width="1323" height="120" key="GridCell.Tab.0.bottom" timestamp="1607118842553">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="232" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1607035853325" />
-    <state width="1323" height="232" key="GridCell.Tab.0.center" timestamp="1607035853324">
+    <state width="1323" height="120" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1607118842553" />
+    <state width="1323" height="120" key="GridCell.Tab.0.center" timestamp="1607118842552">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="232" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1607035853324" />
-    <state width="1323" height="232" key="GridCell.Tab.0.left" timestamp="1607035853324">
+    <state width="1323" height="120" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1607118842552" />
+    <state width="1323" height="120" key="GridCell.Tab.0.left" timestamp="1607118842552">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="232" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1607035853324" />
-    <state width="1323" height="232" key="GridCell.Tab.0.right" timestamp="1607035853325">
+    <state width="1323" height="120" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1607118842552" />
+    <state width="1323" height="120" key="GridCell.Tab.0.right" timestamp="1607118842553">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="232" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1607035853324" />
-    <state x="129" y="55" key="MergeDialog" timestamp="1607032528015">
+    <state width="1323" height="120" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1607118842553" />
+    <state x="213" y="18" key="Maven.ArtifactSearchDialog" timestamp="1607116452935">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="129" y="55" key="MergeDialog/0.0.1366.728@0.0.1366.728" timestamp="1607032528015" />
-    <state x="321" y="125" key="MultipleFileMergeDialog" timestamp="1607032528024">
+    <state x="213" y="18" key="Maven.ArtifactSearchDialog/0.0.1366.728@0.0.1366.728" timestamp="1607116452935" />
+    <state x="0" y="0" width="1366" height="728" key="MergeDialog" timestamp="1607116249469">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="321" y="125" key="MultipleFileMergeDialog/0.0.1366.728@0.0.1366.728" timestamp="1607032528024" />
-    <state x="375" y="122" key="Vcs.Multiple.Commit.Info.Dialog.Key" timestamp="1607032496941">
+    <state x="0" y="0" width="1366" height="728" key="MergeDialog/0.0.1366.728@0.0.1366.728" timestamp="1607116249469" />
+    <state x="321" y="125" width="935" height="478" key="MultipleFileMergeDialog" timestamp="1607116280585">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="375" y="122" key="Vcs.Multiple.Commit.Info.Dialog.Key/0.0.1366.728@0.0.1366.728" timestamp="1607032496941" />
-    <state x="275" y="96" key="Vcs.Push.Dialog.v2" timestamp="1607032600117">
+    <state x="321" y="125" width="935" height="478" key="MultipleFileMergeDialog/0.0.1366.728@0.0.1366.728" timestamp="1607116280585" />
+    <state x="375" y="122" key="Vcs.Multiple.Commit.Info.Dialog.Key" timestamp="1607105854516">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="275" y="96" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1607032600117" />
+    <state x="375" y="122" key="Vcs.Multiple.Commit.Info.Dialog.Key/0.0.1366.728@0.0.1366.728" timestamp="1607105854516" />
+    <state x="275" y="96" key="Vcs.Push.Dialog.v2" timestamp="1607036288927">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="275" y="96" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1607036288927" />
   </component>
 </project>

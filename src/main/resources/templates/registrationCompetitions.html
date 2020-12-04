@@ -52,6 +52,7 @@
     </ul>
 </div>
 <div class="container">
+    <h1 class="form-signin-heading">Dodaj nowe zawody</h1>
     <form method="POST" class="form-signin" th:object="${competitionForm}" th:action="@{/registrationCompetitions}">
         <div class="form-group">
             <input type="date" th:field="*{competitionDate}" class="form-control" placeholder="Wybierz datę zawodów"
