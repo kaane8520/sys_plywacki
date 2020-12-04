@@ -1,0 +1,31 @@
+﻿do tabeli person dodaje kolumne ktora bedzie zawierac role na ktora chce zminic uzytkownik
+
+po kliknieciu zaakceptuj wykonuje sie metoda post edit
+
+po kliknieciu odrzuc nic
+
+w obu przypadkach usuniecie pola prosby o zmiane na 
+
+trzeba zmienic 
+
+Get Mapping edit 
+
+Post Mapping edit 
+tzn musze zrobic obiekt Verification:
+id_person
+private Set<Role> roles; ( plus funkcja printYourRoles)
+String role - rola na jaka zmienic
+Object dokumentacja
+
+
+źle
+person onetoone
+role onetomany
+
+
+person manytoone
+role manytomany
+
+
+
+Stworzenie tabeli posredniej, ktora bedzie wyswietlac sie w verificationMedicalExaminations

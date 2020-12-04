@@ -5,7 +5,54 @@
     <title>Title</title>
 
 </head>
+
 <body>
+<div class="navbar">
+    <span>To jest navbar</span>
+    <form th:action="@{/redirectToWelcome}">
+        <input class="nav-items" type="submit" value="Strona główna"/>
+    </form>
+
+    <form th:action="@{/redirectToSearchClubPage}">
+        <input class="nav-items" type="submit" value="wyszukaj klub"/>
+    </form>
+    <form th:action="@{/redirectToSearchCompetitionsPage}">
+        <input class="nav-items" type="submit" value="wyszukaj zawody"/>
+    </form>
+    <form th:action="@{/redirectToSearchPlayersPage}">
+        <input class="nav-items" type="submit" value="wyszukaj zawodników"/>
+    </form>
+    <div sec:authorize="isAuthenticated()">
+        <form th:action="@{/redirectToEditPage}">
+            <input class="nav-items" type="submit" value="Edytuj swoje konto"/>
+        </form>
+    </div>
+    <div sec:authorize="isAuthenticated()">
+        <form id="logoutForm" method="POST" th:action="@{/logout}">
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        </form>
+        <a onclick="document.forms['logoutForm'].submit()">Logout</a>
+    </div>
+</div>
+
+<div class="container">
+        <h3>Aktualizuj swoją dokumentację:</h3>
+        <hr/>
+        <h4>Wybierz plik:</h4>
+        <form method="POST" class="form-signin" th:action="@{/uploadFile}" enctype="multipart/form-data">
+            <input type="file" name="file"/> <br/><br/>
+            <button button class="btn btn-lg btn-primary btn-block" type="submit">Zaakceptuj dokumentacje</button>
+        </form>
+        <hr/>
+        <div th:if="${message}">
+            <h2 th:text="${message}"/>
+        </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<script src="/js/main.js"></script>
 <div class="navbar">
     <input id="navbar-toggle" th:type="checkbox" />
     <label class="navbar-btn" for="navbar-toggle">

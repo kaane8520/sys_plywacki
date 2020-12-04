@@ -64,7 +64,7 @@
                 <td th:block th:text="${message.getContent()}"></td>
 
                 <a th:href="@{'/deleteMessage/' + ${message.getIdMessage()}}" style="text-indent: 20px;">OK</a> <br>
-            </tr>
+        </tr>
 
 
           <h5>Twoja rola to: <span sec:authentication="authorities"></span></h5>
@@ -79,6 +79,16 @@
             <div sec:authorize="hasAuthority('trener')">
                 <p>
                     Twój klub: <span th:text="${coachWelcomeClubname}"></span>
+                </p>
+            </div>
+            <div sec:authorize="hasAuthority('trener')">
+                <p>
+                    Data wygaśnięcia dokumentacji: <span th:text="${coachWelcomeMedExDate}"></span>
+                </p>
+            </div>
+            <div sec:authorize="hasAuthority('sedzia')">
+                <p>
+                    Data wygaśnięcia dokumentacji: <span th:text="${refereeWelcomeMedExDate}"></span>
                 </p>
             </div>
             <div sec:authorize="hasAuthority('trener')">
