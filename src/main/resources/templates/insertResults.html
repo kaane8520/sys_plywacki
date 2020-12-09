@@ -90,17 +90,18 @@
             <thead>
             <tr>
                 <th>ID wyniku</th>
-                <th>Data zawodów</th>
-                <th>Nazwa zawodów</th>
+
+
             </tr>
             </thead>
             <tbody>
                 <tr th:if="${listOfCategoriesOnCompanies.empty}">
-                    <td colspan="3"> Nie ma zawodów </td>
+                    <td colspan="3"> Nie ma wyników </td>
                 </tr>
 
                 <tr id="myBtn" th:each="com: ${listOfCategoriesOnCompanies}">
                     <td th:text="${com.id}"></td>
+
 
 
                 </tr>

@@ -30,14 +30,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http
+
             .authorizeRequests()
-                .antMatchers("/css/**", "/js/**", "/registration", "/searchClubs", "/serachCompetitions", "/searchPlayers", "/registrationClub").permitAll()
-                .antMatchers("/enterResults", "/acceptApplications", "/registrationCompetitions").hasAuthority("organizator")
-                .antMatchers("/judgingCompetitions").hasAuthority("sedzia")
-                .antMatchers("/registrationCompetitorsCoach").hasAuthority("trener")
-                .antMatchers("/registrationCompetitiorsPlayer","/test").hasAuthority("trener")
-                .antMatchers("/verificationMedicalExaminations").hasAuthority("Moderator")
-                //.antMatchers("/editPlayer").hasAuthority("zawodnik")
+                .antMatchers("/css/**", "/js/**", "/registration", "/searchClubs", "/serachCompetitions", "/searchPlayers").permitAll()
+                .antMatchers("/insertResults", "/acceptApplications", "/registrationCompetitions",
+                        "/organizerCompetitionView", "/refereesOnCompetitionView").hasAuthority("organizator")
+                .antMatchers("/judgingCompetitions", "/addDocumentation", "/chooseCompetitionForReferee").hasAuthority("sedzia")
+                .antMatchers("/registrationCompetitorsCoach", "/registrationClub", "/addDocumentation", "/regClubForCompetition").hasAuthority("trener")
+                .antMatchers("/registrationCompetitiorsPlayer","/test", "/addDocumentation").hasAuthority("trener")
+                .antMatchers("/verificationMedicalExaminations", "/editCoach", "/editPlayerByModerator", "/editReferee").hasAuthority("Moderator")
+                .antMatchers("/editPlayer").hasAuthority("zawodnik")
                 .anyRequest().authenticated()
                 .and()
             .formLogin()
