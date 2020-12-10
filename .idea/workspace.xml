@@ -29,21 +29,7 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="97c93293-327e-4ddb-a53a-0c46104e3c4c" name="Default Changelist" comment="wyswietlanie akceptacji klubów na zawody,&#10;odrzucanie akceptacji">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dokumentacja/3_UMvlNDb9oh_cl.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dokumentacja/3_wwcyGD7jXM_cl.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dokumentacja/4_mrSzT4oPDG_cl.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dokumentacja/4_qfrTCgsDmO_cl.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dokumentacja/5_JG4QHKoyGO_cl.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dokumentacja/5_rj7vbb9ygO_cl.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dokumentacja/9_DZIG8KcCBA_cl.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/my_app/sys_plywacki/repository/RegistrationForCompetitionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/my_app/sys_plywacki/repository/RegistrationForCompetitionRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/my_app/sys_plywacki/web/PersonController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/my_app/sys_plywacki/web/PersonController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/searchCompetitions.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/searchCompetitions.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/my_app/sys_plywacki/web/PersonController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/my_app/sys_plywacki/web/PersonController.class" afterDir="false" />
-    </list>
+    <list default="true" id="97c93293-327e-4ddb-a53a-0c46104e3c4c" name="Default Changelist" comment="polaczenie ze zmianami moderatora" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -64,7 +50,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="aneta" />
+        <entry key="$PROJECT_DIR$" value="organizator_weryfikacja_zgloszen" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -103,6 +89,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.DemoApplication" />
         <item itemvalue="Application.DemoApplication" />
         <item itemvalue="Application.DemoApplication" />
       </list>
