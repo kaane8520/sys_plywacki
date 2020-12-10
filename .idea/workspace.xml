@@ -19,27 +19,28 @@
         <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
       </path>
     </expand>
-    <select />
+    <select>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="BRANCH:origin/clubCompetition" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="97c93293-327e-4ddb-a53a-0c46104e3c4c" name="Default Changelist" comment="poprawnione zglaszanie klubu na zawody przez">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__javax_javaee_endorsed_api_6_0.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sys_plywacki.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sys_plywacki.iml" afterDir="false" />
+    <list default="true" id="97c93293-327e-4ddb-a53a-0c46104e3c4c" name="Default Changelist" comment="polaczenie ze zmianami moderatora">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dokumentacja/2_vxlqGGoJ41_cl.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dokumentacja/3_a4dqXVzJpE_inzynierka notatki.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dokumentacja/4_zYlkUIXyey_cl.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/my_app/sys_plywacki/model/Club.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/my_app/sys_plywacki/model/Club.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/my_app/sys_plywacki/model/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/my_app/sys_plywacki/model/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/my_app/sys_plywacki/model/RegistrationForCompetition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/my_app/sys_plywacki/model/RegistrationForCompetition.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/my_app/sys_plywacki/repository/RegistrationForCompetitionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/my_app/sys_plywacki/repository/RegistrationForCompetitionRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/my_app/sys_plywacki/web/PersonController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/my_app/sys_plywacki/web/PersonController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/addDocumentation.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/addDocumentation.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/editCoach.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/editCoach.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/editPlayerByModerator.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/editPlayerByModerator.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/registrationCompetitions.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/registrationCompetitions.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/welcome.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/welcome.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/my_app/sys_plywacki/DemoApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/my_app/sys_plywacki/DemoApplication.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/my_app/sys_plywacki/model/Person.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/my_app/sys_plywacki/model/Person.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/organizerCompetitionView.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/organizerCompetitionView.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/searchCompetitions.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/searchCompetitions.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/my_app/sys_plywacki/web/PersonController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/my_app/sys_plywacki/web/PersonController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/welcome.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/welcome.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,9 +50,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="HTML File" />
         <option value="Class" />
         <option value="Interface" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -59,6 +60,11 @@
     <option name="BRANCH" value="aneta" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="aneta" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MavenImportPreferences">
@@ -96,6 +102,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.DemoApplication" />
+        <item itemvalue="Application.DemoApplication" />
       </list>
     </recent_temporary>
   </component>
@@ -130,7 +137,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/clubCompetition" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -151,22 +170,22 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="413" y="110" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1366.728@0.0.1366.728" timestamp="1607026824750" />
-    <state width="1323" height="120" key="GridCell.Tab.0.bottom" timestamp="1607118842553">
+    <state width="1323" height="141" key="GridCell.Tab.0.bottom" timestamp="1607622809323">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="120" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1607118842553" />
-    <state width="1323" height="120" key="GridCell.Tab.0.center" timestamp="1607118842552">
+    <state width="1323" height="141" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1607622809323" />
+    <state width="1323" height="141" key="GridCell.Tab.0.center" timestamp="1607622809323">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="120" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1607118842552" />
-    <state width="1323" height="120" key="GridCell.Tab.0.left" timestamp="1607118842552">
+    <state width="1323" height="141" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1607622809323" />
+    <state width="1323" height="141" key="GridCell.Tab.0.left" timestamp="1607622809322">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="120" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1607118842552" />
-    <state width="1323" height="120" key="GridCell.Tab.0.right" timestamp="1607118842553">
+    <state width="1323" height="141" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1607622809322" />
+    <state width="1323" height="141" key="GridCell.Tab.0.right" timestamp="1607622809323">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="120" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1607118842553" />
+    <state width="1323" height="141" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1607622809323" />
     <state x="213" y="18" key="Maven.ArtifactSearchDialog" timestamp="1607116452935">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -183,9 +202,9 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="375" y="122" key="Vcs.Multiple.Commit.Info.Dialog.Key/0.0.1366.728@0.0.1366.728" timestamp="1607105854516" />
-    <state x="275" y="96" key="Vcs.Push.Dialog.v2" timestamp="1607036288927">
+    <state x="275" y="96" key="Vcs.Push.Dialog.v2" timestamp="1607119899922">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="275" y="96" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1607036288927" />
+    <state x="275" y="96" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1607119899922" />
   </component>
 </project>

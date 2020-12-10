@@ -20,6 +20,7 @@ public class Club {
     @Column
     private List<Player> players;
 
+
     @OneToOne
     private Coach coach;
 
@@ -35,7 +36,6 @@ public class Club {
     public void setCoach(Coach coach) {
         this.coach = coach;
     }
-
 
 
     @Override

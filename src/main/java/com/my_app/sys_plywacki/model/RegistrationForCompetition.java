@@ -1,9 +1,15 @@
 package com.my_app.sys_plywacki.model;
 
+import com.my_app.sys_plywacki.repository.ClubRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
+@Transactional
 @Entity
 public class RegistrationForCompetition {
 
@@ -14,9 +20,21 @@ public class RegistrationForCompetition {
     private Long idCoach;
     private Long idClub;
     private Long idCompetition;
+
+    private String clubName;
+    private String coachName;
+
     @ManyToMany
     @Column
     private List<Player> players;
+
+
+    public Long getId(){
+        return id;
+    }
+    public void setId(Long id){
+        this.id = id;
+    }
 
     public Long getIdCoach(){
         return idCoach;
@@ -49,5 +67,17 @@ public class RegistrationForCompetition {
     }
     public void setIdRegistrationForCompetition(Long idRegistrationForCompetition){
         this.id = idRegistrationForCompetition;
+    }
+    public void setClubName(String clubName){
+        this.clubName = clubName;
+    }
+    public String getClubName(){
+        return this.clubName;
+    }
+    public void setCoachName(String coachName){
+        this.coachName = coachName;
+    }
+    public String getCoachName(){
+        return this.coachName;
     }
 }

@@ -149,6 +149,7 @@ public class PersonController {
     private ResultRepository resultRepository;
 
     List<Player> listOfPlayers = new ArrayList<>();
+    List<RegistrationForCompetition> listOfRegForCompetitions = new ArrayList<>();
 
     @GetMapping("/registration")
     public String registration(Model model) {
@@ -179,6 +180,8 @@ public class PersonController {
     @GetMapping("/login")
     public String login(Model model, String error, String logout) {
         listOfPlayers.clear();
+        listOfRegForCompetitions.clear();
+
         if(personRepository.findAll().isEmpty()){
             personService.addModerator();
         }
@@ -1121,6 +1124,7 @@ public class PersonController {
         }
     }
 
+
     @RequestMapping(value = "/redirectToOrganizerCompetitionView", method = RequestMethod.GET)
     public String redirectToOrganizerCompetitionView() {
 
@@ -1244,15 +1248,20 @@ public class PersonController {
 
         System.out.println("registrationForCompetition id = "+registrationForCompetition.getIdRegistrationForCompetition());
         System.out.println("registrationForCompetition list of players = "+registrationForCompetition.getPlayers());
-        System.out.println("Doaje zawodnikow ...");
+        System.out.println("Dodaje zawodnikow ...");
         registrationForCompetition.setPlayers(listOfPlayers);
         System.out.println("registrationForCompetition list of players = "+registrationForCompetition.getPlayers());
         System.out.println("Id zawodow: "+registrationForCompetition.getIdCompetition());
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Person p = personService.findByUsername(auth.getName());
         Coach coach = coachRepository.findCoachByPerson(p);
+        String coachName = coach.getPerson().getUsername();
+        Club club = clubRepository.findClubByCoach(coach);
+        String clubName = club.getClubname();
         registrationForCompetition.setIdCoach(coach.getIdCoach());
         registrationForCompetition.setIdClub(coach.getClub().getId_club());
+        registrationForCompetition.setClubName(clubName);
+        registrationForCompetition.setCoachName(coachName);
 
 
         System.out.println("Rejestracja na zawody");
@@ -1285,6 +1294,50 @@ public class PersonController {
         addToListOfPlayers(player.get());
         return "redirect:/regClubForCompetition";
     }
+    @GetMapping("/searchApplication/{idCompetitions}")
+    public String searchApplicationForCompetition(@PathVariable(name = "idCompetitions") Long id, Model model,  RedirectAttributes redirAttrs){
+        System.out.println("Jestem w /searchApplicationForCompetition/{idCompetitions}\n\n\n");
+        List<RegistrationForCompetition> registrationForCompetition=registrationForCompetitionRepository.findByIdCompetition(id);
+        listOfRegForCompetitions.clear();
+        listOfRegForCompetitions = registrationForCompetition;
+        for (RegistrationForCompetition x : listOfRegForCompetitions) {
+            System.out.println("listOfRegForCompetitions: "+x.getIdRegistrationForCompetition());
+        }
+        return "redirect:/searchApplication";
+    }
+
+    @GetMapping("/seePlayersInRegistration/{idRegistration}")
+    public String seePlayersInRegistration(@PathVariable(name = "idRegistration") Long id, Model model,  RedirectAttributes redirAttrs){
+        System.out.println("Jestem w funkcji seePlayersInRegistration");
+        Optional<RegistrationForCompetition> registrationForCompetition = registrationForCompetitionRepository.findById(id);
+
+        List<Player> listOfPlayers = registrationForCompetition.get().getPlayers();
+
+        String text = "Zgłoszeni zawodnicy:\n";
+        for (Player player : listOfPlayers) {
+            System.out.println("Zawodnik: "+player.getUsername());
+            text = text+" "+player.getUsername();
+        }
+        redirAttrs.addFlashAttribute("success", text);
+        return "redirect:/searchApplication";
+    }
+    @GetMapping("/searchApplication")
+    public String searchApplication(Model model) {
+        System.out.println("jestem w getmapping searchApplication");
+
+        for (RegistrationForCompetition x : listOfRegForCompetitions) {
+            System.out.println("listOfRegForCompetitions: "+x.getIdRegistrationForCompetition());
+        }
+        return "searchApplication";
+    }
+
+    @ModelAttribute("regClubForCompetition")
+    public List<RegistrationForCompetition> getRegClubForCompetition(){
+        for (RegistrationForCompetition x : listOfRegForCompetitions) {
+            System.out.println("model attribute: listOfRegForCompetitions: "+x.getIdRegistrationForCompetition());
+        }
+        return listOfRegForCompetitions;
+    }
 
     public void addToListOfPlayers(Player player){
         listOfPlayers.add(player);
@@ -1292,6 +1345,32 @@ public class PersonController {
     @ModelAttribute("listOfPlayersForCompetitions")
     public List<Player> getListOfPlayers(){
         return listOfPlayers;
+    }
+    @GetMapping("/acceptRegistrationForCompetition/{id_registration}")
+    public String acceptRegistrationForCompetition(@PathVariable(name = "id_registration") Long id, Model model) {
+
+        System.out.println("Jestem w /acceptRegistrationForCompetition/{id_registration}\n\n\n");
+
+
+        return "redirect:/searchApplication";
+    }
+
+    @GetMapping("/rejectRegistrationForCompetition/{id_registration}")
+    public String rejectRegistrationForCompetition(@PathVariable(name = "id_registration") Long id, Model model) {
+
+        System.out.println("Jestem w /acceptRegistrationForCompetition/{id_registration}\n\n\n");
+
+        Optional <RegistrationForCompetition> registrationForCompetition = registrationForCompetitionRepository.findById(id);
+        registrationForCompetitionRepository.delete(registrationForCompetition.get());
+        Competition competition = competitionRepository.findByIdCompetitions(registrationForCompetition.get().getIdCompetition());
+        Message message = new Message();
+        message.setIdPerson(registrationForCompetition.get().getIdCoach());
+        message.setContent("Twoj klub zostal odrzucony na zawody "+competition.getCompetitionName()+"\n");
+        messageRepository.save(message);
+        List<RegistrationForCompetition> registrationForCompetitionList=registrationForCompetitionRepository.findByIdCompetition(competition.getIdCompetitions());
+        listOfRegForCompetitions.clear();
+        listOfRegForCompetitions = registrationForCompetitionList;
+        return "redirect:/searchApplication";
     }
 }
 

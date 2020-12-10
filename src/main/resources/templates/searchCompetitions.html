@@ -102,6 +102,7 @@
                         </form>
                     </td>
                 </div>
+
                 <div sec:authorize="hasAuthority('sedzia')">
                     <td>
                         <form class="form-signin" th:object="${competitiorsPlayerForm}" th:action="@{/redirectToJudgingCompetitions}">
