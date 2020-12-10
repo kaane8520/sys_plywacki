@@ -18,4 +18,6 @@ public interface PlayerRepository extends JpaRepository<Player, Long>{
     Player findPlayerByPerson(Person person);
     List<Player> findPlayersByClubCoachPersonUsernameContains(String keyword);
     boolean existsByIdPerson(Long aLong);
+
+    Player findPlayerByIdPlayer(Long along);
 }

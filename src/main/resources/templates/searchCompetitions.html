@@ -88,6 +88,11 @@
                 <td th:text="${competition.idCompetitions}"></td>
                 <td th:text="${competition.competitionDate}"></td>
                 <td th:text="${competition.competitionName}"></td>
+                <td>
+                    <form class="form-signin" th:object="${competitiorsPlayerForm}" th:action="@{'/searchResults/' + ${competition.idCompetitions}}">
+                        <input type="submit" value="Zobacz wyniki"/>
+                    </form>
+                </td>
                 <div sec:authorize="hasAuthority('trener')">
                     <td>
                         <!--                        <form class="form-signin" th:object="${competitiorsPlayerForm}" th:action="@{/redirectRegCompetitorsPlayer}">-->
@@ -109,13 +114,9 @@
                         </form>
                     </td>
                 </div>
-                <div sec:authorize="hasAuthority('organizator')">
-                    <td>
-                        <form class="form-signin" th:object="${competitiorsPlayerForm}" th:action="@{/redirectToJudgingCompetitions}">
-                            <input type="submit" value="Zobacz aplikacje"/>
-                        </form>
-                    </td>
-                </div>
+
+
+
             </tr>
             </tbody>
         </table>

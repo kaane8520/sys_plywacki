@@ -2,7 +2,7 @@
 <html lang="pl-PL" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="utf-8">
-    <title>Wyszukaj zawody</title>
+    <title>Wyniki zawodów</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link href="/css/main.css" rel="stylesheet">
 </head>
@@ -56,21 +56,9 @@
 
 <div class="container search-forms">
 
-    <form  th:action="@{/searchCompKey}" >
-        <h1 class="form-heading">Lista zawodów</h1>
-        Filter: <input type="text" name="keywordComp" class="form-control" size="50" th:value="${keywordComp}" required />
-
-        <button type="submit" class="btn btn-lg btn-primary btn-block">Wyszukaj</button>
-    </form>
-
+<h1>>Lista wyników</h1>
     <div align="center">
-        <br/><br/>
-        <!-- <div sec:authorize="isAuthenticated()"> -->
-        <div sec:authorize="hasAuthority('organizator')">
-            <form th:action="@{/registrationCompetitions}">
-                <input type="submit" value="Dodaj zawody"/>
-            </form>
-        </div>
+
         <br/><br/>
         <table border="1" cellpadding="10">
             <thead>
@@ -78,17 +66,20 @@
                 <th>ID Wyniku</th>
                 <th>Nazwa zawodów</th>
                 <th>Czas wyniku</th>
-                <th>Nazwa konkurencji</th>
+<!--                <th>Nazwa konkurencji</th>-->
+                <th>Dyskwalifikacja</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:if="${competitionList.empty}">
-                <td colspan="3"> Nie ma zawodów </td>
+            <tr th:if="${listOfResultsOnCompetition.empty}">
+                <td colspan="3"> Nie ma wyników </td>
             </tr>
-            <tr th:each="competition : ${competitionList}">
-                <td th:text="${competition.idCompetitions}"></td>
-                <td th:text="${competition.competitionDate}"></td>
-                <td th:text="${competition.competitionName}"></td>
+            <tr th:each="result : ${listOfResultsOnCompetition}">
+                <td th:text="${result.idresult}"></td>
+                <td th:text="${result.getcompetitionname()}"></td>
+                <td th:text="${result.timeofresult}"></td>
+<!--                <td th:text="${result.getcategoryname()}"></td>-->
+                <td th:text="${result.getdisqualificationname()}"></td>
 
 
             </tr>

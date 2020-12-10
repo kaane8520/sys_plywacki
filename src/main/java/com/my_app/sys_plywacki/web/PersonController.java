@@ -722,7 +722,7 @@ public class PersonController {
         Role role = roleRepository.findByPerson(p);
         if(roleRepository.existsByPerson(p)) {
             if (role.getName().contains("trener")) {
-                System.out.println("Nie weszłeś");
+
                 Coach coach = coachRepository.findCoachByPerson(p);
                 if (clubRepository.existsClubByCoach(coach)) {
                     return coach.getClub().getClubname();
@@ -740,7 +740,7 @@ public class PersonController {
         Role role = roleRepository.findByPerson(p);
         if(roleRepository.existsByPerson(p)) {
             if (role.getName().contains("trener")) {
-                System.out.println("Nie wszedłeś");
+
                 Coach coach = coachRepository.findCoachByPerson(p);
                 if (coach.getCoachlegidate()!=null) {
                     return coach.getCoachlegidate().toString();
@@ -758,7 +758,7 @@ public class PersonController {
         Role role = roleRepository.findByPerson(p);
         if(roleRepository.existsByPerson(p)) {
             if (role.getName().contains("sedzia")) {
-                System.out.println("Nie wszedłeś");
+
                 Referee referee = refereeRepository.findRefereeByPerson(p);
                 if (referee.getRefereelegidate()!=null) {
                     return referee.getRefereelegidate().toString();
@@ -777,7 +777,7 @@ public class PersonController {
         Role role = roleRepository.findByPerson(p);
         if(roleRepository.existsByPerson(p)) {
             if (role.getName().contains("trener")) {
-                System.out.println("Nie weszłeś");
+
                 Coach coach = coachRepository.findCoachByPerson(p);
                 if (clubRepository.existsClubByCoach(coach)) {
                     List<Player> playersListInCoachClub = playerRepository.findPlayersByClubCoach(coach);
@@ -1185,8 +1185,12 @@ public class PersonController {
 //        resultForm = resultRepository.findResultByIdresult(resultId);
         resultForm.setCompetition(competitionRepository.findByIdCompetitions(compId));
         resultRepository.save(resultForm);
-        System.out.println("TO JEST ID RESULT: " + compId);
-        System.out.println("JESTEM W POSTMAPPING");
+
+        CategoriesOnCompetition compr = categoriesOnCompetitionRepository.findCategoriesOnCompetitionById(resultForm.getCategoriesOnCompetition().getId());
+        compr.setResult(resultForm);
+        categoriesOnCompetitionRepository.saveAndFlush(compr);
+
+
         return "redirect:/organizerCompetitionView";
     }
 
@@ -1204,6 +1208,32 @@ public class PersonController {
         }
 
         return "/refereesOnCompetitionView";
+    }
+//    @ModelAttribute("/listOfResultsOnCompetition")
+//    public String searchResults(){
+//        if(resultRepository.findResultByCompetition_IdCompetitions(idCom))
+//    }
+    @GetMapping("/searchResults/{idCompetitions}")
+    public String resultsOfCompetitionsView(@PathVariable(name = "idCompetitions") Long id, Model model){
+        if(resultRepository.findResultsByCompetition_IdCompetitions(id).isEmpty()){
+            return null;
+        }else {
+            List<Result> listOfResultsOnCompetition = resultRepository.findResultsByCompetition_IdCompetitions(id);
+            model.addAttribute("listOfResultsOnCompetition", listOfResultsOnCompetition);
+            return "/searchResults";
+        }
+
+    }
+    @GetMapping("/searchPlayerResults/{idPlayer}")
+    public String resultsOfPlayersView(@PathVariable(name = "idPlayer") Long id, Model model){
+        if(categoriesOnCompetitionRepository.findCategoriesOnCompetitionByPlayers(playerRepository.findPlayerByIdPlayer(id)).isEmpty()){
+            return null;
+        }else {
+            List<CategoriesOnCompetition> listOfPlayerResults = categoriesOnCompetitionRepository.findCategoriesOnCompetitionByPlayers(playerRepository.findPlayerByIdPlayer(id));
+            model.addAttribute("listOfPlayerResults", listOfPlayerResults);
+            return "/searchPlayerResults";
+        }
+
     }
 
     @PostMapping("/refereesOnCompetitionView")

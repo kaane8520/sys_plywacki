@@ -15,7 +15,7 @@ public class CategoriesOnCompetition {
     @ManyToOne
     private Competition competition;
 
-    @ManyToOne
+    @OneToOne
     private Result result;
     @OneToMany
     private List<Player> players;
@@ -83,5 +83,17 @@ public class CategoriesOnCompetition {
 
     public String getCategoriesName(){
         return categories.getNamecategory();
+    }
+
+    public String gettimeofresult(){
+        return result.getTimeofresult();
+    }
+
+    public String getcompetitionname(){
+        return competition.getCompetitionName();
+    }
+
+    public String getdisqualificationname(){
+        return result.getdisqualificationname();
     }
 }

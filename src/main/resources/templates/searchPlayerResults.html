@@ -2,15 +2,15 @@
 <html lang="pl-PL" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="utf-8">
-    <title>Wyszukaj zawody</title>
+    <title>Wyniki zawodników</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link href="/css/main.css" rel="stylesheet">
-
 </head>
 
 <body>
+
 <div class="navbar">
-    <input id="navbar-toggle" th:type="checkbox" />
+    <input id="navbar-toggle" type="checkbox" />
     <label class="navbar-btn" for="navbar-toggle">
         <span></span>
     </label>
@@ -54,34 +54,40 @@
     </ul>
 </div>
 
-<div class="container">
+<div class="container search-forms">
+
+    <h1>Lista wyników</h1>
     <div align="center">
 
-            <h1>Lista wyników</h1>
+        <br/><br/>
+        <table border="1" cellpadding="10">
+            <thead>
+            <tr>
+                <th>ID Wyniku</th>
+                <th>Nazwa zawodów</th>
+                <th>Czas wyniku</th>
+                <!--                <th>Nazwa konkurencji</th>-->
+                <th>Dyskwalifikacja</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${listOfPlayerResults.empty}">
+                <td colspan="3"> Nie ma wyników </td>
+            </tr>
+            <tr th:each="result : ${listOfPlayerResults}">
+                <td th:text="${result.idresult}"></td>
+                <td th:text="${result.getcompetitionname()}"></td>
+                <td th:text="${result.gettimeofresult()}"></td>
+                <!--                <td th:text="${result.getcategoryname()}"></td>-->
+                <td th:text="${result.getdisqualificationname()}"></td>
 
-        <form method="post" th:object="${resultForm}" th:action="@{/insertResults}">
-            <div class="form-group">
-                <select th:field="*{categoriesOnCompetition}" class="form-control">
-                    <option th:each="com: ${listOfCategoriesOnCompanies}"
-                            th:value="${com.id}"
-                            th:text="${com.id}"
-                    />
-                </select>
 
-                Wprowadź czas wyniku: <input type="text" id="basic_example_3" th:field="*{timeofresult}" placeholder="hh:mm:SS:ss" pattern="[0-9]{2}:[0-9]{2}:[0-9]{2}:[0-9]{2}" title="Podany czas musi być w formacie hh:mm:SS:ss" required="required">
-                <br/>
-                Dyskwalifikacja:
-                <select th:field="*{disqualification}" class="form-control">
-                    <option th:each="dis : ${listOfDisqualifiacations}"
-                            th:value="${dis.id}"
-                            th:text="${dis.Disqualificationname}"/>
-                </select>
-            </div>
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Zapisz wynik</button>
-        </form>
-
-
+            </tr>
+            </tbody>
+        </table>
     </div>
+    <br/>
+
 
 </div>
 

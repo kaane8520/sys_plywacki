@@ -84,9 +84,14 @@
                 <td th:text="${player.idPlayer}"></td>
                 <td th:text="${player.getUsername()}"></td>
                 <td th:text="${player.getClubname()}"></td>
-
+                <td>
+                    <form class="form-signin" th:object="${competitiorsPlayerForm}" th:action="@{'/searchPlayerResults/' + ${player.idPlayer}}">
+                        <input type="submit" value="Zobacz wyniki"/>
+                    </form>
+                </td>
 
             </tr>
+
             </tbody>
         </table>
     </div>

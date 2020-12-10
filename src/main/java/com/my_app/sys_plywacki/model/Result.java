@@ -9,8 +9,8 @@ public class Result {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idresult;
 
-    @OneToMany
-    private List<CategoriesOnCompetition> categoriesOnCompetition;
+    @OneToOne
+    private CategoriesOnCompetition categoriesOnCompetition;
     @ManyToOne
     private Competition competition;
     @OneToOne
@@ -22,15 +22,15 @@ public class Result {
         return idresult;
     }
 
-    public void setId_result(Long id_result) {
+    public void setIdresult(Long idresult) {
         this.idresult = idresult;
     }
 
-    public List<CategoriesOnCompetition> getCategoriesOnCompetition() {
+    public CategoriesOnCompetition getCategoriesOnCompetition() {
         return categoriesOnCompetition;
     }
 
-    public void setCategoriesOnCompetition(List<CategoriesOnCompetition> categoriesOnCompetition) {
+    public void setCategoriesOnCompetition(CategoriesOnCompetition categoriesOnCompetition) {
         this.categoriesOnCompetition = categoriesOnCompetition;
     }
 
@@ -56,5 +56,17 @@ public class Result {
 
     public void setTimeofresult(String timeOfresult) {
         this.timeofresult = timeOfresult;
+    }
+
+    public String getdisqualificationname(){
+        return disqualification.getDisqualificationname();
+    }
+
+    public String getcategoryname(){
+        return categoriesOnCompetition.getCategoriesName();
+    }
+
+    public String getcompetitionname(){
+        return competition.getCompetitionName();
     }
 }
