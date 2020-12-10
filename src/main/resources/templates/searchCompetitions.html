@@ -71,6 +71,7 @@
                 <input type="submit" value="Dodaj zawody"/>
             </form>
         </div>
+        <div class="alert alert-primary" role="alert" th:text="${success}" th:if="${success}"></div>
         <br/><br/>
         <table border="1" cellpadding="10">
             <thead>
@@ -78,6 +79,8 @@
                 <th>ID zawodów</th>
                 <th>Data zawodów</th>
                 <th>Nazwa zawodów</th>
+                <div sec:authorize="hasAuthority('trener')"><th>Zarejestruj klub na zawody</th></div>
+                <th>Zobacz kto startuje</th>
             </tr>
             </thead>
             <tbody>
@@ -90,16 +93,11 @@
                 <td th:text="${competition.competitionName}"></td>
                 <div sec:authorize="hasAuthority('trener')">
                     <td>
-                        <!--                        <form class="form-signin" th:object="${competitiorsPlayerForm}" th:action="@{/redirectRegCompetitorsPlayer}">-->
-                        <!--                            <input type="hidden" th:value="${competition.idCompetitions}">-->
-                        <!--                            <input type="submit" value="Zarejestruj klub na zawody"/>-->
-                        <!--                        </form>-->
-                        <form  class="form-signin" th:object="${competitiorsPlayerForm}" th:action="@{/redirectRegCompetitorsPlayer}">
-                            <div class="form-group">
-                                <input type="hidden" name="keyword" id="keyword" th:value="${competition.idCompetitions}">
-                            </div>
-                            <button class="btn btn-lg btn-primary btn-block" type="submit">Zarejestruj klub na zawody</button>
-                        </form>
+                        <div sec:authorize="hasAuthority('trener')">
+                            <form th:action="@{/redirectRegClubForCompetition}">
+                                <input type="submit" class="btn btn-lg btn-primary button" value="Zarejestruj klub na zawody"/>
+                            </form>
+                        </div>
                     </td>
                 </div>
 
@@ -110,13 +108,9 @@
                         </form>
                     </td>
                 </div>
-                <div sec:authorize="hasAuthority('organizator')">
-                    <td>
-                        <form class="form-signin" th:object="${competitiorsPlayerForm}" th:action="@{/redirectToJudgingCompetitions}">
-                            <input type="submit" value="Zobacz aplikacje"/>
-                        </form>
-                    </td>
-                </div>
+                <td>
+                    <a th:href="@{'/seeAcceptedRegistrations/' + ${competition.idCompetitions}}">Sprawdź</a>
+                </td>
             </tr>
             </tbody>
         </table>

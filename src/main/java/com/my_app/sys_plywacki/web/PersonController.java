@@ -3,11 +3,7 @@ package com.my_app.sys_plywacki.web;
 import com.my_app.sys_plywacki.model.*;
 import com.my_app.sys_plywacki.repository.RefereeRepository;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.data.repository.query.Param;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.my_app.sys_plywacki.service.*;
@@ -15,36 +11,20 @@ import com.my_app.sys_plywacki.repository.*;
 import org.springframework.security.core.Authentication;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.sql.Ref;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import org.springframework.security.core.userdetails.User;
 import org.springframework.http.ResponseEntity;
-
-import javax.jws.WebParam;
-import javax.servlet.http.HttpServletRequest;
-import javax.swing.text.html.Option;
 
 
 @Controller
@@ -144,6 +124,9 @@ public class PersonController {
 
     @Autowired
     private RegistrationForCompetitionRepository registrationForCompetitionRepository;
+
+    @Autowired
+    private AcceptedRegistrationForCompetitionRepository acceptedRegistrationForCompetitionRepository;
 
     @Autowired
     private ResultRepository resultRepository;
@@ -1321,6 +1304,19 @@ public class PersonController {
         redirAttrs.addFlashAttribute("success", text);
         return "redirect:/searchApplication";
     }
+    @GetMapping("/seeAcceptedRegistrations/{idCompetitions}")
+    public String seeRegistrations(@PathVariable(name = "idCompetitions") Long id, Model model,  RedirectAttributes redirAttrs){
+        List<AcceptedRegistrationForCompetition> acceptedRegistrationForCompetitionList = acceptedRegistrationForCompetitionRepository.findByIdCompetition(id);
+        System.out.println("Id zawodow: "+id);
+
+        String text = "Kluby zaakceptowane na zawody: ";
+        for(AcceptedRegistrationForCompetition x: acceptedRegistrationForCompetitionList){
+            text = text+"Klub: "+x.getClubName()+", trener: "+x.getCoachName();
+            System.out.println("acceptedRegistrationForCompetition ID"+x.getId());
+        }
+        redirAttrs.addFlashAttribute("success", text);
+        return "redirect:/searchCompetitions";
+    }
     @GetMapping("/searchApplication")
     public String searchApplication(Model model) {
         System.out.println("jestem w getmapping searchApplication");
@@ -1346,19 +1342,62 @@ public class PersonController {
     public List<Player> getListOfPlayers(){
         return listOfPlayers;
     }
+
     @GetMapping("/acceptRegistrationForCompetition/{id_registration}")
     public String acceptRegistrationForCompetition(@PathVariable(name = "id_registration") Long id, Model model) {
 
         System.out.println("Jestem w /acceptRegistrationForCompetition/{id_registration}\n\n\n");
+        Optional<RegistrationForCompetition> registrationForCompetition = registrationForCompetitionRepository.findById(id);
 
+        AcceptedRegistrationForCompetition acceptedRegistrationForCompetition = new AcceptedRegistrationForCompetition();
+        acceptedRegistrationForCompetition.setClubName(registrationForCompetition.get().getClubName());
+        acceptedRegistrationForCompetition.setIdClub(registrationForCompetition.get().getIdClub());
+        acceptedRegistrationForCompetition.setCoachName(registrationForCompetition.get().getCoachName());
+        acceptedRegistrationForCompetition.setIdCoach(registrationForCompetition.get().getIdCoach());
+        acceptedRegistrationForCompetition.setIdCompetition(registrationForCompetition.get().getIdCompetition());
+        List<Player> listOfPlayers = new ArrayList<>();
+        listOfPlayers.addAll(registrationForCompetition.get().getPlayers());
+        acceptedRegistrationForCompetition.setPlayers(listOfPlayers);
+
+        acceptedRegistrationForCompetitionRepository.save(acceptedRegistrationForCompetition);
+
+        Message message = new Message();
+        message.setIdPerson(registrationForCompetition.get().getIdCoach());
+        Competition competition = competitionRepository.findByIdCompetitions(registrationForCompetition.get().getIdCompetition());
+        message.setContent("Twoj klub zostal zaakceptowany na zawody "+competition.getCompetitionName()+"\n");
+
+        registrationForCompetitionRepository.delete(registrationForCompetition.get());
+        List<RegistrationForCompetition> registrationForCompetitionList=registrationForCompetitionRepository.findByIdCompetition(competition.getIdCompetitions());
+        listOfRegForCompetitions.clear();
+        listOfRegForCompetitions = registrationForCompetitionList;
+        return "redirect:/organizerCompetitionView";
+    }
+   /* @PostMapping("acceptRegistrationForCompetition")
+    public String acceptRegistrationForCompetition(@ModelAttribute("registrationForCompetitionForm") RegistrationForCompetition registrationForCompetition) {
+
+        AcceptedRegistrationForCompetition acceptedRegistrationForCompetition = new AcceptedRegistrationForCompetition();
+        acceptedRegistrationForCompetition.setClubName(registrationForCompetition.getClubName());
+        acceptedRegistrationForCompetition.setIdClub(registrationForCompetition.getIdClub());
+        acceptedRegistrationForCompetition.setCoachName(registrationForCompetition.getCoachName());
+        acceptedRegistrationForCompetition.setIdCoach(registrationForCompetition.getIdCoach());
+        acceptedRegistrationForCompetition.setPlayers(registrationForCompetition.getPlayers());
+
+        acceptedRegistrationForCompetitionRepository.save(acceptedRegistrationForCompetition);
+
+        Message message = new Message();
+        message.setIdPerson(registrationForCompetition.getIdCoach());
+        Competition competition = competitionRepository.findByIdCompetitions(registrationForCompetition.getIdCompetition());
+        message.setContent("Twoj klub zostal odrzucony na zawody "+competition.getCompetitionName()+"\n");
+
+        registrationForCompetitionRepository.delete(registrationForCompetition);
 
         return "redirect:/searchApplication";
-    }
+    }*/
 
     @GetMapping("/rejectRegistrationForCompetition/{id_registration}")
     public String rejectRegistrationForCompetition(@PathVariable(name = "id_registration") Long id, Model model) {
 
-        System.out.println("Jestem w /acceptRegistrationForCompetition/{id_registration}\n\n\n");
+        System.out.println("Jestem w /rejectRegistrationForCompetition/{id_registration}\n\n\n");
 
         Optional <RegistrationForCompetition> registrationForCompetition = registrationForCompetitionRepository.findById(id);
         registrationForCompetitionRepository.delete(registrationForCompetition.get());
