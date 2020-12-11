@@ -38,7 +38,7 @@
         </li>
         <li>
             <div sec:authorize="isAuthenticated()">
-                <form th:action="@{/redirectToEditPage}">
+                <form th:action="@{/redirectToChangeYourRolePage}">
                     <input class="nav-items" type="submit" value="Edytuj swoje konto"/>
                 </form>
             </div>
@@ -81,11 +81,7 @@
                 <tr th:each="club : ${clubList}">
                     <td th:text="${club.id_club}"></td>
                     <td th:text="${club.clubname}"></td>
-                    <div sec:authorize="hasAuthority('trener')">
-                        <td>
-                            <a th:href="@{/deleteClub/{id}(id=${club.id_club})}">Delete</a>
-                        </td>
-                    </div>
+
                 </tr>
                 </tbody>
             </table>

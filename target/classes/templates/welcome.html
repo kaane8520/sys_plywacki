@@ -36,7 +36,7 @@
         </li>
         <li>
             <div sec:authorize="isAuthenticated()">
-                <form th:action="@{/redirectToEditPage}">
+                <form th:action="@{/redirectToChangeYourRolePage}">
                     <input class="nav-items" type="submit" value="Edytuj swoje konto"/>
                 </form>
             </div>
@@ -65,7 +65,6 @@
         </tr>
 
 
-<!--          <h5>Twoja rola to: <span sec:authentication="authorities"></span></h5>-->
             <div sec:authorize="hasAuthority('trener')">
                 <h4>Jesteś trenerem</h4>
             </div>
@@ -78,9 +77,7 @@
             <div sec:authorize="hasAuthority('zawodnik')">
                 <h4>Jesteś zawodnikiem</h4>
             </div>
-            <div sec:authorize="hasAuthority">
-                <h4>Wyślij prośbę o przyznanie roli!</h4>
-            </div>
+
 
 
             <div sec:authorize="hasAuthority('zawodnik')">

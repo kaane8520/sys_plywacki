@@ -37,7 +37,7 @@
         </li>
         <li>
             <div sec:authorize="isAuthenticated()">
-                <form th:action="@{/redirectToEditPage}">
+                <form th:action="@{/redirectToChangeYourRolePage}">
                     <input class="nav-items" type="submit" value="Edytuj swoje konto"/>
                 </form>
             </div>

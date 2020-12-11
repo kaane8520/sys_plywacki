@@ -38,7 +38,7 @@
         </li>
         <li>
             <div sec:authorize="isAuthenticated()">
-                <form th:action="@{/redirectToEditPage}">
+                <form th:action="@{/redirectToChangeYourRolePage}">
                     <input class="nav-items" type="submit" value="Edytuj swoje konto"/>
                 </form>
             </div>
@@ -81,6 +81,7 @@
                 <th>Nazwa zawodów</th>
                 <div sec:authorize="hasAuthority('trener')"><th>Zarejestruj klub na zawody</th></div>
                 <th>Zobacz kto startuje</th>
+                <th>Sprawdź wyniki</th>
             </tr>
             </thead>
             <tbody>
@@ -101,15 +102,14 @@
                     </td>
                 </div>
 
-                <div sec:authorize="hasAuthority('sedzia')">
-                    <td>
-                        <form class="form-signin" th:object="${competitiorsPlayerForm}" th:action="@{/redirectToJudgingCompetitions}">
-                            <input type="submit" value="Zapisz się na zawody"/>
-                        </form>
-                    </td>
-                </div>
                 <td>
                     <a th:href="@{'/seeAcceptedRegistrations/' + ${competition.idCompetitions}}">Sprawdź</a>
+                </td>
+                <td>
+<!--                    <form class="form-signin" th:object="${competitiorsPlayerForm}" th:action="@{'/searchResults/' + ${competition.idCompetitions}}">-->
+<!--                        <input type="submit" class="btn btn-lg btn-primary button" value="Zobacz wyniki"/>-->
+<!--                    </form>-->
+                    <a th:href="@{'/searchResults/' + ${competition.idCompetitions}}">Zobacz wyniki</a>
                 </td>
             </tr>
             </tbody>
