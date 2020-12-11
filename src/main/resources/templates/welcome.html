@@ -55,9 +55,7 @@
     <div class="container">
         <h1 class="form-heading">Witaj <span sec:authentication="name">!</span></h1>
         <div sec:authorize="isAuthenticated()">
-    <!--        <form id="logoutForm" method="POST" th:action="@{/logout}">-->
-    <!--            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
-    <!--        </form>-->
+
             <h2>Wiadomości</h2>
             <tr th:each="message : ${messagesForUser}">
 
@@ -79,6 +77,15 @@
             <div sec:authorize="hasAuthority('trener')">
                 <p>
                     Twój klub: <span th:text="${coachWelcomeClubname}"></span>
+
+                <form th:if="${coachWelcomeClubname}=='Stwórz klub!'" th:action="@{/redirectToRegClub}">
+                    <input type="submit" class="btn btn-lg btn-primary welcome-buttons" value="Dodaj klub"/>
+                </form>
+                <br/>
+                <div th:if="${coachWelcomeClubname}!='Stwórz klub!'">
+                    <button id="myBtn" class="btn btn-lg btn-primary welcome-buttons">Pokaż listę zawodników</button>
+                </div>
+                <br/><br/>
                 </p>
             </div>
             <div sec:authorize="hasAuthority('trener')">
@@ -113,12 +120,6 @@
                 <input type="submit" class="btn btn-lg btn-primary welcome-buttons" value="Zmień swoją rolę"/>
             </form>
 
-            <div sec:authorize="hasAuthority('trener')">
-                <form th:action="@{/redirectToRegClub}">
-                    <input type="submit" class="btn btn-lg btn-primary welcome-buttons" value="dodaj klub"/>
-                </form>
-            </div>
-
             <div sec:authorize="hasAuthority('organizator')">
                 <form th:action="@{/registrationCompetitions}">
                     <input type="submit" class="btn btn-lg btn-primary welcome-buttons" value="Dodaj zawody"/>
@@ -140,7 +141,7 @@
 
             <div sec:authorize="hasAuthority('zawodnik')">
             <form th:action="@{/redirectToEditPlayer}">
-                <input type="submit" class="btn btn-lg btn-primary welcome-buttons" value="Edytuj swoje dane"/>
+                <input type="submit" class="btn btn-lg btn-primary welcome-buttons" value="Wybierz swój klub"/>
             </form>
 
             </div>
@@ -153,6 +154,23 @@
             </div>
 
         </div>
+    </div>
+    <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <div class="close-div">
+                <span class="close">&times;</span>
+            </div>
+            <h2 class="header-in-modal">Lista Twoich zawodników</h2>
+
+            <tr th:each="player : ${playersListInCoachClub}">
+
+                <span class="players-in-modal" th:text="${player.getUsername()}"></span>
+
+            </tr>
+
+        </div>
+
     </div>
     <h1 th:text = "${message}"></h1>
 

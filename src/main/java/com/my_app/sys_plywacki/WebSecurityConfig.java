@@ -35,9 +35,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/css/**", "/js/**", "/registration", "/searchClubs", "/serachCompetitions", "/searchPlayers").permitAll()
                 .antMatchers("/insertResults", "/acceptApplications", "/registrationCompetitions",
                         "/organizerCompetitionView", "/refereesOnCompetitionView").hasAuthority("organizator")
-                .antMatchers("/judgingCompetitions", "/addDocumentation", "/chooseCompetitionForReferee").hasAuthority("sedzia")
-                .antMatchers("/registrationCompetitorsCoach", "/registrationClub", "/addDocumentation", "/regClubForCompetition").hasAuthority("trener")
-                .antMatchers("/registrationCompetitiorsPlayer","/test", "/addDocumentation").hasAuthority("trener")
+                .antMatchers("/judgingCompetitions", "/chooseCompetitionForReferee").hasAuthority("sedzia")
+                .antMatchers("/registrationCompetitorsCoach", "/registrationClub", "/regClubForCompetition").hasAuthority("trener")
+                .antMatchers("/registrationCompetitiorsPlayer","/test").hasAuthority("trener")
                 .antMatchers("/verificationMedicalExaminations", "/editCoach", "/editPlayerByModerator", "/editReferee").hasAuthority("Moderator")
                 .antMatchers("/editPlayer").hasAuthority("zawodnik")
                 .anyRequest().authenticated()
