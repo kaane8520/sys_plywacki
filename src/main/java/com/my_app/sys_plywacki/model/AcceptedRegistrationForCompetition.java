@@ -11,7 +11,7 @@ import java.util.Set;
 
 @Transactional
 @Entity
-public class RegistrationForCompetition {
+public class AcceptedRegistrationForCompetition {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,11 +25,10 @@ public class RegistrationForCompetition {
     private String coachName;
     private String categoryName;
 
-    private Long idCategories;
     @ManyToMany
     @Column
     private List<Player> players;
-
+    private Long idCategories;
 
     public Long getId(){
         return id;
@@ -89,7 +88,6 @@ public class RegistrationForCompetition {
     public String getCoachName(){
         return this.coachName;
     }
-
     public void setCategoryName(String categoryName){
         this.categoryName = categoryName;
     }

@@ -86,8 +86,16 @@
                     />
                 </select>
             </div>
+            <h2>Kategoria dla wybranych zawodnikow</h2>
+            <div th:if="${listOfAvailableClubs != null and not #lists.isEmpty(listOfAvailableClubs)}">
+                <select th:field="*{idCategories}" class="form-control">
+                    <option th:each="dropDownItem : ${listOfCategoriesForPlayers}"
+                            th:value="${dropDownItem.idcategory}"
+                            th:text="${dropDownItem.namecategory}"
+                    />
+                </select>
 
-
+            </div>
 
             <button class="btn btn-lg btn-primary btn-block" type="submit">Potwierdz</button>
 

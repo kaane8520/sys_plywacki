@@ -1,6 +1,8 @@
 package com.my_app.sys_plywacki.model;
 
 import com.my_app.sys_plywacki.repository.ClubRepository;
+import com.my_app.sys_plywacki.repository.PlayerRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import javax.persistence.*;
+import com.my_app.sys_plywacki.repository.PersonRepository;
 
 @Entity
 public class Player{
@@ -34,10 +37,17 @@ public class Player{
     @ManyToOne
     private CategoriesOnCompetition categoriesOnCompetition;
 
+    //@Autowired
+    //private PersonRepository personRepository;
+
     private Long idPerson;
     public Player() {
     }
 
+    /*public String searchForUsername(){
+        Optional<Person> p = personRepository.findById(idPerson);
+        return p.get().getUsername();
+    }*/
     public Player(Club club) {
         this.club = club;
     }

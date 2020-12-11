@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="pl-PL" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
 <head>
-    <meta charset="utf-8">
-    <title>Wyszukaj zawody</title>
+    <meta charset="UTF-8">
+    <title>Sprawdź aplikację na te zawody</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link href="/css/main.css" rel="stylesheet">
 </head>
-
 <body>
+
 <div class="navbar">
-    <input id="navbar-toggle" type="checkbox" />
+    <input id="navbar-toggle" th:type="checkbox" />
     <label class="navbar-btn" for="navbar-toggle">
         <span></span>
     </label>
@@ -53,68 +54,36 @@
     </ul>
 </div>
 
-<div class="container search-forms">
-    <div align="center">
-        <h1>Lista zawodów, które organizujesz</h1>
-        <br/><br/>
-        <!-- <div sec:authorize="isAuthenticated()"> -->
-        <div sec:authorize="hasAuthority('organizator')">
-            <form th:action="@{/registrationCompetitions}">
-                <input type="submit" class="btn btn-lg btn-primary btn-block" value="Dodaj zawody"/>
-            </form>
-        </div>
-        <br/><br/>
-        <form  th:action="@{/searchCompKey}" >
-            Wyszukaj zawody: <input type="text" name="keywordComp" id="keywordComp" size="50" th:value="${keywordComp}" required />
-            <br/><br/>
-            <input type="submit" class="btn btn-lg btn-primary btn-block" value="Wyszukaj" />
-        </form>
-        <br/><br/>
+<div class="container">
+    <h2 class="form-signin-heading">Zaakceptowane kluby na te zawody</h2>
+    <div class="alert alert-primary" role="alert" th:text="${success}" th:if="${success}"></div>
+    <form method="POST" class="form-signin" th:object="${verificationForm}" th:action="@{/verificationMedicalExaminations}">
         <table border="1" cellpadding="10">
             <thead>
             <tr>
-                <th>ID zawodów</th>
-                <th>Data zawodów</th>
-                <th>Nazwa zawodów</th>
-                <th>Zapisani sędziowie</th>
-                <th>Zobacz aplikacje na te zawody</th>
-                <th>Wprowadzanie wyników</th>
+                <th>Id rejestracji</th>
+                <th>Nazwa klubu</th>
+                <th>Trener</th>
+                <th>Zobacz zawodników</th>
+                <th>Kategoria</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:if="${organizerCompetitionList.empty}">
-                <td colspan="3"> Nie organizujesz zawodów zawodów </td>
-            </tr>
-            <tr th:each="competition : ${organizerCompetitionList}">
-                <td th:text="${competition.idCompetitions}"></td>
-                <td th:text="${competition.competitionDate}"></td>
-                <td th:text="${competition.competitionName}"></td>
+            <tr th:each="acceptedReg : ${acceptedRegistrationForCompetition}">
+                <td th:block th:text="${acceptedReg.id}"></td>
+                <td th:block th:text="${acceptedReg.clubName}"></td>
+                <td th:block th:text="${acceptedReg.coachName}"></td>
                 <td>
-                    <a th:href="@{'/refereesOnCompetitionView/' + ${competition.idCompetitions}}">Zobacz zapisanych sędziów</a>
+                    <a th:href="@{'/seePlayersInCompetition/' + ${acceptedReg.id}}">Zobacz zawodników</a>
                 </td>
-                <td>
-                    <a th:href="@{'/searchApplication/' + ${competition.idCompetitions}}">Kto aplikowal</a>
-                </td>
-
-                <td>
-                    <form  class="form-signin" th:object="${result}" th:action="@{/redirectToInsertResults}">
-                        <div class="form-group">
-                            <input type="hidden" name="keyword" id="keyword" th:value="${competition.idCompetitions}">
-                        </div>
-                        <button class="btn btn-lg btn-primary btn-block" type="submit">Wprowadź wyniki</button>
-                    </form>
-<!--                    <input type="button" name="keyword" id="keyword" th:value="${competition.idCompetitions}">-->
-<!--                    <a th:href="@{/insertResults}">Wprowadź wyniki</a>-->
-                </td>
+                <td th:block th:text="${acceptedReg.categoryName}"></td>
 
             </tr>
             </tbody>
         </table>
-    </div>
-    <br/>
-
-
+    </form>
 </div>
+
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
