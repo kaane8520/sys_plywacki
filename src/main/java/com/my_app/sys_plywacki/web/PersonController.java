@@ -189,6 +189,10 @@ public class PersonController {
 
     @GetMapping({"/", "/welcome"})
     public String welcome(Model model) {
+        if (!securityService.isAuthenticated()) {
+            System.out.println("Not authenticated!");
+            return "redirect:/login";
+        }
         personService.update_user_role_if_exists();
         if(refereeRolesRepository.findAll().isEmpty()) {
             refereeRolesService.addRoles();
@@ -208,6 +212,7 @@ public class PersonController {
         if(clubRepository.findAll().isEmpty()){
             clubService.add_no_club();
         }
+
 
         return "welcome";
     }
