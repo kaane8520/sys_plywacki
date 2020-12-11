@@ -2,7 +2,7 @@
 <html lang="pl-PL" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="utf-8">
-    <title>Wyszukaj zawody</title>
+    <title>Wyszukaj kluby</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link href="/css/main.css" rel="stylesheet">
 </head>
@@ -55,72 +55,44 @@
 </div>
 
 <div class="container search-forms">
+    <h2 class="form-heading">Wyszukaj klub</h2>
+    <form  th:action="@{/searchClubKey}" >
+        Filter: <input type="text" class="form-control" name="keyword" id="keyword" size="50" th:value="${keyword}" required />
 
-    <form  th:action="@{/searchCompKey}" >
-        <h1 class="form-heading">Lista zawodów</h1>
-        Filter: <input type="text" name="keywordComp" class="form-control" size="50" th:value="${keywordComp}" required />
+        <input type="submit" class="btn btn-lg btn-primary btn-block" value="Wyszukaj" />
 
-        <button type="submit" class="btn btn-lg btn-primary btn-block">Wyszukaj</button>
     </form>
+    <form class="form-signin" method="POST" >
 
-    <div align="center">
-        <br/><br/>
-        <!-- <div sec:authorize="isAuthenticated()"> -->
-        <div sec:authorize="hasAuthority('organizator')">
-            <form th:action="@{/registrationCompetitions}">
-                <input type="submit" value="Dodaj zawody"/>
-            </form>
+
+        <div align="center">
+            <h1>Lista klubów</h1>
+
+            <br/><br/>
+            <table border="1" cellpadding="10">
+                <thead>
+                <tr>
+                    <th>ID klubu</th>
+                    <th>Nazwa klubu</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <tr th:each="club : ${clubList}">
+                    <td th:text="${club.id_club}"></td>
+                    <td th:text="${club.clubname}"></td>
+                    <div sec:authorize="hasAuthority('trener')">
+                        <td>
+                            <a th:href="@{/deleteClub/{id}(id=${club.id_club})}">Delete</a>
+                        </td>
+                    </div>
+                </tr>
+                </tbody>
+            </table>
         </div>
-        <br/><br/>
-        <table border="1" cellpadding="10">
-            <thead>
-            <tr>
-                <th>ID zawodów</th>
-                <th>Data zawodów</th>
-                <th>Nazwa zawodów</th>
-            </tr>
-            </thead>
-            <tbody>
-<!--            <tr th:if="${competitionList.empty}">-->
-<!--                <td colspan="3"> Nie ma zawodów </td>-->
-<!--            </tr>-->
-            <tr th:each="competition : ${competitionList}">
-                <td th:text="${competition.idCompetitions}"></td>
-                <td th:text="${competition.competitionDate}"></td>
-                <td th:text="${competition.competitionName}"></td>
-                <div sec:authorize="hasAuthority('trener')">
-                    <td>
-                        <!--                        <form class="form-signin" th:object="${competitiorsPlayerForm}" th:action="@{/redirectRegCompetitorsPlayer}">-->
-                        <!--                            <input type="hidden" th:value="${competition.idCompetitions}">-->
-                        <!--                            <input type="submit" value="Zarejestruj klub na zawody"/>-->
-                        <!--                        </form>-->
-                        <form  class="form-signin" th:object="${competitiorsPlayerForm}" th:action="@{/redirectRegCompetitorsPlayer}">
-                            <div class="form-group">
-                                <input type="hidden" name="keyword" id="keyword" th:value="${competition.idCompetitions}">
-                            </div>
-                            <button class="btn btn-lg btn-primary btn-block" type="submit">Zarejestruj klub na zawody</button>
-                        </form>
-                    </td>
-                </div>
-                <div sec:authorize="hasAuthority('sedzia')">
-                    <td>
-                        <form class="form-signin" th:object="${competitiorsPlayerForm}" th:action="@{/redirectToJudgingCompetitions}">
-                            <input type="submit" value="Zapisz się na zawody"/>
-                        </form>
-                    </td>
-                </div>
-                <div sec:authorize="hasAuthority('organizator')">
-                    <td>
-                        <form class="form-signin" th:object="${competitiorsPlayerForm}" th:action="@{/redirectToJudgingCompetitions}">
-                            <input type="submit" value="Zobacz aplikacje"/>
-                        </form>
-                    </td>
-                </div>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-    <br/>
+
+
+    </form>
 
 
 </div>
