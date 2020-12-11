@@ -28,7 +28,7 @@ import org.springframework.http.ResponseEntity;
 
 
 @Controller
-@SessionAttributes("verification")
+@SessionAttributes({"verification","acceptedRegistrationForCompetition"})
 @RequestMapping("/")
 public class PersonController {
     @Autowired
@@ -133,6 +133,7 @@ public class PersonController {
 
     List<Player> listOfPlayers = new ArrayList<>();
     List<RegistrationForCompetition> listOfRegForCompetitions = new ArrayList<>();
+    List<AcceptedRegistrationForCompetition> listOfAcceptedRegistrationForCompetition = new ArrayList<>();
 
     @GetMapping("/registration")
     public String registration(Model model) {
@@ -1245,7 +1246,8 @@ public class PersonController {
         registrationForCompetition.setIdClub(coach.getClub().getId_club());
         registrationForCompetition.setClubName(clubName);
         registrationForCompetition.setCoachName(coachName);
-
+        Optional <Categories> categories = categoriesRepository.findById(registrationForCompetition.getIdCategories());
+        registrationForCompetition.setCategoryName(categories.get().getNamecategory());
 
         System.out.println("Rejestracja na zawody");
         System.out.println("Id trenera:"+registrationForCompetition.getIdCoach());
@@ -1304,18 +1306,58 @@ public class PersonController {
         redirAttrs.addFlashAttribute("success", text);
         return "redirect:/searchApplication";
     }
-    @GetMapping("/seeAcceptedRegistrations/{idCompetitions}")
-    public String seeRegistrations(@PathVariable(name = "idCompetitions") Long id, Model model,  RedirectAttributes redirAttrs){
-        List<AcceptedRegistrationForCompetition> acceptedRegistrationForCompetitionList = acceptedRegistrationForCompetitionRepository.findByIdCompetition(id);
-        System.out.println("Id zawodow: "+id);
 
-        String text = "Kluby zaakceptowane na zawody: ";
-        for(AcceptedRegistrationForCompetition x: acceptedRegistrationForCompetitionList){
-            text = text+"Klub: "+x.getClubName()+", trener: "+x.getCoachName();
-            System.out.println("acceptedRegistrationForCompetition ID"+x.getId());
+    @GetMapping("/seePlayersInCompetition/{id}")
+    public String seePlayersInCompetiton(@PathVariable(name = "id") Long id, Model model,  RedirectAttributes redirAttrs){
+        Optional<AcceptedRegistrationForCompetition> acceptedRegistrationForCompetition = acceptedRegistrationForCompetitionRepository.findById(id);
+
+        List<Player> listOfPlayers = acceptedRegistrationForCompetition.get().getPlayers();
+
+        String text = "Zgłoszeni zawodnicy:\n";
+        for (Player player : listOfPlayers) {
+            System.out.println("Zawodnik: "+player.getUsername());
+            text = text+" "+player.getUsername();
         }
         redirAttrs.addFlashAttribute("success", text);
-        return "redirect:/searchCompetitions";
+        return "redirect:/seeAcceptedRegistrations";
+    }
+    @GetMapping("/seeAcceptedRegistrations/{idCompetitions}")
+    public String seeAcceptedRegistrations(@PathVariable(name = "idCompetitions") Long id, Model model,  RedirectAttributes redirAttrs){
+        List<AcceptedRegistrationForCompetition> acceptedRegistrationForCompetitionList = acceptedRegistrationForCompetitionRepository.findByIdCompetition(id);
+        listOfAcceptedRegistrationForCompetition.clear();
+        listOfAcceptedRegistrationForCompetition = acceptedRegistrationForCompetitionList;
+        model.addAttribute("acceptedRegistrationForCompetition",listOfAcceptedRegistrationForCompetition);
+        /*System.out.println("Id zawodow: "+id);
+
+        String text = "Kluby zaakceptowane na zawody: ";*/
+        for(AcceptedRegistrationForCompetition x: acceptedRegistrationForCompetitionList){
+            System.out.println("acceptedRegistrationForCompetition ID "+x.getId());
+        }
+        /*
+        redirAttrs.addFlashAttribute("success", text);*/
+        System.out.println("Jestem w /seeAcceptedRegistrations/{idCompetitions}");
+        return "redirect:/seeAcceptedRegistrations";
+        //return "redirect:/searchCompetitions";
+    }
+    @GetMapping("seeAcceptedRegistrations")
+    public String seeAcceptedRegistrations(Model model) {
+        System.out.println("Jestem w  @GetMapping(\"seeAcceptedRegistrations\")");
+        model.addAttribute(listOfAcceptedRegistrationForCompetition);
+        return "/seeAcceptedRegistrations";
+    }
+    @PostMapping("seeAcceptedRegistrations")
+    public String seeAcceptedRegistrations(@ModelAttribute("listOfAcceptedRegistrationForCompetition") AcceptedRegistrationForCompetition acceptedRegistrationForCompetition){
+        System.out.println("Jestem w PostMapping seeAcceptedRegistrations");
+        return "redirect:/seeAcceptedRegistrations";
+    }
+
+    @ModelAttribute("acceptedRegistrationForCompetition")
+    public List<AcceptedRegistrationForCompetition> getAcceptedRegistrationForCompetition() {
+        System.out.println("Szukam zaakceptowanych klubów na zawody...");
+        for(AcceptedRegistrationForCompetition a: listOfAcceptedRegistrationForCompetition){
+            System.out.println("Na te zawody zaakceptowano klub: "+a.getClubName());
+        }
+        return listOfAcceptedRegistrationForCompetition;
     }
     @GetMapping("/searchApplication")
     public String searchApplication(Model model) {
@@ -1343,6 +1385,12 @@ public class PersonController {
         return listOfPlayers;
     }
 
+    @ModelAttribute("listOfCategoriesForPlayers")
+    public List<Categories> getListOfCategoriesForPlayer(){
+        List<Categories> categoriesList = categoriesRepository.findAll();
+        return categoriesList;
+    }
+
     @GetMapping("/acceptRegistrationForCompetition/{id_registration}")
     public String acceptRegistrationForCompetition(@PathVariable(name = "id_registration") Long id, Model model) {
 
@@ -1355,15 +1403,25 @@ public class PersonController {
         acceptedRegistrationForCompetition.setCoachName(registrationForCompetition.get().getCoachName());
         acceptedRegistrationForCompetition.setIdCoach(registrationForCompetition.get().getIdCoach());
         acceptedRegistrationForCompetition.setIdCompetition(registrationForCompetition.get().getIdCompetition());
+        acceptedRegistrationForCompetition.setIdCategories(registrationForCompetition.get().getIdCategories());
+        acceptedRegistrationForCompetition.setCategoryName(registrationForCompetition.get().getCategoryName());
+
         List<Player> listOfPlayers = new ArrayList<>();
         listOfPlayers.addAll(registrationForCompetition.get().getPlayers());
         acceptedRegistrationForCompetition.setPlayers(listOfPlayers);
+        Optional <Categories> categories = categoriesRepository.findById(registrationForCompetition.get().getIdCategories());
+
+        CategoriesOnCompetition categoriesOnCompetition = new CategoriesOnCompetition();
+        categoriesOnCompetition.setCategories(categories.get());
+        categoriesOnCompetition.setPlayers(listOfPlayers);
+        Competition competition = competitionRepository.findByIdCompetitions(registrationForCompetition.get().getIdCompetition());
+        categoriesOnCompetition.setCompetition(competition);
+        categoriesOnCompetitionRepository.save(categoriesOnCompetition);
 
         acceptedRegistrationForCompetitionRepository.save(acceptedRegistrationForCompetition);
 
         Message message = new Message();
         message.setIdPerson(registrationForCompetition.get().getIdCoach());
-        Competition competition = competitionRepository.findByIdCompetitions(registrationForCompetition.get().getIdCompetition());
         message.setContent("Twoj klub zostal zaakceptowany na zawody "+competition.getCompetitionName()+"\n");
 
         registrationForCompetitionRepository.delete(registrationForCompetition.get());
@@ -1372,27 +1430,6 @@ public class PersonController {
         listOfRegForCompetitions = registrationForCompetitionList;
         return "redirect:/organizerCompetitionView";
     }
-   /* @PostMapping("acceptRegistrationForCompetition")
-    public String acceptRegistrationForCompetition(@ModelAttribute("registrationForCompetitionForm") RegistrationForCompetition registrationForCompetition) {
-
-        AcceptedRegistrationForCompetition acceptedRegistrationForCompetition = new AcceptedRegistrationForCompetition();
-        acceptedRegistrationForCompetition.setClubName(registrationForCompetition.getClubName());
-        acceptedRegistrationForCompetition.setIdClub(registrationForCompetition.getIdClub());
-        acceptedRegistrationForCompetition.setCoachName(registrationForCompetition.getCoachName());
-        acceptedRegistrationForCompetition.setIdCoach(registrationForCompetition.getIdCoach());
-        acceptedRegistrationForCompetition.setPlayers(registrationForCompetition.getPlayers());
-
-        acceptedRegistrationForCompetitionRepository.save(acceptedRegistrationForCompetition);
-
-        Message message = new Message();
-        message.setIdPerson(registrationForCompetition.getIdCoach());
-        Competition competition = competitionRepository.findByIdCompetitions(registrationForCompetition.getIdCompetition());
-        message.setContent("Twoj klub zostal odrzucony na zawody "+competition.getCompetitionName()+"\n");
-
-        registrationForCompetitionRepository.delete(registrationForCompetition);
-
-        return "redirect:/searchApplication";
-    }*/
 
     @GetMapping("/rejectRegistrationForCompetition/{id_registration}")
     public String rejectRegistrationForCompetition(@PathVariable(name = "id_registration") Long id, Model model) {

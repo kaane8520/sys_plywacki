@@ -29,7 +29,18 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="97c93293-327e-4ddb-a53a-0c46104e3c4c" name="Default Changelist" comment="polaczenie ze zmianami moderatora" />
+    <list default="true" id="97c93293-327e-4ddb-a53a-0c46104e3c4c" name="Default Changelist" comment="akceptacja klubów na zawody">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dokumentacja/2_vxlqGGoJ41_cl.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dokumentacja/3_a4dqXVzJpE_inzynierka notatki.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dokumentacja/4_zYlkUIXyey_cl.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/my_app/sys_plywacki/model/AcceptedRegistrationForCompetition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/my_app/sys_plywacki/model/AcceptedRegistrationForCompetition.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/my_app/sys_plywacki/model/RegistrationForCompetition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/my_app/sys_plywacki/model/RegistrationForCompetition.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/my_app/sys_plywacki/web/PersonController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/my_app/sys_plywacki/web/PersonController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/regClubForCompetition.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/regClubForCompetition.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/searchApplication.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/searchApplication.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/my_app/sys_plywacki/web/PersonController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/my_app/sys_plywacki/web/PersonController.class" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -38,9 +49,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="HTML File" />
         <option value="Class" />
         <option value="Interface" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -50,7 +61,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="organizator_weryfikacja_zgloszen" />
+        <entry key="$PROJECT_DIR$" value="organizator" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -125,7 +136,14 @@
       <option name="project" value="LOCAL" />
       <updated>1607622946985</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="akceptacja klubów na zawody">
+      <created>1607636717148</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1607636717148</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -156,7 +174,8 @@
     <MESSAGE value="zglaszanie klubu na zawody przez trenera" />
     <MESSAGE value="poprawnione zglaszanie klubu na zawody przez" />
     <MESSAGE value="wyswietlanie akceptacji klubów na zawody,&#10;odrzucanie akceptacji" />
-    <option name="LAST_COMMIT_MESSAGE" value="wyswietlanie akceptacji klubów na zawody,&#10;odrzucanie akceptacji" />
+    <MESSAGE value="akceptacja klubów na zawody" />
+    <option name="LAST_COMMIT_MESSAGE" value="akceptacja klubów na zawody" />
   </component>
   <component name="WindowStateProjectService">
     <state x="137" y="18" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1607023555621">
@@ -171,22 +190,22 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="413" y="110" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1366.728@0.0.1366.728" timestamp="1607623740331" />
-    <state width="1323" height="204" key="GridCell.Tab.0.bottom" timestamp="1607629043486">
+    <state width="1323" height="136" key="GridCell.Tab.0.bottom" timestamp="1607678062996">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="204" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1607629043486" />
-    <state width="1323" height="204" key="GridCell.Tab.0.center" timestamp="1607629043485">
+    <state width="1323" height="136" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1607678062996" />
+    <state width="1323" height="136" key="GridCell.Tab.0.center" timestamp="1607678062996">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="204" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1607629043485" />
-    <state width="1323" height="204" key="GridCell.Tab.0.left" timestamp="1607629043484">
+    <state width="1323" height="136" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1607678062996" />
+    <state width="1323" height="136" key="GridCell.Tab.0.left" timestamp="1607678062996">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="204" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1607629043484" />
-    <state width="1323" height="204" key="GridCell.Tab.0.right" timestamp="1607629043486">
+    <state width="1323" height="136" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1607678062996" />
+    <state width="1323" height="136" key="GridCell.Tab.0.right" timestamp="1607678062996">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="204" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1607629043486" />
+    <state width="1323" height="136" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1607678062996" />
     <state x="213" y="18" key="Maven.ArtifactSearchDialog" timestamp="1607116452935">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -203,9 +222,9 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="375" y="122" key="Vcs.Multiple.Commit.Info.Dialog.Key/0.0.1366.728@0.0.1366.728" timestamp="1607105854516" />
-    <state x="275" y="96" key="Vcs.Push.Dialog.v2" timestamp="1607623059088">
+    <state x="275" y="96" key="Vcs.Push.Dialog.v2" timestamp="1607636739738">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="275" y="96" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1607623059088" />
+    <state x="275" y="96" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1607636739738" />
   </component>
 </project>

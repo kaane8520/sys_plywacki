@@ -23,7 +23,9 @@ public class RegistrationForCompetition {
 
     private String clubName;
     private String coachName;
+    private String categoryName;
 
+    private Long idCategories;
     @ManyToMany
     @Column
     private List<Player> players;
@@ -34,6 +36,13 @@ public class RegistrationForCompetition {
     }
     public void setId(Long id){
         this.id = id;
+    }
+
+    public Long getIdCategories(){
+        return idCategories;
+    }
+    public void setIdCategories(Long idCategories){
+        this.idCategories = idCategories;
     }
 
     public Long getIdCoach(){
@@ -79,5 +88,12 @@ public class RegistrationForCompetition {
     }
     public String getCoachName(){
         return this.coachName;
+    }
+
+    public void setCategoryName(String categoryName){
+        this.categoryName = categoryName;
+    }
+    public String getCategoryName(){
+        return this.categoryName;
     }
 }

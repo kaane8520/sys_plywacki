@@ -55,7 +55,7 @@
 </div>
 
 <div class="container">
-    <h2 class="form-signin-heading">Prośby o akceptacje na zawody</h2>
+    <h2 class="form-signin-heading">Zaakceptowane kluby na te zawody</h2>
     <div class="alert alert-primary" role="alert" th:text="${success}" th:if="${success}"></div>
     <form method="POST" class="form-signin" th:object="${verificationForm}" th:action="@{/verificationMedicalExaminations}">
         <table border="1" cellpadding="10">
@@ -64,26 +64,20 @@
                 <th>Id rejestracji</th>
                 <th>Nazwa klubu</th>
                 <th>Trener</th>
-                <th>Kategoria</th>
                 <th>Zobacz zawodników</th>
-                <th>Twoja akcja</th>
+                <th>Kategoria</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="registration : ${regClubForCompetition}">
-                <td th:block th:text="${registration.id}"></td>
-                <td th:block th:text="${registration.clubName}"></td>
-                <td th:block th:text="${registration.coachName}"></td>
-                <td th:block th:text="${registration.categoryName}"></td>
+            <tr th:each="acceptedReg : ${acceptedRegistrationForCompetition}">
+                <td th:block th:text="${acceptedReg.id}"></td>
+                <td th:block th:text="${acceptedReg.clubName}"></td>
+                <td th:block th:text="${acceptedReg.coachName}"></td>
+                <td>
+                    <a th:href="@{'/seePlayersInCompetition/' + ${acceptedReg.id}}">Zobacz zawodników</a>
+                </td>
+                <td th:block th:text="${acceptedReg.categoryName}"></td>
 
-                <td>
-                    <a th:href="@{'/seePlayersInRegistration/' + ${registration.id}}">Zobacz zawodników</a>
-                </td>
-                <td>
-                    <a th:href="@{'/acceptRegistrationForCompetition/' + ${registration.id}}">Akceptuj</a>
-                    &nbsp;&nbsp;&nbsp;
-                    <a th:href="@{'/rejectRegistrationForCompetition/' + ${registration.id}}">Odrzuć</a>
-                </td>
             </tr>
             </tbody>
         </table>
