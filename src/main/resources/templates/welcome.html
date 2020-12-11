@@ -65,7 +65,18 @@
         </tr>
 
 
-          <h5>Twoja rola to: <span sec:authentication="authorities"></span></h5>
+            <div sec:authorize="hasAuthority('trener')">
+                <h4>Jesteś trenerem</h4>
+            </div>
+            <div sec:authorize="hasAuthority('sedzia')">
+                <h4>Jesteś sędzią</h4>
+            </div>
+            <div sec:authorize="hasAuthority('organizator')">
+                <h4>Jesteś organizatorem</h4>
+            </div>
+            <div sec:authorize="hasAuthority('zawodnik')">
+                <h4>Jesteś zawodnikiem</h4>
+            </div>
 
 
 
