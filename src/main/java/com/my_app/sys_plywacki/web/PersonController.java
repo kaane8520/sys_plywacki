@@ -753,6 +753,10 @@ public class PersonController {
 
                 Referee referee = refereeRepository.findRefereeByPerson(p);
                 if (referee.getRefereelegidate()!=null) {
+                    //Sprawdzam date wygaśnięcia dokumentacji, jeśli wygaśnie za mniej niż miesiąc
+                    //wysyłam wiadomość dla sędziego
+
+
                     return referee.getRefereelegidate().toString();
                 }
                 return "Edytuj date wygaśnięcia dokumentacji";
@@ -861,17 +865,6 @@ public class PersonController {
         refereeRoleOnCompetition.setRefereeRoles(refereeRolesForm);
         //update rekordu
         refereeRoleOnCompetitionRepository.saveAndFlush(refereeRoleOnCompetition);
-        return "redirect:/welcome";
-    }
-
-
-    @GetMapping("/test")
-    public String test(Model model) {
-        return "test";
-    }
-
-    @PostMapping("/test")
-    public String test() {
         return "redirect:/welcome";
     }
 
@@ -1362,17 +1355,13 @@ public class PersonController {
         listOfAcceptedRegistrationForCompetition.clear();
         listOfAcceptedRegistrationForCompetition = acceptedRegistrationForCompetitionList;
         model.addAttribute("acceptedRegistrationForCompetition",listOfAcceptedRegistrationForCompetition);
-        /*System.out.println("Id zawodow: "+id);
-
-        String text = "Kluby zaakceptowane na zawody: ";*/
         for(AcceptedRegistrationForCompetition x: acceptedRegistrationForCompetitionList){
             System.out.println("acceptedRegistrationForCompetition ID "+x.getId());
         }
-        /*
-        redirAttrs.addFlashAttribute("success", text);*/
+
         System.out.println("Jestem w /seeAcceptedRegistrations/{idCompetitions}");
         return "redirect:/seeAcceptedRegistrations";
-        //return "redirect:/searchCompetitions";
+
     }
     @GetMapping("seeAcceptedRegistrations")
     public String seeAcceptedRegistrations(Model model) {

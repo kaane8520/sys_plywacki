@@ -32,7 +32,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
 
             .authorizeRequests()
-                .antMatchers("/css/**", "/js/**", "/registration", "/searchClubs", "/serachCompetitions", "/searchPlayers").permitAll()
+                .antMatchers("/css/**", "/js/**", "/registration", "/searchClubs", "/serachCompetitions", "/searchPlayers","/seeAcceptedRegistrations/**","/searchResults/**","/searchPlayerResults/**").permitAll()
                 .antMatchers("/insertResults", "/acceptApplications", "/registrationCompetitions",
                         "/organizerCompetitionView", "/refereesOnCompetitionView","/searchApplication").hasAuthority("organizator")
                 .antMatchers("/judgingCompetitions", "/chooseCompetitionForReferee").hasAuthority("sedzia")
@@ -40,7 +40,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/registrationCompetitiorsPlayer","/test").hasAuthority("trener")
                 .antMatchers("/verificationMedicalExaminations", "/editCoach", "/editPlayerByModerator", "/editReferee").hasAuthority("Moderator")
                 .antMatchers("/editPlayer").hasAuthority("zawodnik")
-                .antMatchers("/welcome","/changeYourRole","/seeAcceptedRegistrations","/searchPlayerResults/**","/addDocumentation").authenticated()
+                .antMatchers("/welcome","/changeYourRole","/seeAcceptedRegistrations","/addDocumentation").authenticated()
                 .antMatchers("/edit").hasAnyAuthority("trener","zawodnik","sedzia")
                 .and()
             .formLogin()
