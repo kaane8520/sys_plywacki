@@ -19,26 +19,23 @@
         <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
       </path>
     </expand>
-    <select>
-      <path>
-        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="BRANCH:origin/clubCompetition" type="e8cecc67:BranchNodeDescriptor" />
-      </path>
-    </select>
+    <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="97c93293-327e-4ddb-a53a-0c46104e3c4c" name="Default Changelist" comment="akceptacja klubów na zawody">
+    <list default="true" id="97c93293-327e-4ddb-a53a-0c46104e3c4c" name="Default Changelist" comment="dodanie endpointów w WebSecurityConfig">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/searchPlayerResults.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dokumentacja/2_vxlqGGoJ41_cl.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dokumentacja/3_a4dqXVzJpE_inzynierka notatki.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dokumentacja/4_zYlkUIXyey_cl.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/my_app/sys_plywacki/model/AcceptedRegistrationForCompetition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/my_app/sys_plywacki/model/AcceptedRegistrationForCompetition.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/my_app/sys_plywacki/model/RegistrationForCompetition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/my_app/sys_plywacki/model/RegistrationForCompetition.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/my_app/sys_plywacki/model/CategoriesOnCompetition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/my_app/sys_plywacki/model/CategoriesOnCompetition.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/my_app/sys_plywacki/model/Result.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/my_app/sys_plywacki/model/Result.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/my_app/sys_plywacki/repository/CategoriesOnCompetitionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/my_app/sys_plywacki/repository/CategoriesOnCompetitionRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/my_app/sys_plywacki/repository/PlayerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/my_app/sys_plywacki/repository/PlayerRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/my_app/sys_plywacki/repository/ResultRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/my_app/sys_plywacki/repository/ResultRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/my_app/sys_plywacki/web/PersonController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/my_app/sys_plywacki/web/PersonController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/regClubForCompetition.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/regClubForCompetition.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/searchApplication.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/searchApplication.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/insertResults.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/insertResults.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/searchCompetitions.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/searchCompetitions.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/searchPlayers.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/searchPlayers.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/searchResults.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/searchResults.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/my_app/sys_plywacki/WebSecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/my_app/sys_plywacki/WebSecurityConfig.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/my_app/sys_plywacki/web/PersonController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/my_app/sys_plywacki/web/PersonController.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -49,42 +46,35 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
         <option value="HTML File" />
       </list>
     </option>
   </component>
   <component name="Git.Pull.Settings">
-    <option name="BRANCH" value="organizator" />
+    <option name="BRANCH" value="aneta" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-        <entry key="$PROJECT_DIR$" value="organizator" />
-      </map>
-    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="MavenImportPreferences">
-    <option name="generalSettings">
-      <MavenGeneralSettings>
-        <option name="mavenHome" value="C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\plugins\maven\lib\maven3" />
-      </MavenGeneralSettings>
-    </option>
-  </component>
   <component name="ProjectId" id="1l9xbvIKNv14flZzbo1AIoQi6pb" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.DemoApplication">
     <configuration name="DemoApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.my_app.sys_plywacki.DemoApplication" />
       <module name="sys_plywacki" />
@@ -98,10 +88,15 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="DemoApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="sys_plywacki" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.my_app.sys_plywacki.DemoApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.DemoApplication" />
-        <item itemvalue="Application.DemoApplication" />
         <item itemvalue="Application.DemoApplication" />
       </list>
     </recent_temporary>
@@ -114,6 +109,10 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1607023183916</updated>
+      <workItem from="1607174774386" duration="1696000" />
+      <workItem from="1607341615285" duration="1561000" />
+      <workItem from="1607510244300" duration="6886000" />
+      <workItem from="1607630786920" duration="4654000" />
     </task>
     <task id="LOCAL-00001" summary="zglaszanie klubu na zawody przez trenera">
       <created>1607032275503</created>
@@ -129,41 +128,32 @@
       <option name="project" value="LOCAL" />
       <updated>1607036276860</updated>
     </task>
-    <task id="LOCAL-00003" summary="wyswietlanie akceptacji klubów na zawody,&#10;odrzucanie akceptacji">
-      <created>1607622946985</created>
+    <task id="LOCAL-00003" summary="poprawione wyświetlanie listy klubów">
+      <created>1607184778422</created>
       <option name="number" value="00003" />
       <option name="presentableId" value="LOCAL-00003" />
       <option name="project" value="LOCAL" />
-      <updated>1607622946985</updated>
+      <updated>1607184778422</updated>
     </task>
-    <task id="LOCAL-00004" summary="akceptacja klubów na zawody">
-      <created>1607636717148</created>
+    <task id="LOCAL-00004" summary="dodanie endpointów w WebSecurityConfig">
+      <created>1607525920869</created>
       <option name="number" value="00004" />
       <option name="presentableId" value="LOCAL-00004" />
       <option name="project" value="LOCAL" />
-      <updated>1607636717148</updated>
+      <updated>1607525920869</updated>
     </task>
     <option name="localTasksCounter" value="5" />
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="FILTERS">
-                <map>
-                  <entry key="branch">
-                    <value>
-                      <list>
-                        <option value="origin/clubCompetition" />
-                      </list>
-                    </value>
-                  </entry>
-                </map>
-              </option>
-            </State>
+            <State />
           </value>
         </entry>
       </map>
@@ -171,60 +161,11 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="zglaszanie klubu na zawody przez trenera" />
     <MESSAGE value="poprawnione zglaszanie klubu na zawody przez" />
-    <MESSAGE value="wyswietlanie akceptacji klubów na zawody,&#10;odrzucanie akceptacji" />
-    <MESSAGE value="akceptacja klubów na zawody" />
-    <option name="LAST_COMMIT_MESSAGE" value="akceptacja klubów na zawody" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="137" y="18" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1607023555621">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="137" y="18" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.728@0.0.1366.728" timestamp="1607023555621" />
-    <state x="0" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1607623601771">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="0" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1366.728@0.0.1366.728" timestamp="1607623601771" />
-    <state x="413" y="110" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1607623740331">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="413" y="110" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1366.728@0.0.1366.728" timestamp="1607623740331" />
-    <state width="1323" height="136" key="GridCell.Tab.0.bottom" timestamp="1607678062996">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state width="1323" height="136" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1607678062996" />
-    <state width="1323" height="136" key="GridCell.Tab.0.center" timestamp="1607678062996">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state width="1323" height="136" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1607678062996" />
-    <state width="1323" height="136" key="GridCell.Tab.0.left" timestamp="1607678062996">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state width="1323" height="136" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1607678062996" />
-    <state width="1323" height="136" key="GridCell.Tab.0.right" timestamp="1607678062996">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state width="1323" height="136" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1607678062996" />
-    <state x="213" y="18" key="Maven.ArtifactSearchDialog" timestamp="1607116452935">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="213" y="18" key="Maven.ArtifactSearchDialog/0.0.1366.728@0.0.1366.728" timestamp="1607116452935" />
-    <state x="0" y="0" width="1366" height="728" key="MergeDialog" timestamp="1607116249469">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="0" y="0" width="1366" height="728" key="MergeDialog/0.0.1366.728@0.0.1366.728" timestamp="1607116249469" />
-    <state x="321" y="125" width="935" height="478" key="MultipleFileMergeDialog" timestamp="1607116280585">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="321" y="125" width="935" height="478" key="MultipleFileMergeDialog/0.0.1366.728@0.0.1366.728" timestamp="1607116280585" />
-    <state x="375" y="122" key="Vcs.Multiple.Commit.Info.Dialog.Key" timestamp="1607105854516">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="375" y="122" key="Vcs.Multiple.Commit.Info.Dialog.Key/0.0.1366.728@0.0.1366.728" timestamp="1607105854516" />
-    <state x="275" y="96" key="Vcs.Push.Dialog.v2" timestamp="1607636739738">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="275" y="96" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1607636739738" />
+    <MESSAGE value="poprawione wyświetlanie listy klubów" />
+    <MESSAGE value="dodanie endpointów w WebSecurityConfig" />
+    <option name="LAST_COMMIT_MESSAGE" value="dodanie endpointów w WebSecurityConfig" />
   </component>
 </project>
