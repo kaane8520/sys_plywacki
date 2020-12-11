@@ -39,7 +39,7 @@
         </li>
         <li>
             <div sec:authorize="isAuthenticated()">
-                <form th:action="@{/redirectToEditPage}">
+                <form th:action="@{/redirectToChangeYourRolePage}">
                     <input class="nav-items" type="submit" value="Edytuj swoje konto"/>
                 </form>
             </div>
@@ -74,6 +74,7 @@
                 <th>Numer zawodnika</th>
                 <th>Nazwa zawodnika</th>
                 <th>Nazwa klubu</th>
+                <th>Wyniki zawodnika</th>
             </tr>
             </thead>
             <tbody>
@@ -85,9 +86,10 @@
                 <td th:text="${player.getUsername()}"></td>
                 <td th:text="${player.getClubname()}"></td>
                 <td>
-                    <form class="form-signin" th:object="${competitiorsPlayerForm}" th:action="@{'/searchPlayerResults/' + ${player.idPlayer}}">
-                        <input type="submit" value="Zobacz wyniki"/>
-                    </form>
+<!--                    <form class="form-signin" th:object="${competitiorsPlayerForm}" th:action="@{'/searchPlayerResults/' + ${player.idPlayer}}">-->
+<!--                        <input type="submit" class="btn btn-lg btn-primary button" value="Zobacz wyniki"/>-->
+<!--                    </form>-->
+                    <a th:href="@{'/searchPlayerResults/' + ${player.idPlayer}}">Zobacz wyniki</a>
                 </td>
 
             </tr>

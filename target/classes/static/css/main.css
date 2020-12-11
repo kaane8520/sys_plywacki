@@ -378,17 +378,29 @@ table th {
 /* Modal Content */
 .modal-content {
     background-color: #fefefe;
+    box-shadow: 0 5px 5px 5px;
     margin: auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 80%;
+    width: 40%;
+
+}
+.header-in-modal{
+    text-align: center;
+    float: top;
+    font-weight: bold;
+    font-size: 2em;
 }
 
+.close-div{
+    float: right;
+}
 /* The Close Button */
 .close {
-    color: #aaaaaa;
+    color: #007bff;
     float: right;
-    font-size: 28px;
+
+    font-size: 3em;
     font-weight: bold;
 }
 
@@ -397,4 +409,12 @@ table th {
     color: #000;
     text-decoration: none;
     cursor: pointer;
+}
+.players-in-modal{
+    color: black;
+    font-size: 1em;
+}
+.players-in-modal:hover{
+    color: #007bff;
+    font-weight: bold;
 }
