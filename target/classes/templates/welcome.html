@@ -90,7 +90,7 @@
                     Twój klub: <span th:text="${coachWelcomeClubname}"></span>
 
                 <form th:if="${coachWelcomeClubname}=='Stwórz klub!'" th:action="@{/redirectToRegClub}">
-                    <input type="submit" class="btn btn-lg btn-primary welcome-buttons" value="Dodaj klub"/>
+                    <button type="submit" class="btn btn-lg btn-primary">Dodaj klub</button>
                 </form>
                 <br/>
                 <div th:if="${coachWelcomeClubname}!='Stwórz klub!'">
@@ -122,44 +122,44 @@
             </div>
             <div sec:authorize="hasAuthority('trener')">
                 <form th:action="@{/redirectRegClubForCompetition}">
-                    <input type="submit" class="btn btn-lg btn-primary welcome-buttons" value="Zarejestruj klub na zawody"/>
+                    <button type="submit" class="btn btn-lg btn-primary">Zarejestruj klub na zawody</button>
                 </form>
             </div>
 
 
             <form th:action="@{/redirectToChangeYourRolePage}">
-                <input type="submit" class="btn btn-lg btn-primary welcome-buttons" value="Zmień swoją rolę"/>
+                <button type="submit" class="btn btn-lg btn-primary">Zmień swoją rolę</button>
             </form>
 
             <div sec:authorize="hasAuthority('organizator')">
                 <form th:action="@{/registrationCompetitions}">
-                    <input type="submit" class="btn btn-lg btn-primary welcome-buttons" value="Dodaj zawody"/>
+                    <button type="submit" class="btn btn-lg btn-primary">Dodaj zawody</button>
                 </form>
             </div>
 
             <div sec:authorize="hasAuthority('sedzia')">
                 <form th:action="@{/chooseCompetitionForReferee}">
-                    <input type="submit" class="btn btn-lg btn-primary welcome-buttons" value="Sędziuj na zawodach"/>
+                    <button type="submit" class="btn btn-lg btn-primary">Sędziuj na zawodach</button>
                 </form>
             </div>
 
             <div sec:authorize="hasAuthority('Moderator')">
             <form th:action="@{/redirectToVerificationMedicalExaminations}">
-                <input type="submit" class="btn btn-lg btn-primary welcome-buttons" value="Weryfikuj dokumentacje"/>
+                <button type="submit" class="btn btn-lg btn-primary">Weryfikuj dokumentacje</button>
             </form>
 
             </div>
 
             <div sec:authorize="hasAuthority('zawodnik')">
             <form th:action="@{/redirectToEditPlayer}">
-                <input type="submit" class="btn btn-lg btn-primary welcome-buttons" value="Wybierz swój klub"/>
+                <button type="submit" class="btn btn-lg btn-primary">Wybierz swój klub</button>
             </form>
 
             </div>
 
             <div sec:authorize="hasAuthority('organizator')">
                 <form th:action="@{/redirectToOrganizerCompetitionView}">
-                    <input type="submit" class="btn btn-lg btn-primary welcome-buttons" value="Zobacz zawody które organizujesz"/>
+                    <button type="submit" class="btn btn-lg btn-primary">Zobacz zawody które organizujesz</button>
                 </form>
 
             </div>
