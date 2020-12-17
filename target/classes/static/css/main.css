@@ -198,14 +198,13 @@ table th {
     color: white;
 }
 
-.welcome-buttons {
-    display: inline-block;
-    float: left;
-
-}
-
 .has-error {
     color: red
+}
+
+
+button {
+    margin-top: 5px;
 }
 
 @media screen and (min-device-width: 781px){
