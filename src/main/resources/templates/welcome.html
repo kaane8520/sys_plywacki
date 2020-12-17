@@ -109,6 +109,11 @@
                     Data wygaśnięcia dokumentacji: <span th:text="${refereeWelcomeMedExDate}"></span>
                 </p>
             </div>
+            <div sec:authorize="hasAuthority('zawodnik')">
+                <p>
+                    Data wygaśnięcia dokumentacji: <span th:text="${playerWelcomeMedExDate}"></span>
+                </p>
+            </div>
             <div sec:authorize="hasAuthority('trener')">
                 <p>
                     <h3>Lista Twoich zawodników</h3>

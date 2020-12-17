@@ -4,6 +4,7 @@ import com.my_app.sys_plywacki.model.*;
 import com.my_app.sys_plywacki.repository.RefereeRepository;
 import org.springframework.http.HttpHeaders;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.my_app.sys_plywacki.service.*;
@@ -11,6 +12,8 @@ import com.my_app.sys_plywacki.repository.*;
 import org.springframework.security.core.Authentication;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -135,6 +138,8 @@ public class PersonController {
     List<RegistrationForCompetition> listOfRegForCompetitions = new ArrayList<>();
     List<AcceptedRegistrationForCompetition> listOfAcceptedRegistrationForCompetition = new ArrayList<>();
 
+    boolean messageSent = false;
+
     @GetMapping("/registration")
     public String registration(Model model) {
         if (securityService.isAuthenticated()) {
@@ -165,6 +170,7 @@ public class PersonController {
     public String login(Model model, String error, String logout) {
         listOfPlayers.clear();
         listOfRegForCompetitions.clear();
+        messageSent = false;
 
         if(personRepository.findAll().isEmpty()){
             personService.addModerator();
@@ -389,8 +395,9 @@ public class PersonController {
         ///!!!!!!!!!!!!!!!!!!!!
         List<Player> saved_player = playerRepository.findByIdPerson(p.getIdPerson());
         System.out.println("Znaleziono "+saved_player.size()+" zawodnikow");
+        System.out.println("Dokumentacja medyczna: "+saved_player.get(0).getMedExDate());
         saved_player.get(0).setClub(club.get());
-        saved_player.get(0).setMedExDate(player.getMedExDate());
+        saved_player.get(0).setMedExDate(saved_player.get(0).getMedExDate());
         playerRepository.save(saved_player.get(0));
         //System.out.println("to jest club get" + club.get().getId_club());
 
@@ -420,6 +427,10 @@ public class PersonController {
         saved_coach.get(0).setCoachlegidate(coach.getCoachlegidate());
         System.out.println("Id person: "+coach.getIdPerson());
         System.out.println("Data wygasniecia dokumentacji: "+coach.getCoachlegidate());
+
+        if(verification.getOldRole().equals(verification.getNew_role())){
+
+        }
         coachRepository.save(saved_coach.get(0));
 
         usun_zadanie(verification.getId_verification());
@@ -725,6 +736,51 @@ public class PersonController {
 
         return "Musisz wysłać dokumentacje aby dostać uprawnienia";
     }
+    @ModelAttribute("playerWelcomeMedExDate")
+    public String getPlayerMedExDate(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Person p = personService.findByUsername(auth.getName());
+        Role role = roleRepository.findByPerson(p);
+        if(roleRepository.existsByPerson(p)) {
+            if (role.getName().contains("zawodnik")) {
+
+                List<Player> player = playerRepository.findByIdPerson(p.getIdPerson());
+                if (player.get(0).getMedExDate()!=null) {
+
+                    if(!messageSent) {
+                        LocalDate now = LocalDate.now();
+                        LocalDate medExDate = player.get(0).getMedExDate();
+                        //LocalDate toCompare = LocalDate.of(medExDate.getYear(),medExDate.getMonth().minus(1),medExDate.getDayOfMonth());
+                        LocalDate toCompare = medExDate.minusMonths(1);
+
+                        System.out.println("Data wygasniecia dokumentacji: "+medExDate);
+                        System.out.println("Wsyslam wiadomosc od: "+toCompare);
+                        if(now.isAfter(medExDate)){
+                            Message message = new Message();
+                            message.setIdPerson(p.getIdPerson());
+                            message.setContent(now.toString()+": TWOJA DOKUMENTACJA WYGASLA!");
+                            messageRepository.save(message);
+                            System.out.println("Zapiano wiadomosc do uzytkownika");
+                            messageSent = true;
+                        }
+                        else if(now.isAfter(toCompare)||now.equals(toCompare)){
+                            Message message = new Message();
+                            message.setIdPerson(p.getIdPerson());
+                            message.setContent(now.toString()+": Data wygasniecia Twojej dokumentacji jest mniejsza niz 1 miesiac: ");
+                            messageRepository.save(message);
+                            System.out.println("Zapiano wiadomosc do uzytkownika");
+                            messageSent = true;
+                        }
+                    }
+
+                    return player.get(0).getMedExDate().toString();
+                }
+                return "Problem z dokumentacja";
+            }
+        }
+
+        return "Musisz wysłać dokumentacje aby dostać uprawnienia";
+    }
     @ModelAttribute("coachWelcomeMedExDate")
     public String getCoachMedExDate(){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -735,6 +791,32 @@ public class PersonController {
 
                 Coach coach = coachRepository.findCoachByPerson(p);
                 if (coach.getCoachlegidate()!=null) {
+
+                    if(!messageSent) {
+                        LocalDate now = LocalDate.now();
+                        LocalDate medExDate = coach.getCoachlegidate();
+                        //LocalDate toCompare = LocalDate.of(medExDate.getYear(),medExDate.getMonth().minus(1),medExDate.getDayOfMonth());
+                        LocalDate toCompare = medExDate.minusMonths(1);
+                        System.out.println("Data wygasniecia dokumentacji: "+medExDate);
+                        System.out.println("Wsyslam wiadomosc od: "+toCompare);
+                        if(now.isAfter(medExDate)){
+                            Message message = new Message();
+                            message.setIdPerson(p.getIdPerson());
+                            message.setContent(now.toString()+": TWOJA DOKUMENTACJA WYGASLA!");
+                            messageRepository.save(message);
+                            System.out.println("Zapiano wiadomosc do uzytkownika");
+                            messageSent = true;
+                        }
+                        else if(now.isAfter(toCompare)||now.equals(toCompare)){
+                            Message message = new Message();
+                            message.setIdPerson(p.getIdPerson());
+                            message.setContent(now.toString()+": Data wygasniecia Twojej dokumentacji jest mniejsza niz 1 miesiac: ");
+                            messageRepository.save(message);
+                            System.out.println("Zapiano wiadomosc do uzytkownika");
+                            messageSent = true;
+                        }
+                    }
+
                     return coach.getCoachlegidate().toString();
                 }
                 return "Edytuj date wygaśnięcia dokumentacji";
@@ -755,8 +837,32 @@ public class PersonController {
                 if (referee.getRefereelegidate()!=null) {
                     //Sprawdzam date wygaśnięcia dokumentacji, jeśli wygaśnie za mniej niż miesiąc
                     //wysyłam wiadomość dla sędziego
+                    if(!messageSent) {
+                        LocalDate now = LocalDate.now();
+                        LocalDate medExDate = referee.getRefereelegidate();
+                        //LocalDate toCompare = LocalDate.of(medExDate.getYear(),medExDate.getMonth().minus(1),medExDate.getDayOfMonth());
+                        LocalDate toCompare = medExDate.minusMonths(1);
 
+                        System.out.println("Data wygasniecia dokumentacji: "+medExDate);
+                        System.out.println("Wsyslam wiadomosc od: "+toCompare);
+                        if(now.isAfter(medExDate)){
+                            Message message = new Message();
+                            message.setIdPerson(p.getIdPerson());
+                            message.setContent(now.toString()+": TWOJA DOKUMENTACJA WYGASLA!");
+                            messageRepository.save(message);
+                            System.out.println("Zapiano wiadomosc do uzytkownika");
+                            messageSent = true;
+                        }
+                        else if(now.isAfter(toCompare)||now.equals(toCompare)){
+                            Message message = new Message();
+                            message.setIdPerson(p.getIdPerson());
+                            message.setContent(now.toString()+": Data wygasniecia Twojej dokumentacji jest mniejsza niz 1 miesiac: ");
+                            messageRepository.save(message);
+                            System.out.println("Zapiano wiadomosc do uzytkownika");
+                            messageSent = true;
+                        }
 
+                    }
                     return referee.getRefereelegidate().toString();
                 }
                 return "Edytuj date wygaśnięcia dokumentacji";
@@ -927,60 +1033,68 @@ public class PersonController {
         if(p==null) System.out.println("Nie znaleziono takiej osoby!");
         else System.out.println("Znaleziono osobe z takim id, username = "+p.get().getUsername());
         String r = verification.get().getNew_role();
-        System.out.println("Nowa rola: "+r);
-        Set<Role> roles = p.get().getRoles();
-        Role role = new Role();
-        System.out.println("Utworzono nowa role Role role = new Role()");
-        role.setName(r);
-        System.out.println("Ustawiono nazwe roli na: "+role.getName());
-        roles.add(role);
-        System.out.println("Dodano nowa role do zbioru rol");
-        personService.add_role(p.get(), role);
-        role.setPerson(p.get());
-        roleRepository.save(role);
-        System.out.println("Dodano nowa role do serwisu");
+        if(verification.get().getOldRole().equals(verification.get().getNew_role())){
+            System.out.println("Chcesz zmienic role na taka sama");
+        }else {
+            System.out.println("Nowa rola: " + r);
+            Set<Role> roles = p.get().getRoles();
+            Role role = new Role();
+            System.out.println("Utworzono nowa role Role role = new Role()");
+            role.setName(r);
+            System.out.println("Ustawiono nazwe roli na: " + role.getName());
+            roles.add(role);
+            System.out.println("Dodano nowa role do zbioru rol");
+            personService.add_role(p.get(), role);
+            role.setPerson(p.get());
+            roleRepository.save(role);
+            System.out.println("Dodano nowa role do serwisu");
+
+
+            if(verification.get().getNew_role().equals("zawodnik")) {
+                Player player = new Player();
+                player.setPerson(p.get());
+                player.setIdPerson(id_person);
+
+                //Ustawiam brak klubu jako klub
+                Optional<Club> club = clubRepository.findById(Integer.toUnsignedLong(1));
+                player.setClub(club.get());
+
+                playerRepository.save(player);
+
+            }
+            else if (verification.get().getNew_role().equals("organizator")) {
+
+                Organizer organizer = new Organizer();
+
+                organizer.setPerson(p.get());
+                organizerRepository.save(organizer);
+
+            }
+            else if (verification.get().getNew_role().equals("trener")) {
+
+                Coach coach = new Coach();
+                coach.setPerson(p.get());
+                coach.setIdPerson(id_person);
+                coachRepository.save(coach);
+
+            }
+            else if(verification.get().getNew_role().equals("sedzia")) {
+
+                Referee referee = new Referee();
+                referee.setPerson(p.get());
+                referee.setIdPerson(id_person);
+                refereeRepository.save(referee);
+            }
+
+        }
         //p.get().setRoles(roles);
 
-        if(role.getName().equals("zawodnik")) {
-            Player player = new Player();
-            player.setPerson(p.get());
-            player.setIdPerson(id_person);
 
-            //Ustawiam brak klubu jako klub
-            Optional<Club> club = clubRepository.findById(Integer.toUnsignedLong(1));
-            player.setClub(club.get());
-
-            playerRepository.save(player);
-
-        }
-        else if (role.getName().equals("organizator")) {
-
-            Organizer organizer = new Organizer();
-
-            organizer.setPerson(p.get());
-            organizerRepository.save(organizer);
-
-        }
-        else if (role.getName().equals("trener")) {
-
-            Coach coach = new Coach();
-            coach.setPerson(p.get());
-            coach.setIdPerson(id_person);
-            coachRepository.save(coach);
-
-        }
-        else if(role.getName().equals("sedzia")) {
-
-            Referee referee = new Referee();
-            referee.setPerson(p.get());
-            referee.setIdPerson(id_person);
-            refereeRepository.save(referee);
-        }
 
 
         Message message = new Message();
         message.setIdPerson(verification.get().getIdPerson());
-        message.setContent("Twoja rola zostala zmieniona na: "+role.getName()+"\n");
+        message.setContent("Twoja rola zostala zmieniona na: "+verification.get().getNew_role()+"\n");
         messageRepository.save(message);
         System.out.println("Zapiano wiadomosc do uzytkownika");
 
@@ -989,13 +1103,13 @@ public class PersonController {
         //verificationRepository.deleteById(verification.get().getId_verification());
 
 
-        if(role.getName().equals("zawodnik")){
+        if(verification.get().getNew_role().equals("zawodnik")){
             return "redirect:/redirectToEditPlayerByModerator";
         }
-        if(role.getName().equals("trener")){
+        if(verification.get().getNew_role().equals("trener")){
             return "redirect:/redirectToEditCoach";
         }
-        if(role.getName().equals("sedzia")){
+        if(verification.get().getNew_role().equals("sedzia")){
             //return "redirect:/redirectToEditReferee/"+verification.get().getIdPerson();
             return "redirect:/redirectToEditReferee";
         } else {
