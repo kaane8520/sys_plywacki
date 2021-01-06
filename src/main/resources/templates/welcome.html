@@ -109,17 +109,17 @@
                     Data wygaśnięcia dokumentacji: <span th:text="${refereeWelcomeMedExDate}"></span>
                 </p>
             </div>
-            <div sec:authorize="hasAuthority('trener')">
-                <p>
-                    <h3>Lista Twoich zawodników</h3>
-                    <tr th:each="player : ${playersListInCoachClub}">
-    <!--                    <td th:text="${player}"></td>-->
-                        <td th:text="${player.getUsername()}"></td>
+<!--            <div sec:authorize="hasAuthority('trener')">-->
+<!--                <p>-->
+<!--                    <h3>Lista Twoich zawodników</h3>-->
+<!--                    <tr th:each="player : ${playersListInCoachClub}">-->
+<!--    &lt;!&ndash;                    <td th:text="${player}"></td>&ndash;&gt;-->
+<!--                        <td th:text="${player.getUsername()}"></td>-->
 
 
-                    </tr>
-                </p>
-            </div>
+<!--                    </tr>-->
+<!--                </p>-->
+<!--            </div>-->
             <div sec:authorize="hasAuthority('trener')">
                 <form th:action="@{/redirectRegClubForCompetition}">
                     <input type="submit" class="btn btn-lg btn-primary welcome-buttons" value="Zarejestruj klub na zawody"/>
@@ -133,7 +133,7 @@
 
             <div sec:authorize="hasAuthority('organizator')">
                 <form th:action="@{/registrationCompetitions}">
-                    <input type="submit" class="btn btn-lg btn-primary welcome-buttons" value="Dodaj zawody"/>
+                    <input id="add-competitions-button" type="submit" class="btn btn-lg btn-primary welcome-buttons" value="Dodaj zawody"/>
                 </form>
             </div>
 

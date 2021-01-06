@@ -62,7 +62,7 @@
         <form method="post" th:object="${resultForm}" th:action="@{/insertResults}">
             <div class="form-group">
                 <select th:field="*{categoriesOnCompetition}" class="form-control">
-                    <option th:each="com: ${listOfCategoriesOnCompanies}"
+                    <option th:each="com: ${listOfCategoriesOnCompetitions}"
                             th:value="${com.id}"
                             th:text="${com.id}"
                     />

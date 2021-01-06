@@ -36,21 +36,7 @@
                 <input class="nav-items" type="submit" value="Wyszukaj zawodników"/>
             </form>
         </li>
-        <li>
-            <div sec:authorize="isAuthenticated()">
-                <form th:action="@{/redirectToEditPage}">
-                    <input class="nav-items" type="submit" value="Edytuj swoje konto"/>
-                </form>
-            </div>
-        </li>
-        <li>
-            <div sec:authorize="isAuthenticated()">
-                <form id="logoutForm" method="POST" th:action="@{/logout}">
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                </form>
-                <button onclick="document.forms['logoutForm'].submit()">Logout</button>
-            </div>
-        </li>
+
     </ul>
 </div>
 
@@ -61,23 +47,23 @@
 
 
         <div class="form-group">
-            <input type="text" th:field="*{username}" class="form-control" placeholder="Wpisz nazwę użytkownika"
+            <input type="text" id="registration-input-login" th:field="*{username}" class="form-control" placeholder="Wpisz nazwę użytkownika"
                    autofocus="true">
             <span class="has-error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
         </div>
 
         <div class="form-group">
-            <input type="password" th:field="*{password}" class="form-control" placeholder="Wpisz hasło">
+            <input type="password" id="registration-input-password" th:field="*{password}" class="form-control" placeholder="Wpisz hasło">
             <span class="has-error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
         </div>
 
         <div class="form-group">
-            <input type="password" th:field="*{passwordConfirm}" class="form-control"
+            <input type="password" id="registration-input-password2" th:field="*{passwordConfirm}" class="form-control"
                    placeholder="Ponownie wpisz hasło">
             <span class="has-error" th:if="${#fields.hasErrors('passwordConfirm')}" th:errors="*{passwordConfirm}"></span>
         </div>
 
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Zarejestruj się</button>
+        <button class="btn btn-lg btn-primary btn-block" id="button-registration" type="submit">Zarejestruj się</button>
     </form>
 
 </div>

@@ -1143,10 +1143,10 @@ public class PersonController {
         return listOfDisqualifiacations;
     }
 
-    @ModelAttribute("listOfCategoriesOnCompanies")
+    @ModelAttribute("listOfCategoriesOnCompetitions")
     public List<CategoriesOnCompetition>chooseCOM(){
-        List<CategoriesOnCompetition> listOfCategoriesOnCompanies = categoriesOnCompetitionRepository.findAll();
-        return listOfCategoriesOnCompanies;
+        List<CategoriesOnCompetition> listOfCategoriesOnCompetitions = categoriesOnCompetitionRepository.findAll();
+        return listOfCategoriesOnCompetitions;
     }
 
     Long compId;
@@ -1154,6 +1154,8 @@ public class PersonController {
     public String redirectToInsertResults(@Param("keyword") Long keyword, Model model){
 
         compId = keyword;
+//        List<CategoriesOnCompetition> listOfCategoriesOnCompetitions = categoriesOnCompetitionRepository.findCategoriesOnCompetitionsByCompetition_IdCompetitions(compId);
+//        model.addAttribute("listOfCategoriesOnCompetitions", listOfCategoriesOnCompetitions);
 
         return "redirect:/insertResults";
     }
